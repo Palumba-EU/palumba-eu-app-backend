@@ -19,3 +19,18 @@ check for code style problems respectively.
 
 Users can only register for the admin panel after an invitation.  
 This is based on [Filament: Invite Only Registration via Email Invitations](https://filamentapps.dev/blog/filament-invite-only-registration-via-email-invitations)
+
+
+## Seeding
+
+To add the 27 EU member countries, run the CountrySeeder
+
+```bash
+artisan db:seed --class=CountrySeeder
+```
+
+or to run all seeders
+
+```bash
+artisan db:seed
+```

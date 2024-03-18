@@ -25,4 +25,5 @@ class Statement extends Model
         'footnote',
         'sort_index',
     ];
+
 }

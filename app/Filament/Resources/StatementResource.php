@@ -34,7 +34,7 @@ class StatementResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('sort_index')
                     ->required()
-                    ->unique()
+                    ->unique(Statement::class, ignoreRecord: true)
                     ->numeric(),
             ]);
     }

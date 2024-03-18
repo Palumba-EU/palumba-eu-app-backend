@@ -16,6 +16,11 @@ class StatementResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'statement' => $this->statement,
+            'details' => $this->details,
+            'footnote' => $this->footnote,
+        ];
     }
 }

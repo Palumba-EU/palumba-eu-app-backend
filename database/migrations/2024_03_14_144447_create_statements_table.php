@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('details');
             $table->text('footnote');
 
-            $table->smallInteger('sort_index');
+            $table->smallInteger('sort_index')->unique();
         });
     }
 

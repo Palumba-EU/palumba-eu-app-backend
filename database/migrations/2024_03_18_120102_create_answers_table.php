@@ -19,6 +19,8 @@ return new class extends Migration
             $table->morphs('answerable');
 
             $table->tinyInteger('answer');
+
+            $table->unique(['statement_id', 'answerable_id', 'answerable_type']);
         });
     }
 

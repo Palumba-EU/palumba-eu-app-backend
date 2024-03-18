@@ -24,6 +24,9 @@ class Answer extends Model
     use HasFactory;
 
     protected $fillable = [
+        'statement_id',
+        'answerable_id',
+        'answerable_type',
         'answer',
     ];
 
@@ -36,4 +39,18 @@ class Answer extends Model
     {
         return $this->morphTo();
     }
+
+    public static array $answerTexts = [
+        -2 => 'Strongly disagree',
+        -1 => 'Disagree',
+        0 => 'Neutral',
+        1 => 'Agree',
+        2 => 'Strongly agree',
+    ];
+
+    public function getAnswerText(): string
+    {
+        return self::$answerTexts[$this->answer];
+    }
+
 }

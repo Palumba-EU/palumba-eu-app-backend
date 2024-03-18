@@ -68,7 +68,7 @@ class PartyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PartyResource\RelationManagers\AnswerableRelationManager::class
         ];
     }
 

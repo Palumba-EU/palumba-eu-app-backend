@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Collection;
 
 /**
  * @property int $id
@@ -15,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $country_id
  * @property Country $country
  * @property string $color
+ * @property Collection<Answer> $answers
  */
 class Party extends Model
 {
@@ -29,6 +32,11 @@ class Party extends Model
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function answers(): MorphMany
+    {
+        return $this->morphMany(Answer::class, 'answerable');
     }
 
 }

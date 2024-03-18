@@ -23,13 +23,21 @@ class AnswerableRelationManager extends RelationManager
                     ->relationship(
                         'statement',
                         'statement',
-                        modifyQueryUsing: fn (Builder $query) => $query->whereNotIn('id', $this->ownerRecord->answers->pluck('statement_id')),
+                        modifyQueryUsing: fn (Builder $query) => $query
+                            ->whereNotIn('id', $this->ownerRecord->answers
+                                // allow the currently selected statement. For new records $form-model is a string.
+                                ->filter(fn (Answer $answer) => is_string($form->model) || $answer->statement_id !== $form->model->statement_id)
+                                ->pluck('statement_id')
+                            ),
                     )
                     ->required()
-                    ->unique(modifyRuleUsing: fn (Unique $rule) => $rule
-                        ->where('answerable_id', $this->ownerRecord->id)
-                        ->where('answerable_type', $this->ownerRecord->getMorphClass())
+                    ->unique(
+                        ignoreRecord: true,
+                        modifyRuleUsing: fn (Unique $rule) => $rule
+                            ->where('answerable_id', $this->ownerRecord->id)
+                            ->where('answerable_type', $this->ownerRecord->getMorphClass())
                     )
+                    ->disabledOn('edit')
                     ->live(),
                 Forms\Components\Select::make('answer')
                     ->options(Answer::$answerTexts)

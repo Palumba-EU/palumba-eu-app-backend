@@ -28,7 +28,45 @@ class PartyResource extends Resource
                     ->required(),
                 Forms\Components\ColorPicker::make('color')
                     ->required()
-                    ->hex(),
+                    ->hex()
+                    ->columnSpanFull(),
+
+                // 5D position
+                Forms\Components\TextInput::make('p1')
+                    ->label('Position 1')
+                    ->required()
+                    ->numeric()
+                    ->minValue(-100)
+                    ->maxValue(+100)
+                    ->columns(1),
+                Forms\Components\TextInput::make('p2')
+                    ->label('Position 2')
+                    ->required()
+                    ->numeric()
+                    ->minValue(-100)
+                    ->maxValue(+100)
+                    ->columns(1),
+                Forms\Components\TextInput::make('p3')
+                    ->label('Position 3')
+                    ->required()
+                    ->numeric()
+                    ->minValue(-100)
+                    ->maxValue(+100)
+                    ->columns(1),
+                Forms\Components\TextInput::make('p4')
+                    ->label('Position 4')
+                    ->required()
+                    ->numeric()
+                    ->minValue(-100)
+                    ->maxValue(+100)
+                    ->columns(1),
+                Forms\Components\TextInput::make('p5')
+                    ->label('Position 5')
+                    ->required()
+                    ->numeric()
+                    ->minValue(-100)
+                    ->maxValue(+100)
+                    ->columns(1),
             ]);
     }
 
@@ -68,7 +106,6 @@ class PartyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            PartyResource\RelationManagers\AnswerableRelationManager::class
         ];
     }
 

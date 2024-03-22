@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Palumba API",
-    "version": "0.1.1"
+    "version": "0.1.2"
   },
   "paths": {
     "/localization": {
@@ -87,6 +87,18 @@
                       },
                       "footnote": {
                         "type": "string"
+                      },
+                      "vector": {
+                        "description": "The statements 5D vector",
+                        "type": "array",
+                        "minItems": 5,
+                        "maxItems": 5,
+                        "items": {
+                          "type": "integer",
+                          "minimum": -100,
+                          "maximum": 100
+                        },
+                        "example": [-25, 0, 90, 15, -11]
                       }
                     }
                   }
@@ -213,19 +225,17 @@
                               }
                             }
                           },
-                          "answer_vectors": {
+                          "position": {
+                            "description": "The parties position in 5D space",
                             "type": "array",
+                            "minItems": 5,
+                              "maxItems": 5,
                             "items": {
-                              "type": "object",
-                              "properties": {
-                                "statement_id": {
-                                  "type": "number"
-                                },
-                                "answer": {
-                                  "type": "number"
-                                }
-                              }
-                            }
+                              "type": "integer",
+                              "minimum": -100,
+                              "maximum": 100
+                            },
+                            "example": [-25, 0, 90, 15, -11]
                           }
                         }
                       }

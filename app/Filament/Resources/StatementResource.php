@@ -35,7 +35,45 @@ class StatementResource extends Resource
                 Forms\Components\TextInput::make('sort_index')
                     ->required()
                     ->unique(Statement::class, ignoreRecord: true)
-                    ->numeric(),
+                    ->numeric()
+                    ->columnSpanFull(),
+
+                Forms\Components\TextInput::make('w1')
+                    ->label('Weight 1')
+                    ->required()
+                    ->numeric()
+                    ->minValue(-100)
+                    ->maxValue(+100)
+                    ->columns(1),
+                Forms\Components\TextInput::make('w2')
+                    ->label('Weight 2')
+                    ->required()
+                    ->numeric()
+                    ->minValue(-100)
+                    ->maxValue(+100)
+                    ->columns(1),
+                Forms\Components\TextInput::make('w3')
+                    ->label('Weight 3')
+                    ->required()
+                    ->numeric()
+                    ->minValue(-100)
+                    ->maxValue(+100)
+                    ->columns(1),
+                Forms\Components\TextInput::make('w4')
+                    ->label('Weight 4')
+                    ->required()
+                    ->numeric()
+                    ->minValue(-100)
+                    ->maxValue(+100)
+                    ->columns(1),
+                Forms\Components\TextInput::make('w5')
+                    ->label('Weight 5')
+                    ->required()
+                    ->numeric()
+                    ->minValue(-100)
+                    ->maxValue(+100)
+                    ->columns(1),
+
             ]);
     }
 

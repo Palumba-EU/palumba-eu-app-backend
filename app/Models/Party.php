@@ -26,6 +26,7 @@ use Illuminate\Support\Collection;
  * @property int $p4
  * @property int $p5
  * @property array<int> $position
+ * @property Collection<Policy> $policies
  * @property Collection<LocalParty> $local_parties
  */
 class Party extends Model
@@ -48,6 +49,11 @@ class Party extends Model
         return $this->belongsTo(Country::class);
     }
 
+    public function policies(): HasMany
+    {
+        return $this->hasMany(Policy::class);
+    }
+  
     public function local_parties(): HasMany
     {
         return $this->hasMany(LocalParty::class);

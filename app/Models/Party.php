@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
 /**
+ * An EU level party/group
+ *
  * @property int $id
  * @property Carbon $createdAt
  * @property Carbon $updatedAt
@@ -25,6 +27,7 @@ use Illuminate\Support\Collection;
  * @property int $p5
  * @property array<int> $position
  * @property Collection<Policy> $policies
+ * @property Collection<LocalParty> $local_parties
  */
 class Party extends Model
 {
@@ -49,6 +52,11 @@ class Party extends Model
     public function policies(): HasMany
     {
         return $this->hasMany(Policy::class);
+    }
+  
+    public function local_parties(): HasMany
+    {
+        return $this->hasMany(LocalParty::class);
     }
 
     public function position(): Attribute

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\CrowdIn\CrowdIn;
+use App\Services\CrowdIn\Translatable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,9 +19,19 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $banner_link
  * @property string $category
  */
-class Sponsor extends Model
+class Sponsor extends Model implements Translatable
 {
-    use HasFactory;
+    use CrowdIn, HasFactory;
 
     protected $fillable = ['name', 'logo', 'link', 'banner_image', 'banner_link', 'category'];
+
+    public function getTranslatableAttributes(): array
+    {
+        return ['name'];
+    }
+
+    public function getTranslatableFiles(): array
+    {
+        return ['logo', 'banner_image'];
+    }
 }

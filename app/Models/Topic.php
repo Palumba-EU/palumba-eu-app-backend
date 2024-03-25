@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\CrowdIn\CrowdIn;
+use App\Services\CrowdIn\Translatable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,14 +19,24 @@ use Illuminate\Support\Collection;
  * @property string $icon
  * @property Collection<Statement> $statements
  */
-class Topic extends Model
+class Topic extends Model implements Translatable
 {
-    use HasFactory;
+    use CrowdIn, HasFactory;
 
     protected $fillable = ['name', 'color', 'icon'];
 
     public function statements(): BelongsToMany
     {
         return $this->belongsToMany(Statement::class);
+    }
+
+    public function getTranslatableAttributes(): array
+    {
+        return ['name'];
+    }
+
+    public function getTranslatableFiles(): array
+    {
+        return ['icon'];
     }
 }

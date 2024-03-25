@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\CrowdIn\CrowdIn;
+use App\Services\CrowdIn\Translatable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,9 +31,9 @@ use Illuminate\Support\Collection;
  * @property Collection<Policy> $policies
  * @property Collection<LocalParty> $local_parties
  */
-class Party extends Model
+class Party extends Model implements Translatable
 {
-    use HasFactory;
+    use HasFactory, CrowdIn;
 
     protected $fillable = [
         'name',
@@ -53,7 +55,7 @@ class Party extends Model
     {
         return $this->hasMany(Policy::class);
     }
-  
+
     public function local_parties(): HasMany
     {
         return $this->hasMany(LocalParty::class);
@@ -71,5 +73,15 @@ class Party extends Model
                 $this->p5 = $value[4];
             }
         );
+    }
+
+    public function getTranslatableAttributes(): array
+    {
+        return ['name'];
+    }
+
+    public function getTranslatableFiles(): array
+    {
+        return [];
     }
 }

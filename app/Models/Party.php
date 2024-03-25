@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
 /**
+ * An EU level party/group
+ *
  * @property int $id
  * @property Carbon $createdAt
  * @property Carbon $updatedAt
@@ -24,6 +26,7 @@ use Illuminate\Support\Collection;
  * @property int $p4
  * @property int $p5
  * @property array<int> $position
+ * @property Collection<LocalParty> $local_parties
  */
 class Party extends Model
 {
@@ -43,6 +46,11 @@ class Party extends Model
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function local_parties(): HasMany
+    {
+        return $this->hasMany(LocalParty::class);
     }
 
     public function position(): Attribute

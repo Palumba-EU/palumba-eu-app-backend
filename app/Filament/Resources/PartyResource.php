@@ -2,78 +2,71 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\StatementResource\Pages;
-use App\Models\Statement;
+use App\Filament\Resources\PartyResource\Pages;
+use App\Models\Party;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class StatementResource extends Resource
+class PartyResource extends Resource
 {
-    protected static ?string $model = Statement::class;
-
-    protected static ?int $navigationSort = 30;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $model = Party::class;
+    protected static ?int $navigationSort = 40;
+    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Textarea::make('statement')
+                Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(1024)
-                    ->columnSpanFull(),
-                Forms\Components\RichEditor::make('details')
+                    ->maxLength(255),
+                Forms\Components\Select::make('country_id')
+                    ->relationship('country', 'name')
+                    ->required(),
+                Forms\Components\ColorPicker::make('color')
                     ->required()
-                    ->columnSpanFull(),
-                Forms\Components\RichEditor::make('footnote')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('sort_index')
-                    ->required()
-                    ->unique(Statement::class, ignoreRecord: true)
-                    ->numeric()
+                    ->hex()
                     ->columnSpanFull(),
 
-                Forms\Components\TextInput::make('w1')
-                    ->label('Weight 1')
+                // 5D position
+                Forms\Components\TextInput::make('p1')
+                    ->label('Position 1')
                     ->required()
                     ->numeric()
                     ->minValue(-100)
                     ->maxValue(+100)
                     ->columns(1),
-                Forms\Components\TextInput::make('w2')
-                    ->label('Weight 2')
+                Forms\Components\TextInput::make('p2')
+                    ->label('Position 2')
                     ->required()
                     ->numeric()
                     ->minValue(-100)
                     ->maxValue(+100)
                     ->columns(1),
-                Forms\Components\TextInput::make('w3')
-                    ->label('Weight 3')
+                Forms\Components\TextInput::make('p3')
+                    ->label('Position 3')
                     ->required()
                     ->numeric()
                     ->minValue(-100)
                     ->maxValue(+100)
                     ->columns(1),
-                Forms\Components\TextInput::make('w4')
-                    ->label('Weight 4')
+                Forms\Components\TextInput::make('p4')
+                    ->label('Position 4')
                     ->required()
                     ->numeric()
                     ->minValue(-100)
                     ->maxValue(+100)
                     ->columns(1),
-                Forms\Components\TextInput::make('w5')
-                    ->label('Weight 5')
+                Forms\Components\TextInput::make('p5')
+                    ->label('Position 5')
                     ->required()
                     ->numeric()
                     ->minValue(-100)
                     ->maxValue(+100)
                     ->columns(1),
-
             ]);
     }
 
@@ -89,11 +82,13 @@ class StatementResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('statement')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('sort_index')
+                Tables\Columns\TextColumn::make('country.name')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\ColorColumn::make('color')
+                    ->copyable(),
             ])
             ->filters([
                 //
@@ -111,16 +106,15 @@ class StatementResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListStatements::route('/'),
-            'create' => Pages\CreateStatement::route('/create'),
-            'edit' => Pages\EditStatement::route('/{record}/edit'),
+            'index' => Pages\ListParties::route('/'),
+            'create' => Pages\CreateParty::route('/create'),
+            'edit' => Pages\EditParty::route('/{record}/edit'),
         ];
     }
 }

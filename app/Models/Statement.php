@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\CrowdIn\CrowdIn;
+use App\Services\CrowdIn\Translatable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,9 +24,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $w5
  * @property array<int> $vector
  */
-class Statement extends Model
+class Statement extends Model implements Translatable
 {
-    use HasFactory;
+    use CrowdIn, HasFactory;
 
     protected $fillable = [
         'statement',
@@ -50,5 +52,15 @@ class Statement extends Model
                 $this->w5 = $value[4];
             }
         );
+    }
+
+    public function getTranslatableAttributes(): array
+    {
+        return ['statement', 'details', 'footnote'];
+    }
+
+    public function getTranslatableFiles(): array
+    {
+        return [];
     }
 }

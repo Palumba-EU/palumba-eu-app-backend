@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
 /**
@@ -24,6 +24,7 @@ use Illuminate\Support\Collection;
  * @property int $p4
  * @property int $p5
  * @property array<int> $position
+ * @property Collection<Policy> $policies
  */
 class Party extends Model
 {
@@ -43,6 +44,11 @@ class Party extends Model
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function policies(): HasMany
+    {
+        return $this->hasMany(Policy::class);
     }
 
     public function position(): Attribute

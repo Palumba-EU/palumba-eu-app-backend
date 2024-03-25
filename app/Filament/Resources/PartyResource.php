@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PartyResource\Pages;
+use App\Filament\Resources\PartyResource\RelationManagers\PoliciesRelationManager;
 use App\Models\Party;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -13,7 +14,9 @@ use Filament\Tables\Table;
 class PartyResource extends Resource
 {
     protected static ?string $model = Party::class;
+
     protected static ?int $navigationSort = 40;
+
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
     public static function form(Form $form): Form
@@ -106,6 +109,7 @@ class PartyResource extends Resource
     public static function getRelations(): array
     {
         return [
+            PoliciesRelationManager::class,
         ];
     }
 

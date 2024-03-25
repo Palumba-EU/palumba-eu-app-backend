@@ -37,6 +37,7 @@ class LocalPartyResource extends Resource
                     ->maxLength(512),
                 Forms\Components\FileUpload::make('logo')
                     ->image()
+                    ->directory('local_parties')
                     ->required()
                     ->columnSpanFull(),
 

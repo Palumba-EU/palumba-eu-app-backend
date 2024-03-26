@@ -4,14 +4,16 @@ namespace App\Models;
 
 use App\Services\CrowdIn\CrowdIn;
 use App\Services\CrowdIn\Translatable;
+use App\Services\CrowdIn\TranslatableFile;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property int $id
- * @property Carbon $createdAt
- * @property Carbon $updatedAt
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  * @property string $name
  * @property string $logo
  * @property string $link
@@ -32,6 +34,8 @@ class Sponsor extends Model implements Translatable
 
     public function getTranslatableFiles(): array
     {
-        return ['logo', 'banner_image'];
+        return [
+            new TranslatableFile('banner_image', Storage::disk('public')->path($this->banner_image), sprintf('banner of %s', $this->name), $this->updated_at),
+        ];
     }
 }

@@ -48,7 +48,7 @@ class LocalParty extends Model implements Translatable
 
     public function getTranslatableFiles(): array
     {
-        return ['logo'];
+        return [];
     }
 
 }

@@ -2,22 +2,28 @@
 
 namespace App\Services;
 
-use App\Services\CrowdIn\Translatable;
-use Illuminate\Contracts\Filesystem\Filesystem;
+use App\Services\CrowdIn\CrowdInFileRepository;
+use App\Services\CrowdIn\SourceImageUploader;
+use App\Services\CrowdIn\SourceStringGenerator;
+use CrowdinApiClient\Crowdin;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class CrowdInTranslation
 {
-    private Filesystem $disk;
+    private Collection $models;
 
-    private string $basePath;
+    private Crowdin $client;
+
+    private int $projectId;
+
+    private CrowdInFileRepository $fileRepository;
 
     public function __construct()
     {
-        $this->disk = Storage::disk(config('crowdin.storage.disk'));
-        $this->basePath = config('crowdin.storage.path');
+        $this->models = collect(config('crowdin.translatable_models'));
+        $this->projectId = config('crowdin.project_id');
+        $this->client = resolve(Crowdin::class);
+        $this->fileRepository = new CrowdInFileRepository($this->client, $this->projectId);
     }
 
     /**
@@ -25,30 +31,20 @@ class CrowdInTranslation
      */
     public function generate(): void
     {
-        $models = collect(config('crowdin.translatable_models'));
-        $models->each(function ($class) {
-            $data = $this->generateSourceStringsForClass($class);
-            $filename = $this->getFilenameForClass($class);
-            $this->disk->put($filename, json_encode($data->all()));
+        $this->models->each(function (string $class) {
+            $generator = new SourceStringGenerator($this->client, $this->fileRepository, $this->projectId, $class);
+            $generator->generateAndUpload();
         });
     }
 
-    private function generateSourceStringsForClass(string $class): Collection
+    /**
+     * Collects and uploads all files that need translation
+     */
+    public function uploadFiles(): void
     {
-        return $class::query()->get()->flatMap(
-            fn (Translatable $model) => $this->generateSourceStrings($model)
-        );
-    }
-
-    private function generateSourceStrings(Translatable $model): Collection
-    {
-        $attributes = collect($model->getTranslatableAttributes());
-
-        return $attributes->mapWithKeys(fn ($attribute) => [$model->getIdentifier($attribute) => $model->getAttribute($attribute)]);
-    }
-
-    private function getFilenameForClass(string $class): string
-    {
-        return sprintf('%s/%s.sources.json', $this->basePath, Str::kebab(class_basename($class)));
+        $this->models->each(function (string $class) {
+            $uploader = new SourceImageUploader($this->client, $this->fileRepository, $this->projectId, $class);
+            $uploader->upload();
+        });
     }
 }

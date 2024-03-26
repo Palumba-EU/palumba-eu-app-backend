@@ -9,6 +9,7 @@ use App\Models\Topic;
 
 return [
     'token' => env('CROWDIN_TOKEN'),
+    'project_id' => env('CROWDIN_PROJECT_ID'),
 
     'storage' => [
         'disk' => env('TRANSLATABLE_SOURCE_DISK', 'local'),

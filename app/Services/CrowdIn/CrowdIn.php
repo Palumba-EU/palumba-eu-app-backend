@@ -20,8 +20,8 @@ trait CrowdIn
         });
     }
 
-    public function getIdentifier( string $attribute ): string {
-        return sprintf('%s-%s.%s', Str::kebab(class_basename(self::class)), $this->getAttribute('id'), $attribute);
+    public function getIdentifier(string $attribute): string
+    {
+        return sprintf('%s-%s.%s', $this->getAttribute('id'), Str::kebab(class_basename(self::class)), $attribute);
     }
-
 }

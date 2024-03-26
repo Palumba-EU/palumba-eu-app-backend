@@ -37,6 +37,6 @@ class Topic extends Model implements Translatable
 
     public function getTranslatableFiles(): array
     {
-        return ['icon'];
+        return [];
     }
 }

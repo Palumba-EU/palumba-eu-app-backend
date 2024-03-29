@@ -15,11 +15,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $link
  * @property string $banner_image
  * @property string $banner_link
+ * @property string $banner_description
  * @property string $category
  */
 class Sponsor extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'logo', 'link', 'banner_image', 'banner_link', 'category'];
+    protected $fillable = ['name', 'logo', 'link', 'banner_image', 'banner_link', 'banner_description', 'category'];
 }

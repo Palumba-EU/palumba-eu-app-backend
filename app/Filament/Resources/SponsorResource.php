@@ -45,6 +45,9 @@ class SponsorResource extends Resource
                     ->url()
                     ->required()
                     ->maxLength(512),
+                Forms\Components\RichEditor::make('banner_description')
+                    ->required()
+                    ->columnSpanFull(),
                 Forms\Components\Select::make('category')
                     ->required()
                     ->options([
@@ -84,7 +87,7 @@ class SponsorResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('category')
                     ->searchable()
-                    ->formatStateUsing(fn ($state) => Str::ucfirst($state)),
+                    ->formatStateUsing(fn($state) => Str::ucfirst($state)),
             ])
             ->filters([
                 //

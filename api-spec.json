@@ -259,6 +259,9 @@
           "statement": {
             "type": "string"
           },
+          "emojis": {
+            "type": "string"
+          },
           "details": {
             "type": "string"
           },
@@ -287,6 +290,7 @@
         "required": [
           "id",
           "statement",
+          "emojis",
           "details",
           "footnote",
           "vector"
@@ -373,10 +377,10 @@
           "name": {
             "type": "string"
           },
-          "country": {
-            "$ref": "#/components/schemas/Country"
-          },
           "color": {
+            "type": "string"
+          },
+          "logo": {
             "type": "string"
           },
           "images": {
@@ -417,9 +421,7 @@
             "minItems": 5,
             "maxItems": 5,
             "items": {
-              "type": "integer",
-              "minimum": -100,
-              "maximum": 100
+              "type": "integer"
             },
             "example": [
               -25,
@@ -433,8 +435,8 @@
         "required": [
           "id",
           "name",
-          "country",
           "color",
+          "logo",
           "images",
           "local_parties",
           "policies",
@@ -462,6 +464,9 @@
           "banner_link": {
             "type": "string"
           },
+          "banner_description": {
+            "type": "string"
+          },
           "category": {
             "type": "string",
             "enum": [
@@ -480,6 +485,7 @@
           "link",
           "banner_image",
           "banner_link",
+          "banner_description",
           "category"
         ]
       }

@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Ramsey\Collection\Collection;
 
 /**
  * A local party
@@ -17,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $country_id
  * @property Country $country
  * @property int $party_id
- * @property Party $party
+ * @property Collection<Party> $parties
  * @property string $logo
  * @property string $link
  */
@@ -34,8 +36,8 @@ class LocalParty extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function party(): BelongsTo
+    public function parties(): BelongsToMany
     {
-        return $this->belongsTo(Party::class);
+        return $this->belongsToMany(Party::class)->withTimestamps();
     }
 }

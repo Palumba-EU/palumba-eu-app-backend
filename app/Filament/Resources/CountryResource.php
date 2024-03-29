@@ -53,8 +53,7 @@ class CountryResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('code')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('flag')
-                    ->searchable(),
+                Tables\Columns\ImageColumn::make('flag'),
             ])
             ->filters([
                 //

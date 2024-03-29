@@ -26,6 +26,8 @@ class StatementResource extends Resource
                     ->required()
                     ->maxLength(1024)
                     ->columnSpanFull(),
+                Forms\Components\TextInput::make('emojis')
+                    ->required(),
                 Forms\Components\RichEditor::make('details')
                     ->required()
                     ->columnSpanFull(),

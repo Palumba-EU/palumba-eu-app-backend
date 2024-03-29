@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Models\Party;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 /** @mixin Party */
 class PartyResource extends JsonResource
@@ -19,8 +20,8 @@ class PartyResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'country' => new CountryResource($this->country),
             'color' => $this->color,
+            'logo' => Storage::url($this->logo),
             'local_parties' => LocalPartyResource::collection($this->local_parties),
             'policies' => PolicyResource::collection($this->policies),
             'position' => $this->position,

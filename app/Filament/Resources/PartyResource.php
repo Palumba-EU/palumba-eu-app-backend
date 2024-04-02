@@ -19,6 +19,9 @@ class PartyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
+    protected static ?string $label = 'EU Group';
+    protected static ?string $pluralLabel = 'EU Groups';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -26,12 +29,14 @@ class PartyResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('country_id')
-                    ->relationship('country', 'name')
-                    ->required(),
                 Forms\Components\ColorPicker::make('color')
                     ->required()
                     ->hex()
+                    ->columnSpanFull(),
+                Forms\Components\FileUpload::make('logo')
+                    ->image()
+                    ->directory('parties/logos')
+                    ->required()
                     ->columnSpanFull(),
 
                 // 5D position
@@ -39,36 +44,26 @@ class PartyResource extends Resource
                     ->label('Position 1')
                     ->required()
                     ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
                     ->columns(1),
                 Forms\Components\TextInput::make('p2')
                     ->label('Position 2')
                     ->required()
                     ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
                     ->columns(1),
                 Forms\Components\TextInput::make('p3')
                     ->label('Position 3')
                     ->required()
                     ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
                     ->columns(1),
                 Forms\Components\TextInput::make('p4')
                     ->label('Position 4')
                     ->required()
                     ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
                     ->columns(1),
                 Forms\Components\TextInput::make('p5')
                     ->label('Position 5')
                     ->required()
                     ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
                     ->columns(1),
             ]);
     }
@@ -87,11 +82,9 @@ class PartyResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('country.name')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\ColorColumn::make('color')
                     ->copyable(),
+                Tables\Columns\ImageColumn::make('logo'),
             ])
             ->filters([
                 //

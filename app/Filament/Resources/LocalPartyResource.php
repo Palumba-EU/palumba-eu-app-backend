@@ -18,6 +18,9 @@ class LocalPartyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
+    protected static ?string $label = 'Local Candidate List';
+    protected static ?string $pluralLabel = 'Local Candidate Lists';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -29,8 +32,11 @@ class LocalPartyResource extends Resource
                     ->relationship('country', 'name')
                     ->required(),
                 Forms\Components\Select::make('party_id')
-                    ->label('Associated party')
-                    ->relationship('party', 'name')
+                    ->label('Associated parties')
+                    ->relationship('parties', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
                     ->required(),
                 Forms\Components\TextInput::make('link')
                     ->required()

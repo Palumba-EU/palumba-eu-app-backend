@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $w4
  * @property int $w5
  * @property array<int> $vector
+ * @property string $emojis
  */
 class Statement extends Model
 {
@@ -36,6 +37,7 @@ class Statement extends Model
         'w3',
         'w4',
         'w5',
+        'emojis',
     ];
 
     public function vector(): Attribute

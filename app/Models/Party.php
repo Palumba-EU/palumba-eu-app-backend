@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
@@ -17,9 +18,8 @@ use Illuminate\Support\Collection;
  * @property Carbon $createdAt
  * @property Carbon $updatedAt
  * @property string $name
- * @property int $country_id
- * @property Country $country
  * @property string $color
+ * @property string $logo
  * @property int $p1
  * @property int $p2
  * @property int $p3
@@ -35,8 +35,8 @@ class Party extends Model
 
     protected $fillable = [
         'name',
-        'country_id',
         'color',
+        'logo',
         'p1',
         'p2',
         'p3',
@@ -44,19 +44,14 @@ class Party extends Model
         'p5',
     ];
 
-    public function country(): BelongsTo
-    {
-        return $this->belongsTo(Country::class);
-    }
-
     public function policies(): HasMany
     {
         return $this->hasMany(Policy::class);
     }
-  
-    public function local_parties(): HasMany
+
+    public function local_parties(): BelongsToMany
     {
-        return $this->hasMany(LocalParty::class);
+        return $this->belongsToMany(LocalParty::class)->withTimestamps();
     }
 
     public function position(): Attribute

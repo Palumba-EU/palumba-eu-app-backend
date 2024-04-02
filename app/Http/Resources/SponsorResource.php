@@ -24,6 +24,7 @@ class SponsorResource extends JsonResource
             'link' => $this->link,
             'banner_image' => Storage::url($this->banner_image),
             'banner_link' => $this->banner_link,
+            'banner_description' => $this->banner_description,
             'category' => $this->category,
         ];
     }

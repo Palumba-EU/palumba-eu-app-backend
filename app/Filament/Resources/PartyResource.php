@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PartyResource\Pages;
+use App\Filament\Resources\PartyResource\RelationManagers\MoodImagesRelationManager;
 use App\Filament\Resources\PartyResource\RelationManagers\PoliciesRelationManager;
 use App\Models\Party;
 use Filament\Forms;
@@ -103,6 +104,7 @@ class PartyResource extends Resource
     {
         return [
             PoliciesRelationManager::class,
+            MoodImagesRelationManager::class
         ];
     }
 

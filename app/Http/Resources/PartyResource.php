@@ -25,6 +25,7 @@ class PartyResource extends JsonResource
             'local_parties' => LocalPartyResource::collection($this->local_parties),
             'policies' => PolicyResource::collection($this->policies),
             'position' => $this->position,
+            'images' => MoodImageResource::collection($this->mood_images),
         ];
     }
 }

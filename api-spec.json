@@ -389,12 +389,18 @@
               "type": "object",
               "properties": {
                 "link": {
-                  "type": "string"
+                  "type": "string",
+                  "nullable": true
                 },
                 "text": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "image": {
                   "type": "string"
                 }
-              }
+              },
+              "required": ["link", "text", "image"]
             }
           },
           "local_parties": {

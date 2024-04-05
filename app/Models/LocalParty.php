@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Ramsey\Collection\Collection;
 
 /**
- * A local party
+ * A local candidates list
  *
  * @property int $id
  * @property Carbon $createdAt
@@ -22,13 +22,14 @@ use Ramsey\Collection\Collection;
  * @property Collection<Party> $parties
  * @property string $logo
  * @property string $link
+ * @property string $internal_notes
  */
 class LocalParty extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name', 'country_id', 'party_id', 'logo', 'link',
+        'name', 'country_id', 'party_id', 'logo', 'link', 'internal_notes',
     ];
 
     public function country(): BelongsTo

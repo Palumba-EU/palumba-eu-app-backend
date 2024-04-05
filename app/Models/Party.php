@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
@@ -28,6 +27,7 @@ use Illuminate\Support\Collection;
  * @property array<int> $position
  * @property Collection<Policy> $policies
  * @property Collection<LocalParty> $local_parties
+ * @property Collection<MoodImage> $mood_images
  */
 class Party extends Model
 {
@@ -52,6 +52,11 @@ class Party extends Model
     public function local_parties(): BelongsToMany
     {
         return $this->belongsToMany(LocalParty::class)->withTimestamps();
+    }
+
+    public function mood_images(): HasMany
+    {
+        return $this->hasMany(MoodImage::class);
     }
 
     public function position(): Attribute

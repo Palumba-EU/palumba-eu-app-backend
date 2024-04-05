@@ -19,6 +19,7 @@ class LocalPartyResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
     protected static ?string $label = 'Local Candidate List';
+
     protected static ?string $pluralLabel = 'Local Candidate Lists';
 
     public static function form(Form $form): Form
@@ -46,7 +47,8 @@ class LocalPartyResource extends Resource
                     ->directory('local_parties')
                     ->required()
                     ->columnSpanFull(),
-
+                Forms\Components\TextInput::make('acronym')
+                    ->required(),
             ]);
     }
 

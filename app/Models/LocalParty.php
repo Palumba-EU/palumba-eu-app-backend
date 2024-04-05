@@ -22,13 +22,14 @@ use Ramsey\Collection\Collection;
  * @property Collection<Party> $parties
  * @property string $logo
  * @property string $link
+ * @property string $acronym
  */
 class LocalParty extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name', 'country_id', 'party_id', 'logo', 'link',
+        'name', 'country_id', 'party_id', 'logo', 'link', 'acronym'
     ];
 
     public function country(): BelongsTo

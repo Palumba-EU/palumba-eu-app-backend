@@ -19,6 +19,8 @@ use Illuminate\Support\Collection;
  * @property string $name
  * @property string $color
  * @property string $logo
+ * @property string $link
+ * @property string $acronym
  * @property int $p1
  * @property int $p2
  * @property int $p3
@@ -37,6 +39,8 @@ class Party extends Model
         'name',
         'color',
         'logo',
+        'link',
+        'acronym',
         'p1',
         'p2',
         'p3',

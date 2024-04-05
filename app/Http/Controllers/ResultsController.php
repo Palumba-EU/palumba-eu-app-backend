@@ -13,7 +13,7 @@ class ResultsController extends Controller
     public function index(): JsonResponse
     {
         $topics = Topic::query()->with('statements')->get();
-        $parties = Party::query()->with(['local_parties', 'policies'])->get();
+        $parties = Party::query()->with(['local_parties', 'policies', 'mood_images'])->get();
 
         return response()->json([
             'topics' => TopicResource::collection($topics),

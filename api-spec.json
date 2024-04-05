@@ -191,6 +191,9 @@
         "responses": {
           "201": {
             "description": "User responses successfully submitted"
+          },
+          "429": {
+            "description": "Too many attempts. Try again later. Defaults to 5 attempts per hour in production"
           }
         },
         "parameters": [

@@ -33,7 +33,7 @@ class LocalPartyResource extends Resource
                     ->relationship('country', 'name')
                     ->required(),
                 Forms\Components\Select::make('party_id')
-                    ->label('Associated parties')
+                    ->label('Associated EU Groups')
                     ->relationship('parties', 'name')
                     ->multiple()
                     ->preload()
@@ -69,8 +69,8 @@ class LocalPartyResource extends Resource
                 Tables\Columns\TextColumn::make('country.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('party.name')
-                    ->label('Associated party')
+                Tables\Columns\TextColumn::make('parties.name')
+                    ->label('Associated EU Groups')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('link')

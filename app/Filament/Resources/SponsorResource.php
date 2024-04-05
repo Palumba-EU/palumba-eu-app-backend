@@ -73,7 +73,8 @@ class SponsorResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\ImageColumn::make('logo')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('link')
@@ -87,7 +88,8 @@ class SponsorResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('category')
                     ->searchable()
-                    ->formatStateUsing(fn($state) => Str::ucfirst($state)),
+                    ->sortable()
+                    ->formatStateUsing(fn ($state) => Str::ucfirst($state)),
             ])
             ->filters([
                 //

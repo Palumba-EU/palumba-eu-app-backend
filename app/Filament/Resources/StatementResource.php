@@ -92,11 +92,13 @@ class StatementResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('statement')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('sort_index')
                     ->numeric()
                     ->sortable(),
             ])
+            ->defaultSort('sort_index')
             ->filters([
                 //
             ])

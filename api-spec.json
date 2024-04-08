@@ -355,13 +355,17 @@
           },
           "link": {
             "type": "string"
+          },
+          "acronym": {
+            "type": "string"
           }
         },
         "required": [
           "id",
           "name",
           "logo",
-          "link"
+          "link",
+          "acronym"
         ]
       },
       "Policy": {
@@ -398,6 +402,12 @@
           "logo": {
             "type": "string"
           },
+          "link": {
+            "type": "string"
+          },
+          "acronym": {
+            "type": "string"
+          },
           "images": {
             "type": "array",
             "items": {
@@ -422,13 +432,7 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/LocalParty"
-            },
-            "required": [
-              "id",
-              "name",
-              "logo",
-              "link"
-            ]
+            }
           },
           "policies": {
             "type": "array",
@@ -461,7 +465,9 @@
           "images",
           "local_parties",
           "policies",
-          "position"
+          "position",
+          "link",
+          "acronym"
         ]
       },
       "Sponsor": {

@@ -26,6 +26,8 @@ class PartyResource extends JsonResource
             'policies' => PolicyResource::collection($this->policies),
             'position' => $this->position,
             'images' => MoodImageResource::collection($this->mood_images),
+            'link' => $this->link,
+            'acronym' => $this->acronym,
         ];
     }
 }

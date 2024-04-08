@@ -1,44 +1,36 @@
 <?php
 
-namespace App\Filament\Resources\PartyResource\RelationManagers;
+namespace App\Filament\Resources\ResponseResource\RelationManagers;
 
-use App\Filament\Helper\PublishedColumn;
-use App\Models\Scopes\PublishedScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PoliciesRelationManager extends RelationManager
+class StatementsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'policies';
+    protected static string $relationship = 'statements';
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Checkbox::make('published')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('title')
+                Forms\Components\TextInput::make('statement')
                     ->required()
-                    ->maxLength(255)
-                    ->columnSpanFull(),
-                Forms\Components\RichEditor::make('description')
-                    ->required()
-                    ->columnSpanFull(),
+                    ->maxLength(255),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScopes([PublishedScope::class]))
-            ->recordTitleAttribute('title')
+            ->recordTitleAttribute('statement')
             ->columns([
-                PublishedColumn::make('published')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('title')->sortable(),
+                Tables\Columns\TextColumn::make('statement'),
+                Tables\Columns\TextColumn::make('answer'),
             ])
             ->filters([
                 //

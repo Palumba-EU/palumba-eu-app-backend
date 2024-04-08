@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Palumba API",
-    "version": "0.1.3"
+    "version": "0.1.4"
   },
   "paths": {
     "/localization": {
@@ -158,27 +158,39 @@
                 "properties": {
                   "age": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "nullable": true,
+                    "description": "The participants age or null if prefer not to say"
                   },
-                  "country": {
-                    "type": "string"
+                  "country_id": {
+                    "type": "integer",
+                    "description": "The participants selected country"
                   },
-                  "language": {
-                    "type": "string"
+                  "language_id": {
+                    "type": "integer",
+                    "description": "The participants selected language"
                   },
                   "gender": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["male", "female", "diverse"],
+                    "nullable": true,
+                    "description": "The participants gender or null if prefer not to say"
                   },
                   "answers": {
                     "type": "array",
                     "items": {
                       "type": "object",
+                      "description": "The complete list of answers. Should contain one item per statement",
                       "properties": {
                         "statement_id": {
-                          "type": "number"
+                          "type": "integer"
                         },
                         "answer": {
-                          "type": "number"
+                          "type": "integer",
+                          "nullable": true,
+                          "minimum": -2,
+                          "maximum": 2,
+                          "description": "The participants answer or null if skipped"
                         }
                       }
                     }
@@ -191,6 +203,9 @@
         "responses": {
           "201": {
             "description": "User responses successfully submitted"
+          },
+          "429": {
+            "description": "Too many attempts. Try again later. Defaults to 5 attempts per hour in production"
           }
         },
         "parameters": [
@@ -212,7 +227,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "integer"
           },
           "name": {
             "type": "string"
@@ -235,7 +250,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "integer"
           },
           "name": {
             "type": "string"
@@ -254,7 +269,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "integer"
           },
           "statement": {
             "type": "string"
@@ -300,7 +315,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "integer"
           },
           "name": {
             "type": "string"
@@ -314,7 +329,7 @@
           "associated_statements": {
             "type": "array",
             "items": {
-              "type": "number"
+              "type": "integer"
             }
           }
         },
@@ -330,7 +345,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "integer"
           },
           "name": {
             "type": "string"
@@ -353,7 +368,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "integer"
           },
           "title": {
             "type": "string"
@@ -372,7 +387,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "integer"
           },
           "name": {
             "type": "string"
@@ -453,7 +468,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "integer"
           },
           "name": {
             "type": "string"

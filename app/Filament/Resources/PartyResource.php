@@ -94,7 +94,8 @@ class PartyResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\ColorColumn::make('color')
                     ->copyable(),
                 Tables\Columns\ImageColumn::make('logo'),

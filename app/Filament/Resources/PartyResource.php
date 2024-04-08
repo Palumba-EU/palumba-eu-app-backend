@@ -2,14 +2,18 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\PartyResource\Pages;
+use App\Filament\Resources\PartyResource\RelationManagers\MoodImagesRelationManager;
 use App\Filament\Resources\PartyResource\RelationManagers\PoliciesRelationManager;
 use App\Models\Party;
+use App\Models\Scopes\PublishedScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class PartyResource extends Resource
 {
@@ -19,56 +23,59 @@ class PartyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
+    protected static ?string $label = 'EU Group';
+
+    protected static ?string $pluralLabel = 'EU Groups';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\Checkbox::make('published')
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('country_id')
-                    ->relationship('country', 'name')
-                    ->required(),
                 Forms\Components\ColorPicker::make('color')
                     ->required()
                     ->hex()
                     ->columnSpanFull(),
+                Forms\Components\FileUpload::make('logo')
+                    ->image()
+                    ->directory('parties/logos')
+                    ->required()
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('link')
+                    ->required()
+                    ->maxLength(512),
+                Forms\Components\TextInput::make('acronym')
+                    ->required(),
 
                 // 5D position
                 Forms\Components\TextInput::make('p1')
                     ->label('Position 1')
                     ->required()
                     ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
                     ->columns(1),
                 Forms\Components\TextInput::make('p2')
                     ->label('Position 2')
                     ->required()
                     ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
                     ->columns(1),
                 Forms\Components\TextInput::make('p3')
                     ->label('Position 3')
                     ->required()
                     ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
                     ->columns(1),
                 Forms\Components\TextInput::make('p4')
                     ->label('Position 4')
                     ->required()
                     ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
                     ->columns(1),
                 Forms\Components\TextInput::make('p5')
                     ->label('Position 5')
                     ->required()
                     ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
                     ->columns(1),
             ]);
     }
@@ -77,6 +84,7 @@ class PartyResource extends Resource
     {
         return $table
             ->columns([
+                PublishedColumn::make('published')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -86,12 +94,11 @@ class PartyResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('country.name')
-                    ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\ColorColumn::make('color')
                     ->copyable(),
+                Tables\Columns\ImageColumn::make('logo'),
             ])
             ->filters([
                 //
@@ -110,6 +117,7 @@ class PartyResource extends Resource
     {
         return [
             PoliciesRelationManager::class,
+            MoodImagesRelationManager::class,
         ];
     }
 
@@ -120,5 +128,10 @@ class PartyResource extends Resource
             'create' => Pages\CreateParty::route('/create'),
             'edit' => Pages\EditParty::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScopes([PublishedScope::class]);
     }
 }

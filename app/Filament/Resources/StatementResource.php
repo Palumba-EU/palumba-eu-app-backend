@@ -2,13 +2,16 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\StatementResource\Pages;
+use App\Models\Scopes\PublishedScope;
 use App\Models\Statement;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class StatementResource extends Resource
 {
@@ -22,10 +25,14 @@ class StatementResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Checkbox::make('published')
+                    ->columnSpanFull(),
                 Forms\Components\Textarea::make('statement')
                     ->required()
                     ->maxLength(1024)
                     ->columnSpanFull(),
+                Forms\Components\TextInput::make('emojis')
+                    ->required(),
                 Forms\Components\RichEditor::make('details')
                     ->required()
                     ->columnSpanFull(),
@@ -81,6 +88,7 @@ class StatementResource extends Resource
     {
         return $table
             ->columns([
+                PublishedColumn::make('published')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -90,11 +98,13 @@ class StatementResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('statement')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('sort_index')
                     ->numeric()
                     ->sortable(),
             ])
+            ->defaultSort('sort_index')
             ->filters([
                 //
             ])
@@ -122,5 +132,10 @@ class StatementResource extends Resource
             'create' => Pages\CreateStatement::route('/create'),
             'edit' => Pages\EditStatement::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScopes([PublishedScope::class]);
     }
 }

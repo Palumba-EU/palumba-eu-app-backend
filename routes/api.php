@@ -1,19 +1,14 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\LocalizationController;
+use App\Http\Controllers\ResponseController;
+use App\Http\Controllers\ResultsController;
+use App\Http\Controllers\SponsorController;
+use App\Http\Controllers\StatementController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/localization', [LocalizationController::class, 'index']);
+Route::get('/statements', [StatementController::class, 'index']);
+Route::get('/results', [ResultsController::class, 'index']);
+Route::get('/sponsors', [SponsorController::class, 'index']);
+Route::post('/responses', [ResponseController::class, 'store'])->middleware(['throttle:responses']);

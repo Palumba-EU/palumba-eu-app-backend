@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\PublishedScope;
 use App\Services\CrowdIn\CrowdIn;
 use App\Services\CrowdIn\Translatable;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
@@ -18,10 +20,12 @@ use Illuminate\Support\Collection;
  * @property int $id
  * @property Carbon $createdAt
  * @property Carbon $updatedAt
+ * @property bool $published
  * @property string $name
- * @property int $country_id
- * @property Country $country
  * @property string $color
+ * @property string $logo
+ * @property string $link
+ * @property string $acronym
  * @property int $p1
  * @property int $p2
  * @property int $p3
@@ -30,35 +34,40 @@ use Illuminate\Support\Collection;
  * @property array<int> $position
  * @property Collection<Policy> $policies
  * @property Collection<LocalParty> $local_parties
+ * @property Collection<MoodImage> $mood_images
  */
+#[ScopedBy([PublishedScope::class])]
 class Party extends Model implements Translatable
 {
-    use HasFactory, CrowdIn;
+    use CrowdIn, HasFactory;
 
     protected $fillable = [
         'name',
-        'country_id',
         'color',
+        'logo',
+        'link',
+        'acronym',
         'p1',
         'p2',
         'p3',
         'p4',
         'p5',
+        'published',
     ];
-
-    public function country(): BelongsTo
-    {
-        return $this->belongsTo(Country::class);
-    }
 
     public function policies(): HasMany
     {
         return $this->hasMany(Policy::class);
     }
 
-    public function local_parties(): HasMany
+    public function local_parties(): BelongsToMany
     {
-        return $this->hasMany(LocalParty::class);
+        return $this->belongsToMany(LocalParty::class)->withTimestamps();
+    }
+
+    public function mood_images(): HasMany
+    {
+        return $this->hasMany(MoodImage::class);
     }
 
     public function position(): Attribute

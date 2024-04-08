@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\PublishedScope;
 use App\Services\CrowdIn\CrowdIn;
 use App\Services\CrowdIn\Translatable;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property Carbon $createdAt
  * @property Carbon $updatedAt
+ * @property bool $published
  * @property string $statement
  * @property string $details
  * @property string $footnote
@@ -23,7 +26,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $w4
  * @property int $w5
  * @property array<int> $vector
+ * @property string $emojis
  */
+#[ScopedBy([PublishedScope::class])]
 class Statement extends Model implements Translatable
 {
     use CrowdIn, HasFactory;
@@ -38,6 +43,8 @@ class Statement extends Model implements Translatable
         'w3',
         'w4',
         'w5',
+        'emojis',
+        'published',
     ];
 
     public function vector(): Attribute

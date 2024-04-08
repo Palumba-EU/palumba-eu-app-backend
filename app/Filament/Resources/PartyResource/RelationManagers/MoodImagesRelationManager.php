@@ -11,9 +11,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
-class PoliciesRelationManager extends RelationManager
+class MoodImagesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'policies';
+    protected static string $relationship = 'mood_images';
 
     public function form(Form $form): Form
     {
@@ -21,13 +21,17 @@ class PoliciesRelationManager extends RelationManager
             ->schema([
                 Forms\Components\Checkbox::make('published')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpanFull(),
-                Forms\Components\RichEditor::make('description')
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->directory('mood_images')
                     ->required()
                     ->columnSpanFull(),
+                Forms\Components\TextInput::make('link')
+                    ->url()
+                    ->nullable()
+                    ->maxLength(512),
+                Forms\Components\TextInput::make('link_text')
+                    ->nullable(),
             ]);
     }
 
@@ -35,10 +39,12 @@ class PoliciesRelationManager extends RelationManager
     {
         return $table
             ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScopes([PublishedScope::class]))
-            ->recordTitleAttribute('title')
+            ->recordTitleAttribute('image')
             ->columns([
                 PublishedColumn::make('published')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('title')->sortable(),
+                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\TextColumn::make('link_text')->searchable(),
+                Tables\Columns\TextColumn::make('link')->copyable()->searchable(),
             ])
             ->filters([
                 //

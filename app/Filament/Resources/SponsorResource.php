@@ -2,20 +2,23 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\SponsorResource\Pages;
+use App\Models\Scopes\PublishedScope;
 use App\Models\Sponsor;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class SponsorResource extends Resource
 {
     protected static ?string $model = Sponsor::class;
 
-    protected static ?int $navigationSort = 70;
+    protected static ?int $navigationSort = 80;
 
     protected static ?string $navigationIcon = 'heroicon-o-trophy';
 
@@ -23,6 +26,8 @@ class SponsorResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Checkbox::make('published')
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -45,6 +50,9 @@ class SponsorResource extends Resource
                     ->url()
                     ->required()
                     ->maxLength(512),
+                Forms\Components\RichEditor::make('banner_description')
+                    ->required()
+                    ->columnSpanFull(),
                 Forms\Components\Select::make('category')
                     ->required()
                     ->options([
@@ -61,6 +69,7 @@ class SponsorResource extends Resource
     {
         return $table
             ->columns([
+                PublishedColumn::make('published')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -70,7 +79,8 @@ class SponsorResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\ImageColumn::make('logo')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('link')
@@ -84,6 +94,7 @@ class SponsorResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('category')
                     ->searchable()
+                    ->sortable()
                     ->formatStateUsing(fn ($state) => Str::ucfirst($state)),
             ])
             ->filters([
@@ -113,5 +124,10 @@ class SponsorResource extends Resource
             'create' => Pages\CreateSponsor::route('/create'),
             'edit' => Pages\EditSponsor::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScopes([PublishedScope::class]);
     }
 }

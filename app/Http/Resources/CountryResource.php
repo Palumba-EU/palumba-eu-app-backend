@@ -13,8 +13,10 @@ class CountryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            ...parent::toArray($request),
-            'flag' => Storage::url($this->flag),
+            'id' => $this->id,
+            'name' => $this->name,
+            'country_code' => $this->code,
+            'flag_image' => Storage::url($this->flag),
         ];
     }
 }

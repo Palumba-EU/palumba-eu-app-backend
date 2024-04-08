@@ -2,12 +2,13 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Statement;
+use App\Models\MoodImage;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
-/** @mixin Statement */
-class StatementResource extends JsonResource
+/** @mixin MoodImage */
+class MoodImageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +18,9 @@ class StatementResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'statement' => $this->statement,
-            'details' => $this->details,
-            'footnote' => $this->footnote,
-            'vector' => $this->vector,
+            'link' => $this->link,
+            'text' => $this->link_text,
+            'image' => Storage::url($this->image),
         ];
     }
 }

@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Palumba API",
-    "version": "0.1.2"
+    "version": "0.1.4"
   },
   "paths": {
     "/localization": {
@@ -20,38 +20,13 @@
                     "countries": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "number"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "country_code": {
-                            "type": "string"
-                          },
-                          "flag_image": {
-                            "type": "string"
-                          }
-                        }
+                        "$ref": "#/components/schemas/Country"
                       }
                     },
                     "languages": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "number"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "language_code": {
-                            "type": "string"
-                          }
-                        }
+                        "$ref": "#/components/schemas/Language"
                       }
                     }
                   }
@@ -74,33 +49,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "number"
-                      },
-                      "statement": {
-                        "type": "string"
-                      },
-                      "details": {
-                        "type": "string"
-                      },
-                      "footnote": {
-                        "type": "string"
-                      },
-                      "vector": {
-                        "description": "The statements 5D vector",
-                        "type": "array",
-                        "minItems": 5,
-                        "maxItems": 5,
-                        "items": {
-                          "type": "integer",
-                          "minimum": -100,
-                          "maximum": 100
-                        },
-                        "example": [-25, 0, 90, 15, -11]
-                      }
-                    }
+                    "$ref": "#/components/schemas/Statement"
                   }
                 }
               }
@@ -134,110 +83,13 @@
                     "topics": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "number"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "icon": {
-                            "type": "string"
-                          },
-                          "color": {
-                            "type": "string"
-                          },
-                          "associated_statements": {
-                            "type": "array",
-                            "items": {
-                              "type": "number"
-                            }
-                          }
-                        }
+                        "$ref": "#/components/schemas/Topic"
                       }
                     },
                     "parties": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "number"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "country": {
-                            "type": "string"
-                          },
-                          "color": {
-                            "type": "string"
-                          },
-                          "images": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "link": {
-                                  "type": "string"
-                                },
-                                "text": {
-                                  "type": "string"
-                                }
-                              }
-                            }
-                          },
-                          "local_parties": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "id": {
-                                  "type": "number"
-                                },
-                                "name": {
-                                  "type": "string"
-                                },
-                                "logo": {
-                                  "type": "string"
-                                },
-                                "link": {
-                                  "type": "string"
-                                }
-                              }
-                            }
-                          },
-                          "policies": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "id": {
-                                  "type": "number"
-                                },
-                                "title": {
-                                  "type": "string"
-                                },
-                                "description": {
-                                  "type": "string"
-                                }
-                              }
-                            }
-                          },
-                          "position": {
-                            "description": "The parties position in 5D space",
-                            "type": "array",
-                            "minItems": 5,
-                              "maxItems": 5,
-                            "items": {
-                              "type": "integer",
-                              "minimum": -100,
-                              "maximum": 100
-                            },
-                            "example": [-25, 0, 90, 15, -11]
-                          }
-                        }
+                        "$ref": "#/components/schemas/Party"
                       }
                     }
                   },
@@ -274,37 +126,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "number"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "logo": {
-                        "type": "string"
-                      },
-                      "link": {
-                        "type": "string"
-                      },
-                      "banner_image": {
-                        "type": "string"
-                      },
-                      "banner_link": {
-                        "type": "string"
-                      },
-                      "category": {
-                        "type": "string",
-                        "enum": [
-                          "main sponsor",
-                          "european partner",
-                          "national partner",
-                          "media",
-                          "other"
-                        ]
-                      }
-                    }
+                    "$ref": "#/components/schemas/Sponsor"
                   }
                 }
               }
@@ -336,27 +158,39 @@
                 "properties": {
                   "age": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "nullable": true,
+                    "description": "The participants age or null if prefer not to say"
                   },
-                  "country": {
-                    "type": "string"
+                  "country_id": {
+                    "type": "integer",
+                    "description": "The participants selected country"
                   },
-                  "language": {
-                    "type": "string"
+                  "language_id": {
+                    "type": "integer",
+                    "description": "The participants selected language"
                   },
                   "gender": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["male", "female", "diverse"],
+                    "nullable": true,
+                    "description": "The participants gender or null if prefer not to say"
                   },
                   "answers": {
                     "type": "array",
                     "items": {
                       "type": "object",
+                      "description": "The complete list of answers. Should contain one item per statement",
                       "properties": {
                         "statement_id": {
-                          "type": "number"
+                          "type": "integer"
                         },
                         "answer": {
-                          "type": "number"
+                          "type": "integer",
+                          "nullable": true,
+                          "minimum": -2,
+                          "maximum": 2,
+                          "description": "The participants answer or null if skipped"
                         }
                       }
                     }
@@ -369,6 +203,9 @@
         "responses": {
           "201": {
             "description": "User responses successfully submitted"
+          },
+          "429": {
+            "description": "Too many attempts. Try again later. Defaults to 5 attempts per hour in production"
           }
         },
         "parameters": [
@@ -380,6 +217,303 @@
               "type": "string"
             }
           }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Country": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "country_code": {
+            "type": "string"
+          },
+          "flag_image": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "country_code",
+          "flag_image"
+        ]
+      },
+      "Language": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "language_code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "language_code"
+        ]
+      },
+      "Statement": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "statement": {
+            "type": "string"
+          },
+          "emojis": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          },
+          "footnote": {
+            "type": "string"
+          },
+          "vector": {
+            "description": "The statements 5D vector",
+            "type": "array",
+            "minItems": 5,
+            "maxItems": 5,
+            "items": {
+              "type": "integer",
+              "minimum": -100,
+              "maximum": 100
+            },
+            "example": [
+              -25,
+              0,
+              90,
+              15,
+              -11
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "statement",
+          "emojis",
+          "details",
+          "footnote",
+          "vector"
+        ]
+      },
+      "Topic": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "associated_statements": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "icon",
+          "color",
+          "associated_statements"
+        ]
+      },
+      "LocalParty": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "link": {
+            "type": "string"
+          },
+          "acronym": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "logo",
+          "link",
+          "acronym"
+        ]
+      },
+      "Policy": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "description"
+        ]
+      },
+      "Party": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "link": {
+            "type": "string"
+          },
+          "acronym": {
+            "type": "string"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "link": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "text": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "image": {
+                  "type": "string"
+                }
+              },
+              "required": ["link", "text", "image"]
+            }
+          },
+          "local_parties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LocalParty"
+            }
+          },
+          "policies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Policy"
+            }
+          },
+          "position": {
+            "description": "The parties position in 5D space",
+            "type": "array",
+            "minItems": 5,
+            "maxItems": 5,
+            "items": {
+              "type": "integer"
+            },
+            "example": [
+              -25,
+              0,
+              90,
+              15,
+              -11
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "color",
+          "logo",
+          "images",
+          "local_parties",
+          "policies",
+          "position",
+          "link",
+          "acronym"
+        ]
+      },
+      "Sponsor": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "link": {
+            "type": "string"
+          },
+          "banner_image": {
+            "type": "string"
+          },
+          "banner_link": {
+            "type": "string"
+          },
+          "banner_description": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "main sponsor",
+              "european partner",
+              "national partner",
+              "media",
+              "other"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "logo",
+          "link",
+          "banner_image",
+          "banner_link",
+          "banner_description",
+          "category"
         ]
       }
     }

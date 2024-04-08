@@ -33,7 +33,7 @@ class PoliciesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('title')
             ->columns([
-                Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('title')->sortable(),
             ])
             ->filters([
                 //

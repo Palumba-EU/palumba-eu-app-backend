@@ -55,7 +55,8 @@ class TopicResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\ColorColumn::make('color')
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('icon')

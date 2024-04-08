@@ -15,7 +15,7 @@ class SponsorResource extends Resource
 {
     protected static ?string $model = Sponsor::class;
 
-    protected static ?int $navigationSort = 70;
+    protected static ?int $navigationSort = 80;
 
     protected static ?string $navigationIcon = 'heroicon-o-trophy';
 

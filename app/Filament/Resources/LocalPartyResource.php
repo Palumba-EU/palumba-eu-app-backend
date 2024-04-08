@@ -47,6 +47,10 @@ class LocalPartyResource extends Resource
                     ->directory('local_parties')
                     ->required()
                     ->columnSpanFull(),
+                Forms\Components\RichEditor::make('internal_notes')
+                    ->default('')
+                    ->hint('This information will not be shared publicly')
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('acronym')
                     ->required(),
             ]);
@@ -106,4 +110,5 @@ class LocalPartyResource extends Resource
             'edit' => Pages\EditLocalParty::route('/{record}/edit'),
         ];
     }
+
 }

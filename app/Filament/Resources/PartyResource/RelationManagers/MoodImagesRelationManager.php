@@ -2,11 +2,14 @@
 
 namespace App\Filament\Resources\PartyResource\RelationManagers;
 
+use App\Filament\Helper\PublishedColumn;
+use App\Models\Scopes\PublishedScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class MoodImagesRelationManager extends RelationManager
 {
@@ -16,6 +19,8 @@ class MoodImagesRelationManager extends RelationManager
     {
         return $form
             ->schema([
+                Forms\Components\Checkbox::make('published')
+                    ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')
                     ->image()
                     ->directory('mood_images')
@@ -33,8 +38,10 @@ class MoodImagesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScopes([PublishedScope::class]))
             ->recordTitleAttribute('image')
             ->columns([
+                PublishedColumn::make('published')->searchable()->sortable(),
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('link_text')->searchable(),
                 Tables\Columns\TextColumn::make('link')->copyable()->searchable(),

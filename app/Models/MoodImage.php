@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\PublishedScope;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,17 +15,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @property Carbon $createdAt
  * @property Carbon $updatedAt
+ * @property bool $published
  * @property int $party_id
  * @property Party $party
  * @property string $image
  * @property string|null $link
  * @property string|null $link_text
  */
+#[ScopedBy([PublishedScope::class])]
 class MoodImage extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['party_id', 'image', 'link', 'link_text'];
+    protected $fillable = ['party_id', 'image', 'link', 'link_text', 'published'];
 
     public function party(): BelongsTo
     {

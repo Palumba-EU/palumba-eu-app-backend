@@ -2,15 +2,18 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\PartyResource\Pages;
 use App\Filament\Resources\PartyResource\RelationManagers\MoodImagesRelationManager;
 use App\Filament\Resources\PartyResource\RelationManagers\PoliciesRelationManager;
 use App\Models\Party;
+use App\Models\Scopes\PublishedScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class PartyResource extends Resource
 {
@@ -28,6 +31,8 @@ class PartyResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Checkbox::make('published')
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -79,6 +84,7 @@ class PartyResource extends Resource
     {
         return $table
             ->columns([
+                PublishedColumn::make('published')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -122,5 +128,10 @@ class PartyResource extends Resource
             'create' => Pages\CreateParty::route('/create'),
             'edit' => Pages\EditParty::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScopes([PublishedScope::class]);
     }
 }

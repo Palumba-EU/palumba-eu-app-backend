@@ -2,13 +2,16 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\SponsorResource\Pages;
+use App\Models\Scopes\PublishedScope;
 use App\Models\Sponsor;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class SponsorResource extends Resource
@@ -23,6 +26,8 @@ class SponsorResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Checkbox::make('published')
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -64,6 +69,7 @@ class SponsorResource extends Resource
     {
         return $table
             ->columns([
+                PublishedColumn::make('published')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -118,5 +124,10 @@ class SponsorResource extends Resource
             'create' => Pages\CreateSponsor::route('/create'),
             'edit' => Pages\EditSponsor::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScopes([PublishedScope::class]);
     }
 }

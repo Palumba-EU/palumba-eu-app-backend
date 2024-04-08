@@ -2,13 +2,16 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\CountryResource\Pages;
 use App\Models\Country;
+use App\Models\Scopes\PublishedScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class CountryResource extends Resource
 {
@@ -22,6 +25,8 @@ class CountryResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Checkbox::make('published')
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->unique(Country::class, ignoreRecord: true)
                     ->required()
@@ -41,6 +46,7 @@ class CountryResource extends Resource
     {
         return $table
             ->columns([
+                PublishedColumn::make('published')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -84,5 +90,10 @@ class CountryResource extends Resource
             'create' => Pages\CreateCountry::route('/create'),
             'edit' => Pages\EditCountry::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScopes([PublishedScope::class]);
     }
 }

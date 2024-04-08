@@ -2,13 +2,16 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\TopicResource\Pages;
+use App\Models\Scopes\PublishedScope;
 use App\Models\Topic;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class TopicResource extends Resource
 {
@@ -22,6 +25,8 @@ class TopicResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Checkbox::make('published')
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -46,6 +51,7 @@ class TopicResource extends Resource
     {
         return $table
             ->columns([
+                PublishedColumn::make('published')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -89,5 +95,10 @@ class TopicResource extends Resource
             'create' => Pages\CreateTopic::route('/create'),
             'edit' => Pages\EditTopic::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScopes([PublishedScope::class]);
     }
 }

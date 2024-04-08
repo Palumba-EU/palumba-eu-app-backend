@@ -3,11 +3,15 @@
 namespace App\Models;
 
 use App\Models\Scopes\PublishedScope;
+use App\Services\CrowdIn\CrowdIn;
+use App\Services\CrowdIn\Translatable;
+use App\Services\CrowdIn\TranslatableFile;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * A mood image
@@ -23,14 +27,31 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $link_text
  */
 #[ScopedBy([PublishedScope::class])]
-class MoodImage extends Model
+class MoodImage extends Model implements Translatable
 {
-    use HasFactory;
+    use CrowdIn, HasFactory;
 
     protected $fillable = ['party_id', 'image', 'link', 'link_text', 'published'];
 
     public function party(): BelongsTo
     {
         return $this->belongsTo(Party::class);
+    }
+
+    public function getTranslatableAttributes(): array
+    {
+        return ['link_text'];
+    }
+
+    public function getTranslatableFiles(): array
+    {
+        return [
+            new TranslatableFile('image', Storage::disk('public')->path($this->image), sprintf('mood image of %s', $this->party->name), $this->updated_at),
+        ];
+    }
+
+    public static function getRelationshipsToEagerLoad(): array
+    {
+        return ['party' => fn ($query) => $query->withoutGlobalScopes([PublishedScope::class])];
     }
 }

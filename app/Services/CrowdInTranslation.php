@@ -29,7 +29,7 @@ class CrowdInTranslation
     /**
      * Generates source language files for all registered models
      */
-    public function generate(): void
+    public function uploadStrings(): void
     {
         $this->models->each(function (string $class) {
             $generator = new SourceStringGenerator($this->client, $this->fileRepository, $this->projectId, $class);

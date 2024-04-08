@@ -93,4 +93,9 @@ class Party extends Model implements Translatable
     {
         return [];
     }
+
+    public static function getRelationshipsToEagerLoad(): array
+    {
+        return [];
+    }
 }

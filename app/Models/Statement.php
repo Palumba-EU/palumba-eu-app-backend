@@ -70,4 +70,9 @@ class Statement extends Model implements Translatable
     {
         return [];
     }
+
+    public static function getRelationshipsToEagerLoad(): array
+    {
+        return [];
+    }
 }

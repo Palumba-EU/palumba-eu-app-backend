@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\LocalParty;
+use App\Models\MoodImage;
 use App\Models\Party;
 use App\Models\Policy;
 use App\Models\Sponsor;
@@ -20,6 +21,7 @@ return [
         LocalParty::class,
         Party::class,
         Policy::class,
+        MoodImage::class,
         Sponsor::class,
         Statement::class,
         Topic::class,

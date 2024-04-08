@@ -16,4 +16,10 @@ interface Translatable
 
     /** Return a unique identifier for the model and attribute */
     public function getIdentifier(string $attribute): string;
+
+    /**
+     * Return a list of relationships that should be loaded. (E.g. if necessary for context)
+     * @return array<string>
+     */
+    public static function getRelationshipsToEagerLoad(): array;
 }

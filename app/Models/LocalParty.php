@@ -58,4 +58,9 @@ class LocalParty extends Model implements Translatable
     {
         return [];
     }
+
+    public static function getRelationshipsToEagerLoad(): array
+    {
+        return [];
+    }
 }

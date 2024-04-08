@@ -43,4 +43,9 @@ class Sponsor extends Model implements Translatable
             new TranslatableFile('banner_image', Storage::disk('public')->path($this->banner_image), sprintf('banner of %s', $this->name), $this->updated_at),
         ];
     }
+
+    public static function getRelationshipsToEagerLoad(): array
+    {
+        return [];
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services\CrowdIn;
 
+use App\Models\Scopes\PublishedScope;
 use Carbon\Carbon;
 use CrowdinApiClient\Crowdin;
 use Illuminate\Support\Collection;
@@ -22,7 +23,7 @@ class SourceImageUploader
 
     public function upload()
     {
-        $this->class::query()->get()->each(function (Translatable $model) {
+        $this->class::query()->withoutGlobalScopes([PublishedScope::class])->with($this->class::getRelationshipsToEagerLoad())->get()->each(function (Translatable $model) {
             /** @var Collection<TranslatableFile> $files */
             $files = collect($model->getTranslatableFiles());
 

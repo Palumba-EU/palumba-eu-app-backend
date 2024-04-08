@@ -42,4 +42,9 @@ class Policy extends Model implements Translatable
     {
         return [];
     }
+
+    public static function getRelationshipsToEagerLoad(): array
+    {
+        return [];
+    }
 }

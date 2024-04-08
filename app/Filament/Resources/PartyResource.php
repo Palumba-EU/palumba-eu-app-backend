@@ -21,6 +21,7 @@ class PartyResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
     protected static ?string $label = 'EU Group';
+
     protected static ?string $pluralLabel = 'EU Groups';
 
     public static function form(Form $form): Form
@@ -39,6 +40,11 @@ class PartyResource extends Resource
                     ->directory('parties/logos')
                     ->required()
                     ->columnSpanFull(),
+                Forms\Components\TextInput::make('link')
+                    ->required()
+                    ->maxLength(512),
+                Forms\Components\TextInput::make('acronym')
+                    ->required(),
 
                 // 5D position
                 Forms\Components\TextInput::make('p1')
@@ -104,7 +110,7 @@ class PartyResource extends Resource
     {
         return [
             PoliciesRelationManager::class,
-            MoodImagesRelationManager::class
+            MoodImagesRelationManager::class,
         ];
     }
 

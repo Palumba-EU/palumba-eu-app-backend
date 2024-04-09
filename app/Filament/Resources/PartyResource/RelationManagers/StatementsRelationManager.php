@@ -52,6 +52,7 @@ class StatementsRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
+                    ->label('Answer statement')
                     ->preloadRecordSelect()
                     ->form(fn (AttachAction $action): array => [
                         $action->getRecordSelect(),
@@ -67,7 +68,8 @@ class StatementsRelationManager extends RelationManager
                     ]),
             ])
             ->actions([
-                Tables\Actions\DetachAction::make(),
+                Tables\Actions\DetachAction::make()
+                    ->label('Delete answer'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

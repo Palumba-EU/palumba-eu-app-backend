@@ -440,6 +440,25 @@
               "$ref": "#/components/schemas/Policy"
             }
           },
+          "answers": {
+            "description": "The parties answers to the statements",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "statement_id": {
+                  "type": "integer"
+                },
+                "answer": {
+                  "type": "number",
+                  "minimum": -2,
+                  "maximum": 2,
+                  "description": "The parties answer encoded as: -2=strongly disagree, -1=disagree, 0=neutral, +1=agree, +2=strongly agree"
+                }
+              },
+              "required": ["statement_id", "answer"]
+            }
+          },
           "position": {
             "description": "The parties position in 5D space",
             "type": "array",

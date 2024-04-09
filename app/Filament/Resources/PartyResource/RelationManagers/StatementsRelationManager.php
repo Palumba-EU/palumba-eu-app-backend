@@ -16,7 +16,9 @@ class StatementsRelationManager extends RelationManager
     protected static string $relationship = 'statements';
 
     protected static ?string $title = 'Answers';
+
     protected static ?string $label = 'Answer';
+
     protected static ?string $pluralLabel = 'Answers';
 
     public function form(Form $form): Form
@@ -32,18 +34,24 @@ class StatementsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScopes([PublishedScope::class]))
             ->recordTitleAttribute('statement')
             ->columns([
                 Tables\Columns\TextColumn::make('statement'),
-                Tables\Columns\TextColumn::make('answer'),
+                Tables\Columns\SelectColumn::make('answer')
+                    ->options([
+                        -2 => 'Strongly disagree',
+                        -1 => 'Disagree',
+                        0 => 'Neutral',
+                        1 => 'Agree',
+                        2 => 'Strongly agree',
+                    ])
+                    ->selectablePlaceholder(false),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
-                    ->recordSelectOptionsQuery(fn (Builder $query) => $query->withoutGlobalScopes([PublishedScope::class]))
                     ->preloadRecordSelect()
                     ->form(fn (AttachAction $action): array => [
                         $action->getRecordSelect(),

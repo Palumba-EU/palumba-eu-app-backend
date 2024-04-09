@@ -5,13 +5,11 @@ namespace App\Filament\Resources;
 use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\CountryResource\Pages;
 use App\Models\Country;
-use App\Models\Scopes\PublishedScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class CountryResource extends Resource
 {
@@ -92,8 +90,4 @@ class CountryResource extends Resource
         ];
     }
 
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()->withoutGlobalScopes([PublishedScope::class]);
-    }
 }

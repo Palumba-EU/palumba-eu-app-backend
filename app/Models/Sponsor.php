@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\PublishedScope;
+use App\Models\Traits\Publishable;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,10 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $banner_description
  * @property string $category
  */
-#[ScopedBy([PublishedScope::class])]
 class Sponsor extends Model
 {
-    use HasFactory;
+    use HasFactory, Publishable;
 
     protected $fillable = ['name', 'logo', 'link', 'banner_image', 'banner_link', 'banner_description', 'category', 'published'];
 }

@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\PublishedScope;
+use App\Models\Traits\Publishable;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,10 +18,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $party_id
  * @property Party $party
  */
-#[ScopedBy([PublishedScope::class])]
 class Policy extends Model
 {
-    use HasFactory;
+    use HasFactory, Publishable;
 
     protected $fillable = ['title', 'description', 'party_id', 'published'];
 

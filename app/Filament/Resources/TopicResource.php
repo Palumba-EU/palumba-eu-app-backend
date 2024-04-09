@@ -4,14 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\TopicResource\Pages;
-use App\Models\Scopes\PublishedScope;
 use App\Models\Topic;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class TopicResource extends Resource
 {
@@ -97,8 +95,4 @@ class TopicResource extends Resource
         ];
     }
 
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()->withoutGlobalScopes([PublishedScope::class]);
-    }
 }

@@ -5,13 +5,11 @@ namespace App\Filament\Resources;
 use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\LocalPartyResource\Pages;
 use App\Models\LocalParty;
-use App\Models\Scopes\PublishedScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class LocalPartyResource extends Resource
 {
@@ -117,8 +115,4 @@ class LocalPartyResource extends Resource
         ];
     }
 
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()->withoutGlobalScopes([PublishedScope::class]);
-    }
 }

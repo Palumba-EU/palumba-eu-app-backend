@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\PublishedScope;
+use App\Models\Traits\Publishable;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -20,10 +19,9 @@ use Illuminate\Support\Collection;
  * @property string $icon
  * @property Collection<Statement> $statements
  */
-#[ScopedBy([PublishedScope::class])]
 class Topic extends Model
 {
-    use HasFactory;
+    use HasFactory, Publishable;
 
     protected $fillable = ['name', 'color', 'icon', 'published'];
 

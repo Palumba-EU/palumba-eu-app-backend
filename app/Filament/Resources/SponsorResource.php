@@ -4,14 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\SponsorResource\Pages;
-use App\Models\Scopes\PublishedScope;
 use App\Models\Sponsor;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class SponsorResource extends Resource
@@ -126,8 +124,4 @@ class SponsorResource extends Resource
         ];
     }
 
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()->withoutGlobalScopes([PublishedScope::class]);
-    }
 }

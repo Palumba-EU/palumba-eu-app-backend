@@ -3,13 +3,11 @@
 namespace App\Filament\Resources\PartyResource\RelationManagers;
 
 use App\Filament\Helper\PublishedColumn;
-use App\Models\Scopes\PublishedScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class PoliciesRelationManager extends RelationManager
 {
@@ -34,7 +32,6 @@ class PoliciesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScopes([PublishedScope::class]))
             ->recordTitleAttribute('title')
             ->columns([
                 PublishedColumn::make('published')->searchable()->sortable(),

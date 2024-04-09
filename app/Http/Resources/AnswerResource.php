@@ -18,7 +18,12 @@ class AnswerResource extends JsonResource
     {
         return [
             'statement_id' => $this->id,
-            'answer' => $this->pivot->answer
+            // Internally we work with integers (because they are easier to compare and work with than floats),
+            // so the scala changes from
+            // [-1, -0.5, 0, +0.5, +1]
+            // to
+            // [-2, -1, 0, +1, +2]
+            'answer' => $this->pivot->answer / 2,
         ];
     }
 }

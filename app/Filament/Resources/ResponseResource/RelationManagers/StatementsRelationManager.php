@@ -2,13 +2,12 @@
 
 namespace App\Filament\Resources\ResponseResource\RelationManagers;
 
+use App\Filament\Helper\AnswerScale;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class StatementsRelationManager extends RelationManager
 {
@@ -30,7 +29,8 @@ class StatementsRelationManager extends RelationManager
             ->recordTitleAttribute('statement')
             ->columns([
                 Tables\Columns\TextColumn::make('statement'),
-                Tables\Columns\TextColumn::make('answer'),
+                Tables\Columns\TextColumn::make('answer')
+                    ->formatStateUsing(fn (string $state) => AnswerScale::getLabel($state)),
             ])
             ->filters([
                 //

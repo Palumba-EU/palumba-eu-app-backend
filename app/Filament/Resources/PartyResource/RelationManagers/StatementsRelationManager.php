@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PartyResource\RelationManagers;
 
+use App\Filament\Helper\AnswerScale;
 use App\Models\Scopes\PublishedScope;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -38,13 +39,7 @@ class StatementsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('statement'),
                 Tables\Columns\SelectColumn::make('answer')
-                    ->options([
-                        -2 => 'Strongly disagree',
-                        -1 => 'Disagree',
-                        0 => 'Neutral',
-                        1 => 'Agree',
-                        2 => 'Strongly agree',
-                    ])
+                    ->options(AnswerScale::$scale)
                     ->selectablePlaceholder(false),
             ])
             ->filters([
@@ -58,13 +53,7 @@ class StatementsRelationManager extends RelationManager
                         $action->getRecordSelect(),
                         Forms\Components\Select::make('answer')
                             ->required()
-                            ->options([
-                                -2 => 'Strongly disagree',
-                                -1 => 'Disagree',
-                                0 => 'Neutral',
-                                1 => 'Agree',
-                                2 => 'Strongly agree',
-                            ]),
+                            ->options(AnswerScale::$scale),
                     ]),
             ])
             ->actions([

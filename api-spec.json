@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Palumba API",
-    "version": "0.1.4"
+    "version": "0.1.5"
   },
   "paths": {
     "/localization": {
@@ -186,11 +186,12 @@
                           "type": "integer"
                         },
                         "answer": {
-                          "type": "integer",
+                          "type": "number",
                           "nullable": true,
-                          "minimum": -2,
-                          "maximum": 2,
-                          "description": "The participants answer or null if skipped"
+                          "enum": [-1, -0.5, 0, 0.5, 1],
+                          "minimum": -1,
+                          "maximum": 1,
+                          "description": "The participants answer or null if skipped, encoded as: -1 = Fully disagree, -0.5= Somewhat disagree, 0 = Neutral, +0.5 = Somewhat Agree, +1 = Fully agree"
                         }
                       }
                     }
@@ -451,9 +452,10 @@
                 },
                 "answer": {
                   "type": "number",
-                  "minimum": -2,
-                  "maximum": 2,
-                  "description": "The parties answer encoded as: -2=strongly disagree, -1=disagree, 0=neutral, +1=agree, +2=strongly agree"
+                  "enum": [-1, -0.5, 0, 0.5, 1],
+                  "minimum": -1,
+                  "maximum": 1,
+                  "description": "The parties answer encoded as: -1 = Fully disagree, -0.5= Somewhat disagree, 0 = Neutral, +0.5 = Somewhat Agree, +1 = Fully agree"
                 }
               },
               "required": ["statement_id", "answer"]

@@ -12,7 +12,7 @@ class LocalizationController extends Controller
     public function index(): JsonResponse
     {
 
-        $countries = Country::query()->get();
+        $countries = Country::query()->published()->get();
         $languages = [
             [
                 'id' => 1,

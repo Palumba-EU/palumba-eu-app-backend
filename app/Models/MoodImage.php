@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\PublishedScope;
+use App\Models\Traits\Publishable;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,10 +21,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $link
  * @property string|null $link_text
  */
-#[ScopedBy([PublishedScope::class])]
 class MoodImage extends Model
 {
-    use HasFactory;
+    use HasFactory, Publishable;
 
     protected $fillable = ['party_id', 'image', 'link', 'link_text', 'published'];
 

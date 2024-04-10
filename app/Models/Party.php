@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\PublishedScope;
+use App\Models\Traits\Publishable;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,10 +33,9 @@ use Illuminate\Support\Collection;
  * @property Collection<LocalParty> $local_parties
  * @property Collection<MoodImage> $mood_images
  */
-#[ScopedBy([PublishedScope::class])]
 class Party extends Model
 {
-    use HasFactory;
+    use HasFactory, Publishable;
 
     protected $fillable = [
         'name',

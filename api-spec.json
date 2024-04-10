@@ -172,7 +172,11 @@
                   },
                   "gender": {
                     "type": "string",
-                    "enum": ["male", "female", "diverse"],
+                    "enum": [
+                      "male",
+                      "female",
+                      "diverse"
+                    ],
                     "nullable": true,
                     "description": "The participants gender or null if prefer not to say"
                   },
@@ -186,12 +190,14 @@
                           "type": "integer"
                         },
                         "answer": {
-                          "type": "number",
+                          "description": "The participants answer or null if skipped",
                           "nullable": true,
-                          "enum": [-1, -0.5, 0, 0.5, 1],
-                          "minimum": -1,
-                          "maximum": 1,
-                          "description": "The participants answer or null if skipped, encoded as: -1 = Fully disagree, -0.5= Somewhat disagree, 0 = Neutral, +0.5 = Somewhat Agree, +1 = Fully agree"
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/Answer"
+                            }
+                          ]
+
                         }
                       }
                     }
@@ -426,7 +432,11 @@
                   "type": "string"
                 }
               },
-              "required": ["link", "text", "image"]
+              "required": [
+                "link",
+                "text",
+                "image"
+              ]
             }
           },
           "local_parties": {
@@ -451,14 +461,13 @@
                   "type": "integer"
                 },
                 "answer": {
-                  "type": "number",
-                  "enum": [-1, -0.5, 0, 0.5, 1],
-                  "minimum": -1,
-                  "maximum": 1,
-                  "description": "The parties answer encoded as: -1 = Fully disagree, -0.5= Somewhat disagree, 0 = Neutral, +0.5 = Somewhat Agree, +1 = Fully agree"
+                  "$ref": "#/components/schemas/Answer"
                 }
               },
-              "required": ["statement_id", "answer"]
+              "required": [
+                "statement_id",
+                "answer"
+              ]
             }
           },
           "position": {
@@ -536,6 +545,19 @@
           "banner_description",
           "category"
         ]
+      },
+      "Answer": {
+        "type": "number",
+        "enum": [
+          -1,
+          -0.5,
+          0,
+          0.5,
+          1
+        ],
+        "minimum": -1,
+        "maximum": 1,
+        "description": "The parties answer encoded as: -1 = Fully disagree, -0.5 = Somewhat disagree, 0 = Neutral, +0.5 = Somewhat Agree, +1 = Fully agree"
       }
     }
   }

@@ -14,7 +14,7 @@ class ResponseController extends Controller
         $answers = collect($data->get('answers'))->map(fn ($a) => [
             ...$a,
             // Internally we work with integers, so the scale becomes [-2, -1, 0, +1, +2]
-            'answer' => intval($a['answer'] * 2),
+            'answer' => ! is_null($a['answer']) ? intval($a['answer'] * 2) : null,
         ])->keyBy('statement_id')->toArray();
 
         DB::transaction(function () use ($data, $answers) {

@@ -13,6 +13,8 @@ class StatementsRelationManager extends RelationManager
 {
     protected static string $relationship = 'statements';
 
+    protected static ?string $title = 'Answers';
+
     public function form(Form $form): Form
     {
         return $form
@@ -30,7 +32,8 @@ class StatementsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('statement'),
                 Tables\Columns\TextColumn::make('answer')
-                    ->formatStateUsing(fn (string $state) => AnswerScale::getLabel($state)),
+                    ->formatStateUsing(fn (?int $state) => AnswerScale::getLabel($state))
+                    ->placeholder('Skipped'),
             ])
             ->filters([
                 //

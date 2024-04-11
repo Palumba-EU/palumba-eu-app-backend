@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\PublishedScope;
+use App\Models\Traits\Publishable;
 use App\Services\CrowdIn\CrowdIn;
 use App\Services\CrowdIn\Translatable;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -30,10 +29,9 @@ use Ramsey\Collection\Collection;
  * @property string $internal_notes
  * @property string $acronym
  */
-#[ScopedBy([PublishedScope::class])]
 class LocalParty extends Model implements Translatable
 {
-    use CrowdIn, HasFactory;
+    use CrowdIn, HasFactory, Publishable;
 
     protected $fillable = [
         'name', 'country_id', 'party_id', 'logo', 'link', 'internal_notes', 'acronym', 'published',

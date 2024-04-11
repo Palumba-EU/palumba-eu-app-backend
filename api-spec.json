@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Palumba API",
-    "version": "0.1.4"
+    "version": "0.1.5"
   },
   "paths": {
     "/localization": {
@@ -172,7 +172,11 @@
                   },
                   "gender": {
                     "type": "string",
-                    "enum": ["male", "female", "diverse"],
+                    "enum": [
+                      "male",
+                      "female",
+                      "diverse"
+                    ],
                     "nullable": true,
                     "description": "The participants gender or null if prefer not to say"
                   },
@@ -186,11 +190,14 @@
                           "type": "integer"
                         },
                         "answer": {
-                          "type": "integer",
+                          "description": "The participants answer or null if skipped",
                           "nullable": true,
-                          "minimum": -2,
-                          "maximum": 2,
-                          "description": "The participants answer or null if skipped"
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/Answer"
+                            }
+                          ]
+
                         }
                       }
                     }
@@ -358,6 +365,9 @@
           },
           "acronym": {
             "type": "string"
+          },
+          "country_id": {
+            "type": "integer"
           }
         },
         "required": [
@@ -425,7 +435,11 @@
                   "type": "string"
                 }
               },
-              "required": ["link", "text", "image"]
+              "required": [
+                "link",
+                "text",
+                "image"
+              ]
             }
           },
           "local_parties": {
@@ -438,6 +452,25 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Policy"
+            }
+          },
+          "answers": {
+            "description": "The parties answers to the statements",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "statement_id": {
+                  "type": "integer"
+                },
+                "answer": {
+                  "$ref": "#/components/schemas/Answer"
+                }
+              },
+              "required": [
+                "statement_id",
+                "answer"
+              ]
             }
           },
           "position": {
@@ -515,6 +548,19 @@
           "banner_description",
           "category"
         ]
+      },
+      "Answer": {
+        "type": "number",
+        "enum": [
+          -1,
+          -0.5,
+          0,
+          0.5,
+          1
+        ],
+        "minimum": -1,
+        "maximum": 1,
+        "description": "The parties answer encoded as: -1 = Fully disagree, -0.5 = Somewhat disagree, 0 = Neutral, +0.5 = Somewhat Agree, +1 = Fully agree"
       }
     }
   }

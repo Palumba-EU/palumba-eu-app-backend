@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\PublishedScope;
+use App\Models\Traits\Publishable;
 use App\Services\CrowdIn\CrowdIn;
 use App\Services\CrowdIn\Translatable;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int $id
@@ -28,10 +28,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property array<int> $vector
  * @property string $emojis
  */
-#[ScopedBy([PublishedScope::class])]
 class Statement extends Model implements Translatable
 {
-    use CrowdIn, HasFactory;
+    use CrowdIn, HasFactory, Publishable;
 
     protected $fillable = [
         'statement',
@@ -46,6 +45,11 @@ class Statement extends Model implements Translatable
         'emojis',
         'published',
     ];
+
+    public function parties(): BelongsToMany
+    {
+        return $this->belongsToMany(Party::class)->withTimestamps()->withPivot(['answer']);
+    }
 
     public function vector(): Attribute
     {

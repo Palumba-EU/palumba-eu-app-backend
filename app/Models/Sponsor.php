@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\PublishedScope;
+use App\Models\Traits\Publishable;
 use App\Services\CrowdIn\CrowdIn;
 use App\Services\CrowdIn\Translatable;
 use App\Services\CrowdIn\TranslatableFile;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -25,10 +24,9 @@ use Illuminate\Support\Facades\Storage;
  * @property string $banner_description
  * @property string $category
  */
-#[ScopedBy([PublishedScope::class])]
 class Sponsor extends Model implements Translatable
 {
-    use CrowdIn, HasFactory;
+    use CrowdIn, HasFactory, Publishable;
 
     protected $fillable = ['name', 'logo', 'link', 'banner_image', 'banner_link', 'banner_description', 'category', 'published'];
 

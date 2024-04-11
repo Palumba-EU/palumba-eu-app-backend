@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\PublishedScope;
+use App\Models\Traits\Publishable;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,10 +16,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $code
  * @property string $flag
  */
-#[ScopedBy([PublishedScope::class])]
 class Country extends Model
 {
-    use HasFactory;
+    use HasFactory, Publishable;
 
     protected $fillable = [
         'name',

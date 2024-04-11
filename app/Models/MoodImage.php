@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\PublishedScope;
+use App\Models\Traits\Publishable;
 use App\Services\CrowdIn\CrowdIn;
 use App\Services\CrowdIn\Translatable;
 use App\Services\CrowdIn\TranslatableFile;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,10 +25,9 @@ use Illuminate\Support\Facades\Storage;
  * @property string|null $link
  * @property string|null $link_text
  */
-#[ScopedBy([PublishedScope::class])]
 class MoodImage extends Model implements Translatable
 {
-    use CrowdIn, HasFactory;
+    use CrowdIn, HasFactory,Publishable;
 
     protected $fillable = ['party_id', 'image', 'link', 'link_text', 'published'];
 

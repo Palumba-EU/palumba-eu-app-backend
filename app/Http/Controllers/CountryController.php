@@ -10,6 +10,6 @@ class CountryController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        return CountryResource::collection(Country::query()->get());
+        return CountryResource::collection(Country::query()->published()->get());
     }
 }

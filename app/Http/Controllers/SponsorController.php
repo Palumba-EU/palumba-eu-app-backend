@@ -10,6 +10,6 @@ class SponsorController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        return SponsorResource::collection(Sponsor::query()->get());
+        return SponsorResource::collection(Sponsor::query()->published()->get());
     }
 }

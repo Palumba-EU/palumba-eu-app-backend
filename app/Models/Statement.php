@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int $id
@@ -42,6 +43,11 @@ class Statement extends Model
         'emojis',
         'published',
     ];
+
+    public function parties(): BelongsToMany
+    {
+        return $this->belongsToMany(Party::class)->withTimestamps()->withPivot(['answer']);
+    }
 
     public function vector(): Attribute
     {

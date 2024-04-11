@@ -6,6 +6,7 @@ use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\PartyResource\Pages;
 use App\Filament\Resources\PartyResource\RelationManagers\MoodImagesRelationManager;
 use App\Filament\Resources\PartyResource\RelationManagers\PoliciesRelationManager;
+use App\Filament\Resources\PartyResource\RelationManagers\StatementsRelationManager;
 use App\Models\Party;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -116,6 +117,7 @@ class PartyResource extends Resource
         return [
             PoliciesRelationManager::class,
             MoodImagesRelationManager::class,
+            StatementsRelationManager::class,
         ];
     }
 

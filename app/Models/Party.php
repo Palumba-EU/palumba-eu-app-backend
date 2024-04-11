@@ -66,6 +66,11 @@ class Party extends Model
         return $this->hasMany(MoodImage::class);
     }
 
+    public function statements(): BelongsToMany
+    {
+        return $this->belongsToMany(Statement::class)->withTimestamps()->withPivot(['answer']);
+    }
+
     public function position(): Attribute
     {
         return Attribute::make(

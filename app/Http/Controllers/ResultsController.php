@@ -20,6 +20,7 @@ class ResultsController extends Controller
             'local_parties' => fn (BelongsToMany $query) => $query->published(),
             'policies' => fn (HasMany $query) => $query->published(),
             'mood_images' => fn (HasMany $query) => $query->published(),
+            'statements' => fn (BelongsToMany $query) => $query->published(),
         ])->published()->get();
 
         return response()->json([

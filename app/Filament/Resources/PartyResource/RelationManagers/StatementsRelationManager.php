@@ -1,19 +1,26 @@
 <?php
 
-namespace App\Filament\Resources\ResponseResource\RelationManagers;
+namespace App\Filament\Resources\PartyResource\RelationManagers;
 
 use App\Filament\Helper\AnswerScale;
+use App\Models\Scopes\PublishedScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Actions\AttachAction;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class StatementsRelationManager extends RelationManager
 {
     protected static string $relationship = 'statements';
 
     protected static ?string $title = 'Answers';
+
+    protected static ?string $label = 'Answer';
+
+    protected static ?string $pluralLabel = 'Answers';
 
     public function form(Form $form): Form
     {
@@ -31,23 +38,31 @@ class StatementsRelationManager extends RelationManager
             ->recordTitleAttribute('statement')
             ->columns([
                 Tables\Columns\TextColumn::make('statement'),
-                Tables\Columns\TextColumn::make('answer')
-                    ->formatStateUsing(fn (?int $state) => AnswerScale::getLabel($state))
-                    ->placeholder('Skipped'),
+                Tables\Columns\SelectColumn::make('answer')
+                    ->options(AnswerScale::$scale)
+                    ->selectablePlaceholder(false),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\AttachAction::make()
+                    ->label('Answer statement')
+                    ->preloadRecordSelect()
+                    ->form(fn (AttachAction $action): array => [
+                        $action->getRecordSelect(),
+                        Forms\Components\Select::make('answer')
+                            ->required()
+                            ->options(AnswerScale::$scale),
+                    ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DetachAction::make()
+                    ->label('Delete answer'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DetachBulkAction::make(),
                 ]),
             ]);
     }

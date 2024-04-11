@@ -11,7 +11,11 @@ class ResponseController extends Controller
     public function store(CreateResponseRequest $request): \Illuminate\Http\Response
     {
         $data = collect($request->validated());
-        $answers = collect($data->get('answers'))->keyBy('statement_id')->toArray();
+        $answers = collect($data->get('answers'))->map(fn ($a) => [
+            ...$a,
+            // Internally we work with integers, so the scale becomes [-2, -1, 0, +1, +2]
+            'answer' => ! is_null($a['answer']) ? intval($a['answer'] * 2) : null,
+        ])->keyBy('statement_id')->toArray();
 
         DB::transaction(function () use ($data, $answers) {
             $response = new Response($data->only(['age', 'country_id', 'language_id', 'gender'])->toArray());

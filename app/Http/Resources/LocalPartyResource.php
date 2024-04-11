@@ -23,6 +23,7 @@ class LocalPartyResource extends JsonResource
             'logo' => Storage::url($this->logo),
             'link' => $this->link,
             'acronym' => $this->acronym,
+            'country_id' => $this->country_id,
         ];
     }
 }

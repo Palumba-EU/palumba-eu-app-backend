@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Traits\Publishable;
+use App\Services\CrowdIn\CrowdIn;
+use App\Services\CrowdIn\Translatable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,9 +28,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property array<int> $vector
  * @property string $emojis
  */
-class Statement extends Model
+class Statement extends Model implements Translatable
 {
-    use HasFactory, Publishable;
+    use CrowdIn, HasFactory, Publishable;
 
     protected $fillable = [
         'statement',
@@ -61,5 +63,20 @@ class Statement extends Model
                 $this->w5 = $value[4];
             }
         );
+    }
+
+    public function getTranslatableAttributes(): array
+    {
+        return ['statement', 'details', 'footnote'];
+    }
+
+    public function getTranslatableFiles(): array
+    {
+        return [];
+    }
+
+    public static function getRelationshipsToEagerLoad(): array
+    {
+        return [];
     }
 }

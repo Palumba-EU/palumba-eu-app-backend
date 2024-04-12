@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Traits\Publishable;
+use App\Services\CrowdIn\CrowdIn;
+use App\Services\CrowdIn\Translatable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,9 +35,9 @@ use Illuminate\Support\Collection;
  * @property Collection<LocalParty> $local_parties
  * @property Collection<MoodImage> $mood_images
  */
-class Party extends Model
+class Party extends Model implements Translatable
 {
-    use HasFactory, Publishable;
+    use CrowdIn, HasFactory, Publishable;
 
     protected $fillable = [
         'name',
@@ -83,5 +85,20 @@ class Party extends Model
                 $this->p5 = $value[4];
             }
         );
+    }
+
+    public function getTranslatableAttributes(): array
+    {
+        return ['name'];
+    }
+
+    public function getTranslatableFiles(): array
+    {
+        return [];
+    }
+
+    public static function getRelationshipsToEagerLoad(): array
+    {
+        return [];
     }
 }

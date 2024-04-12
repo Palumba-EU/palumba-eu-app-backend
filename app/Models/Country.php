@@ -26,5 +26,4 @@ class Country extends Model
         'flag',
         'published',
     ];
-
 }

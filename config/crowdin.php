@@ -13,7 +13,7 @@ return [
     'project_id' => env('CROWDIN_PROJECT_ID'),
 
     'storage' => [
-        'disk' => env('TRANSLATABLE_SOURCE_DISK', 'local'),
+        'disk' => env('TRANSLATABLE_SOURCE_DISK', 'public'),
         'path' => env('TRANSLATABLE_BASE_PATH', 'sources'),
     ],
 

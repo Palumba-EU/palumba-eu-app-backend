@@ -2,7 +2,6 @@
 
 namespace App\Services\CrowdIn;
 
-use App\Models\Scopes\PublishedScope;
 use Carbon\Carbon;
 use CrowdinApiClient\Crowdin;
 use Illuminate\Support\Collection;
@@ -23,7 +22,7 @@ class SourceImageUploader
 
     public function upload()
     {
-        $this->class::query()->withoutGlobalScopes([PublishedScope::class])->with($this->class::getRelationshipsToEagerLoad())->get()->each(function (Translatable $model) {
+        $this->class::query()->with($this->class::getRelationshipsToEagerLoad())->get()->each(function (Translatable $model) {
             /** @var Collection<TranslatableFile> $files */
             $files = collect($model->getTranslatableFiles());
 
@@ -32,7 +31,7 @@ class SourceImageUploader
                     $directoryName = Str::kebab(class_basename($this->class));
                     $directory = $this->fileRepository->findOrCreateDirectory($directoryName);
 
-                    $fileName = $model->getIdentifier($file->attributeName);
+                    $fileName = $model->getFileIdentifier($file->fullPath, $file->attributeName);
                     $remoteFile = $this->fileRepository->getFileByName($fileName, $directory->getId());
 
                     if (! is_null($remoteFile) && Carbon::make($remoteFile->getUpdatedAt())->isAfter($file->updatedAt)) {
@@ -54,7 +53,6 @@ class SourceImageUploader
                             'name' => $fileName,
                             'title' => $file->context,
                             'context' => $file->context,
-                            'exportOptions' => ['exportPattern' => '%file_name%%two_letters_code%%file_extension%'],
                             'directoryId' => $directory->getId(),
                         ]);
                     } else {

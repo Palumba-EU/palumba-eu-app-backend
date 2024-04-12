@@ -18,7 +18,7 @@ class TopicResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $this->getTranslationForAttribute('name'),
             'icon' => $this->icon,
             'color' => $this->color,
             'associated_statements' => $this->statements->pluck('id'),

@@ -18,9 +18,9 @@ class StatementResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'statement' => $this->statement,
-            'details' => $this->details,
-            'footnote' => $this->footnote,
+            'statement' => $this->getTranslationForAttribute('statement'),
+            'details' => $this->getTranslationForAttribute('details'),
+            'footnote' => $this->getTranslationForAttribute('footnote'),
             'vector' => $this->vector,
         ];
     }

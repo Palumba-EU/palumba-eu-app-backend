@@ -18,8 +18,8 @@ class PolicyResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description,
+            'title' => $this->getTranslationForAttribute('title'),
+            'description' => $this->getTranslationForAttribute('description'),
         ];
     }
 }

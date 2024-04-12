@@ -19,9 +19,9 @@ class PartyResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $this->getTranslationForAttribute('name'),
             'color' => $this->color,
-            'logo' => Storage::url($this->logo),
+            'logo' => Storage::disk('public')->url($this->logo),
             'local_parties' => LocalPartyResource::collection($this->local_parties),
             'policies' => PolicyResource::collection($this->policies),
             'position' => $this->position,

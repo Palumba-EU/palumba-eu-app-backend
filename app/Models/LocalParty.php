@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Models\Traits\Publishable;
+use App\Observers\AuditLogObserver;
 use App\Services\CrowdIn\CrowdIn;
 use App\Services\CrowdIn\Translatable;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,6 +31,7 @@ use Ramsey\Collection\Collection;
  * @property string $internal_notes
  * @property string $acronym
  */
+#[ObservedBy([AuditLogObserver::class])]
 class LocalParty extends Model implements Translatable
 {
     use CrowdIn, HasFactory, Publishable;

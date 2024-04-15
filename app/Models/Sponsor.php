@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use App\Models\Traits\Publishable;
+use App\Observers\AuditLogObserver;
 use App\Services\CrowdIn\CrowdIn;
 use App\Services\CrowdIn\Translatable;
 use App\Services\CrowdIn\TranslatableFile;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -24,6 +26,7 @@ use Illuminate\Support\Facades\Storage;
  * @property string $banner_description
  * @property string $category
  */
+#[ObservedBy([AuditLogObserver::class])]
 class Sponsor extends Model implements Translatable
 {
     use CrowdIn, HasFactory, Publishable;

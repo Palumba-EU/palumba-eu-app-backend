@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use App\Models\Traits\Publishable;
+use App\Observers\AuditLogObserver;
 use App\Services\CrowdIn\CrowdIn;
 use App\Services\CrowdIn\Translatable;
 use App\Services\CrowdIn\TranslatableFile;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,6 +27,7 @@ use Illuminate\Support\Facades\Storage;
  * @property string|null $link
  * @property string|null $link_text
  */
+#[ObservedBy([AuditLogObserver::class])]
 class MoodImage extends Model implements Translatable
 {
     use CrowdIn, HasFactory,Publishable;

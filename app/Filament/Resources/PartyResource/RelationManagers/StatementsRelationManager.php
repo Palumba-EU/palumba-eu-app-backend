@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\PartyResource\RelationManagers;
 
 use App\Filament\Helper\AnswerScale;
-use App\Models\Scopes\PublishedScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;

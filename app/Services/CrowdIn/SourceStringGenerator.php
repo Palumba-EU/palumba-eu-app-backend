@@ -2,7 +2,6 @@
 
 namespace App\Services\CrowdIn;
 
-use App\Models\Scopes\PublishedScope;
 use CrowdinApiClient\Crowdin;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
@@ -43,7 +42,7 @@ class SourceStringGenerator
 
     private function generateSourceStringsForClass(string $class): Collection
     {
-        return $class::query()->withoutGlobalScopes([PublishedScope::class])->with($class::getRelationshipsToEagerLoad())->get()->flatMap(
+        return $class::query()->with($class::getRelationshipsToEagerLoad())->get()->flatMap(
             fn (Translatable $model) => $this->generateSourceStrings($model)
         );
     }

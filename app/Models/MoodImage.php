@@ -50,6 +50,6 @@ class MoodImage extends Model implements Translatable
 
     public static function getRelationshipsToEagerLoad(): array
     {
-        return ['party' => fn ($query) => $query->withoutGlobalScopes([PublishedScope::class])];
+        return ['party'];
     }
 }

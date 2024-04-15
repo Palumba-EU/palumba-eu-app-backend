@@ -5,8 +5,11 @@ namespace App\Services;
 use App\Services\CrowdIn\CrowdInFileRepository;
 use App\Services\CrowdIn\SourceImageUploader;
 use App\Services\CrowdIn\SourceStringGenerator;
+use App\Services\CrowdIn\TranslationsDownloader;
 use CrowdinApiClient\Crowdin;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
+use Nette\NotImplementedException;
 
 class CrowdInTranslation
 {
@@ -47,4 +50,11 @@ class CrowdInTranslation
             $uploader->upload();
         });
     }
+
+    public function downloadTranslations(): void
+    {
+        $downloader = new TranslationsDownloader($this->client, $this->projectId);
+        $downloader->run();
+    }
+
 }

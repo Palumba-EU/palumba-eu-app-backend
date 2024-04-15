@@ -19,10 +19,10 @@ class SponsorResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'logo' => Storage::url($this->logo),
+            'name' => $this->getTranslationForAttribute('name'),
+            'logo' => Storage::disk('public')->url($this->logo),
             'link' => $this->link,
-            'banner_image' => Storage::url($this->banner_image),
+            'banner_image' => $this->getTranslatedFile('banner_image'),
             'banner_link' => $this->banner_link,
             'banner_description' => $this->banner_description,
             'category' => $this->category,

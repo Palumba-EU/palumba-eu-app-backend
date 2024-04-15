@@ -16,7 +16,7 @@ class CountryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'country_code' => $this->code,
-            'flag_image' => Storage::url($this->flag),
+            'flag_image' => Storage::disk('public')->url($this->flag),
         ];
     }
 }

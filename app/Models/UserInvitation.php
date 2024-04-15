@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property Carbon $createdAt
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class UserInvitation extends Model
 {
-    use HasFactory;
+    use HasFactory, HasRoles;
 
     protected $casts = [
         'valid_until' => 'datetime:Y-m-d',

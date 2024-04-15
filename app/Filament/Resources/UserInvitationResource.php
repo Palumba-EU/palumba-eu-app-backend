@@ -36,6 +36,11 @@ class UserInvitationResource extends Resource
                     ->required()
                     ->after(Carbon::now()->addHours(12))
                     ->default(Carbon::now()->addHours(72)),
+                Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->required()
+                    ->preload(),
             ]);
     }
 
@@ -48,6 +53,7 @@ class UserInvitationResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('roles.name'),
             ])
             ->filters([
                 //

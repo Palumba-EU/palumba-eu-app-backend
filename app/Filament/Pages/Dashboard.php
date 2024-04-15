@@ -13,10 +13,12 @@ class Dashboard extends \Filament\Pages\Dashboard
         return [
             Action::make('Download Translations')
                 ->requiresConfirmation()
-                ->action(fn () => DownloadTranslationsFromCrowdInJob::dispatch()),
+                ->action(fn () => DownloadTranslationsFromCrowdInJob::dispatch())
+                ->authorize('sync crowdin'),
             Action::make('Upload Translations')
                 ->requiresConfirmation()
-                ->action(fn () => UploadTranslationsToCrowdInJob::dispatch()),
+                ->action(fn () => UploadTranslationsToCrowdInJob::dispatch())
+                ->authorize('sync crowdin'),
         ];
     }
 }

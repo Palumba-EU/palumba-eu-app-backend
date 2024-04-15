@@ -30,6 +30,11 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->disabledOn('edit'),
+                Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->required()
+                    ->preload(),
             ]);
     }
 
@@ -51,6 +56,7 @@ class UserResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('roles.name'),
             ])
             ->filters([
                 //

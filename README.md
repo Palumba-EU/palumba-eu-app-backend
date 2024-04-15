@@ -9,6 +9,16 @@ Using the following packages:
     - Laravel Pint as code style fixer
     - [Laravel Filament](https://filamentphp.com/) for the Admin panel
 
+## Roles and Permissions
+
+Run the roles and permissions seeder to setup roles and permissions.  
+This will give all existing users Admin permissions on the first run.  
+Subsequent runs will not change existing users roles!
+
+```bash
+artisan db:seed --class=RolesAndPermissionsSeeder
+```
+
 ## Formatting
 
 Run `make format` or `make check-format` to run the code style fixer or 

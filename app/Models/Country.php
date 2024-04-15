@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Models\Traits\Publishable;
+use App\Observers\AuditLogObserver;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $code
  * @property string $flag
  */
+#[ObservedBy([AuditLogObserver::class])]
 class Country extends Model
 {
     use HasFactory, Publishable;

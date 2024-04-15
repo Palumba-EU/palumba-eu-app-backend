@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Observers\AuditLogObserver;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
@@ -14,6 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $email
  * @property string|null $code
  */
+#[ObservedBy([AuditLogObserver::class])]
 class UserInvitation extends Model
 {
     use HasFactory, HasRoles;

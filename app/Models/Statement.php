@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Models\Traits\Publishable;
+use App\Observers\AuditLogObserver;
 use App\Services\CrowdIn\CrowdIn;
 use App\Services\CrowdIn\Translatable;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +30,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property array<int> $vector
  * @property string $emojis
  */
+#[ObservedBy([AuditLogObserver::class])]
 class Statement extends Model implements Translatable
 {
     use CrowdIn, HasFactory, Publishable;

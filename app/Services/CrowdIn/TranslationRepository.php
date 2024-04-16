@@ -21,7 +21,10 @@ class TranslationRepository
             throw new \Exception('Invalid language code');
         }
 
-        if ($this->language === 'en') {
+        $translationDirectory = sprintf('translations/%s', $this->language);
+
+        // Fallback to default language
+        if (! $this->disk->exists($translationDirectory)) {
             $this->language = null;
         }
     }

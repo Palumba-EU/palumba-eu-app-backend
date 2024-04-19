@@ -18,7 +18,7 @@ class TranslationRepository
         $this->disk = Storage::disk(config('crowdin.storage.disk'));
 
         if (preg_match('/^[a-z]{2,3}(-[A-Z]{2})?$/m', $this->language) !== 1) {
-            throw new \Exception('Invalid language code');
+            throw new \Exception('Invalid language code "'.$this->language.'"');
         }
 
         $translationDirectory = sprintf('translations/%s', $this->language);

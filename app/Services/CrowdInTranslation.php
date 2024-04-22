@@ -8,8 +8,8 @@ use App\Services\CrowdIn\SourceStringGenerator;
 use App\Services\CrowdIn\TranslationsDownloader;
 use CrowdinApiClient\Crowdin;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
-use Nette\NotImplementedException;
 
 class CrowdInTranslation
 {
@@ -57,4 +57,23 @@ class CrowdInTranslation
         $downloader->run();
     }
 
+    public function listTargetLanguages(): array
+    {
+        $languages = [];
+
+        try {
+            $languages = Cache::remember('languages', config('crowdin.target_language_cache_time'), function () {
+                $project = $this->client->project->get($this->projectId);
+
+                return collect($project->getTargetLanguages())->map(fn ($language) => ([
+                    'name' => $language['name'],
+                    'language_code' => $language['id'],
+                ]));
+            });
+        } catch (\Exception $exception) {
+            Log::error('Error while loading target languages from crowdin', ['exception' => $exception]);
+        }
+
+        return $languages;
+    }
 }

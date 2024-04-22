@@ -37,7 +37,7 @@
         }
       }
     },
-    "/statements": {
+    "/{language}/statements": {
       "get": {
         "summary": "List statements",
         "description": "Retrieves the complete list of statements with their details and footnotes.",
@@ -58,8 +58,8 @@
         },
         "parameters": [
           {
-            "name": "Accept-Language",
-            "in": "header",
+            "name": "language",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string"
@@ -68,7 +68,7 @@
         ]
       }
     },
-    "/results": {
+    "/{language}/results": {
       "get": {
         "summary": "List parties and topics",
         "description": "Retrieves the complete list of parties and topics.",
@@ -104,8 +104,8 @@
         },
         "parameters": [
           {
-            "name": "Accept-Language",
-            "in": "header",
+            "name": "language",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string"
@@ -114,7 +114,7 @@
         ]
       }
     },
-    "/sponsors": {
+    "/{language}/sponsors": {
       "get": {
         "summary": "List sponsors",
         "description": "Retrieves a list of sponsors with their details.",
@@ -135,8 +135,8 @@
         },
         "parameters": [
           {
-            "name": "Accept-Language",
-            "in": "header",
+            "name": "language",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string"
@@ -214,17 +214,7 @@
           "429": {
             "description": "Too many attempts. Try again later. Defaults to 5 attempts per hour in production"
           }
-        },
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
+        }
       }
     }
   },
@@ -256,9 +246,6 @@
       "Language": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer"
-          },
           "name": {
             "type": "string"
           },

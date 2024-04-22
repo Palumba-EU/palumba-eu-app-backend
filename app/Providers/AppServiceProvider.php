@@ -33,13 +33,18 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(TranslationRepository::class, function () {
-            $language = request()->header('accept-language', null);
+            $language = request('language', request()->header('accept-language'));
 
             $matches = null;
+
             // try extracting the locale string from something like
             // sv-SE,en;q=0.9,de;q=0.8
             if (preg_match('/^[a-z]{2,3}(-[A-Z]{2})?/m', $language, $matches) === 1) {
                 $language = $matches[0];
+            }
+
+            if (strlen(trim($language)) === 0) {
+                $language = null;
             }
 
             return new TranslationRepository($language);

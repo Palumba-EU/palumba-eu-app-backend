@@ -12,6 +12,8 @@ return [
     'token' => env('CROWDIN_TOKEN'),
     'project_id' => env('CROWDIN_PROJECT_ID'),
 
+    'target_language_cache_time' => env('CROWDIN_TARGET_LANGUAGE_CACHE_TIME', 3600),
+
     'storage' => [
         'disk' => env('TRANSLATABLE_SOURCE_DISK', 'public'),
         'path' => env('TRANSLATABLE_BASE_PATH', 'sources'),

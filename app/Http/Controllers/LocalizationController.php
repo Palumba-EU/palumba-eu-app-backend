@@ -5,20 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CountryResource;
 use App\Http\Resources\LanguageResource;
 use App\Models\Country;
+use App\Services\CrowdInTranslation;
 use Illuminate\Http\JsonResponse;
 
 class LocalizationController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(CrowdInTranslation $crowdin): JsonResponse
     {
 
         $countries = Country::query()->published()->get();
+
         $languages = [
             [
-                'id' => 1,
                 'name' => 'English',
                 'language_code' => 'en',
             ],
+            ...$crowdin->listTargetLanguages(),
         ];
 
         return response()->json([

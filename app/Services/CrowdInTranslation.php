@@ -66,6 +66,7 @@ class CrowdInTranslation
                 $project = $this->client->project->get($this->projectId);
 
                 return collect($project->getTargetLanguages())->map(fn ($language) => ([
+                    'id' => $language['id'], // kept for backwards compatibility
                     'name' => $language['name'],
                     'language_code' => $language['id'],
                 ]));

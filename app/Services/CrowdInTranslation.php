@@ -57,7 +57,7 @@ class CrowdInTranslation
         $downloader->run();
     }
 
-    public function listTargetLanguages(): array
+    public function listTargetLanguages(): Collection
     {
         $languages = [];
 

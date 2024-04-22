@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
  * @property Carbon|null $created_at
  * @property int|null $age
  * @property int $country_id
- * @property int $language_id
+ * @property string $language_code
  * @property string|null $gender
  * @property Country $country
  * @property Collection<Statement> $statements
@@ -28,7 +28,7 @@ class Response extends Model
 
     protected $casts = ['created_at' => 'datetime'];
 
-    protected $fillable = ['created_at', 'age', 'country_id', 'language_id', 'gender', 'hashed_ip_address'];
+    protected $fillable = ['created_at', 'age', 'country_id', 'language_code', 'gender', 'hashed_ip_address'];
 
     public function country(): BelongsTo
     {

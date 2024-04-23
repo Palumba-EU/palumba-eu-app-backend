@@ -175,6 +175,8 @@
                     "enum": [
                       "male",
                       "female",
+                      "gender-fluid",
+                      "non-binary",
                       "diverse"
                     ],
                     "nullable": true,

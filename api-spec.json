@@ -166,8 +166,8 @@
                     "type": "integer",
                     "description": "The participants selected country"
                   },
-                  "language_id": {
-                    "type": "integer",
+                  "language_code": {
+                    "type": "string",
                     "description": "The participants selected language"
                   },
                   "gender": {
@@ -256,7 +256,6 @@
           }
         },
         "required": [
-          "id",
           "name",
           "language_code"
         ]

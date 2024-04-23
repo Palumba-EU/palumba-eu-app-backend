@@ -25,7 +25,8 @@ class ResponseController extends Controller
 
         DB::transaction(function () use ($anonymization, $request, $data, $answers) {
             $response = new Response([
-                ...$data->only(['age', 'country_id', 'language_id', 'gender'])->toArray(),
+                ...$data->only(['age', 'country_id', 'gender'])->toArray(),
+                'language_code' => $request->validated('language_code', $request->validated('language_id')),
                 'created_at' => $anonymization->getRandomizedCreatedAtDate(),
                 'hashed_ip_address' => $anonymization->getHashedIp($request),
             ]);

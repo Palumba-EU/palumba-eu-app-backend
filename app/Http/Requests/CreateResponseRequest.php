@@ -18,13 +18,16 @@ class CreateResponseRequest extends FormRequest
         return [
             'age' => ['present', 'nullable', 'integer', 'min:0'],
             'country_id' => ['required', 'exists:countries,id'],
-            'language_id' => ['required', 'integer'],
+            'language_code' => ['required_without:language_id', 'string', 'regex:/^([a-z]{2,3}(-[A-Z]{2})?)$/'],
             'gender' => ['present', 'nullable', Rule::in(['male', 'female', 'gender-fluid', 'non-binary', 'diverse'])],
             'answers' => ['present', 'array'],
             'answers.*.statement_id' => ['required', 'distinct', Rule::exists('statements', 'id')->where(
                 fn (Builder $query) => $query->where('published', '=', true)
             )],
             'answers.*.answer' => ['present', 'nullable', 'numeric', 'min:-1', 'max:1', Rule::in([-1, -0.5, 0, 0.5, 1])],
+
+            // kept for backwards compatibility
+            'language_id' => ['string', 'regex:/^([a-z]{2,3}(-[A-Z]{2})?)$/'],
         ];
     }
 }

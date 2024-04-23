@@ -65,8 +65,8 @@ class CrowdInTranslation
             $languages = Cache::remember('languages', config('crowdin.target_language_cache_time'), function () {
                 $project = $this->client->project->get($this->projectId);
 
-                return collect($project->getTargetLanguages())->map(fn ($language) => ([
-                    'id' => $language['id'], // kept for backwards compatibility
+                return collect($project->getTargetLanguages())->map(fn ($language, $index) => ([
+                    'id' => $index + 1, // kept for backwards compatibility
                     'name' => $language['name'],
                     'language_code' => $language['id'],
                 ]));

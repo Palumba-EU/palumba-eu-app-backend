@@ -17,7 +17,7 @@ class LocalizationController extends Controller
 
         $languages = [
             [
-                'id' => 'en', // kept for backwards compatibility
+                'id' => 0, // kept for backwards compatibility
                 'name' => 'English',
                 'language_code' => 'en',
             ],

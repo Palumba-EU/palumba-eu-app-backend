@@ -27,7 +27,7 @@ class CreateResponseRequest extends FormRequest
             'answers.*.answer' => ['present', 'nullable', 'numeric', 'min:-1', 'max:1', Rule::in([-1, -0.5, 0, 0.5, 1])],
 
             // kept for backwards compatibility
-            'language_id' => ['string', 'regex:/^([a-z]{2,3}(-[A-Z]{2})?)$/'],
+            'language_id' => ['integer'],
         ];
     }
 }

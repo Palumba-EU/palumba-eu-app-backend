@@ -19,8 +19,14 @@ class ResponseAnonymization
     public function getRandomizedCreatedAtDate(): ?Carbon
     {
         try {
+            $minCreatedAt = Response::query()
+                ->whereNotNull('created_at')
+                ->orderByDesc('created_at')
+                ->limit(config('responses.randomizedTimestampSampleSize'))
+                ->min('created_at');
+
             $max = Carbon::now();
-            $min = Carbon::parse(Response::query()->orderByDesc('id')->limit(config('responses.randomizedTimestampSampleSize'))->min('created_at'));
+            $min = Carbon::parse($minCreatedAt);
 
             return $min->addSeconds(random_int(0, $max->diffInSeconds($min)));
         } catch (\Exception $exception) {
@@ -33,9 +39,6 @@ class ResponseAnonymization
     /**
      * Hashes the users ip with a regularly changing salt.
      * This is to ensure that we can detect and filter spam answers afterward the fact.
-     *
-     * @param Request $request
-     * @return string|null
      */
     public function getHashedIp(Request $request): ?string
     {

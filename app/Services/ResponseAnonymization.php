@@ -11,26 +11,32 @@ use Illuminate\Support\Str;
 
 class ResponseAnonymization
 {
+
     /**
-     * Generates a random datetime between now and the lowest date from the last {randomizedTimestampSampleSize} responses.
-     * This should ensure that no single response can be associated with an entry in e.g. the servers access log and
-     * therefore potentially an IP address, while still resulting in a useful timeline.
+     * Fetches all responses without a created_at date and assigns them random dates between
+     * now and the latest date in the database
+     *
+     * @return void
      */
-    public function getRandomizedCreatedAtDate(): ?Carbon
+    public function randomizeCurrentBatch()
     {
         try {
-            $minCreatedAt = Response::query()
-                ->whereNotNull('created_at')
-                ->orderByDesc('created_at')
-                ->limit(config('responses.randomizedTimestampSampleSize'))
-                ->min('created_at');
+            $batchQuery = Response::query()->whereNotNull('created_at');
 
-            $max = Carbon::now();
-            $min = Carbon::parse($minCreatedAt);
+            if ($batchQuery->count() < config('responses.randomizedTimestampSampleSize')) {
+                return;
+            }
 
-            return $min->addSeconds(random_int(0, $max->diffInSeconds($min)));
+            $max = now();
+            $min = Carbon::parse($batchQuery->max('created_at'));
+
+            $batchQuery->inRandomOrder()->each(function (Response $response, int $index) use ($max, $min) {
+                // Give one random element the $max date, so that the next batch starts after now
+                $response->created_at = $index === 0 ? $max : $min->copy()->addSeconds(random_int(0, $max->diffInSeconds($min)));
+                $response->save();
+            });
         } catch (\Exception $exception) {
-            Log::error('Error creating random timestamp', ['exception' => $exception]);
+            Log::error('Error randomizing current batch', ['exception' => $exception]);
 
             return null;
         }

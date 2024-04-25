@@ -37,12 +37,14 @@ class ResponseController extends Controller
             $response = new Response([
                 ...$data->only(['age', 'country_id', 'gender'])->toArray(),
                 'language_code' => $languageCode,
-                'created_at' => $anonymization->getRandomizedCreatedAtDate(),
+                'created_at' => null,
                 'hashed_ip_address' => $anonymization->getHashedIp($request),
             ]);
             $response->save();
             $response->statements()->sync($answers);
         });
+
+        $anonymization->randomizeCurrentBatch();
 
         return \response('', 201);
     }

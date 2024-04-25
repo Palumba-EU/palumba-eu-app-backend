@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class StatementsRelationManager extends RelationManager
 {
@@ -29,6 +30,7 @@ class StatementsRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('statement')
+            ->modifyQueryUsing(fn ($query) => $query->withoutGlobalScope(SoftDeletingScope::class))
             ->columns([
                 Tables\Columns\TextColumn::make('statement'),
                 Tables\Columns\TextColumn::make('answer')

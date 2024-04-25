@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 
 /**
  * @property int $id
@@ -29,11 +31,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $w5
  * @property array<int> $vector
  * @property string $emojis
+ * @property Collection<Response> $responses
  */
 #[ObservedBy([AuditLogObserver::class])]
 class Statement extends Model implements Translatable
 {
-    use CrowdIn, HasFactory, Publishable;
+    use CrowdIn, HasFactory, Publishable, SoftDeletes;
 
     protected $fillable = [
         'statement',
@@ -52,6 +55,11 @@ class Statement extends Model implements Translatable
     public function parties(): BelongsToMany
     {
         return $this->belongsToMany(Party::class)->withTimestamps()->withPivot(['answer']);
+    }
+
+    public function responses(): BelongsToMany
+    {
+        return $this->belongsToMany(Response::class)->withPivot(['answer']);
     }
 
     public function vector(): Attribute

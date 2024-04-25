@@ -199,7 +199,6 @@
                               "$ref": "#/components/schemas/Answer"
                             }
                           ]
-
                         }
                       }
                     }
@@ -215,6 +214,33 @@
           },
           "429": {
             "description": "Too many attempts. Try again later. Defaults to 5 attempts per hour in production"
+          }
+        }
+      }
+    },
+    "/statistics": {
+      "get": {
+        "summary": "Available statistics",
+        "description": "Returns a set of available statistics",
+        "responses": {
+          "200": {
+            "description": "The statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "responses_last_24h": {
+                      "type": "integer",
+                      "description": "The amount of responses in the last 24 hours"
+                    }
+                  },
+                  "required": [
+                    "responses_last_24h"
+                  ]
+                }
+              }
+            }
           }
         }
       }

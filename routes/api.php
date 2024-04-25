@@ -5,10 +5,12 @@ use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\StatementController;
+use App\Http\Controllers\StatisticsController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(sprintf('cache.headers:public;max_age=%d;etag', config('cdn.maxAge')))->group(function () {
     Route::get('/localization', [LocalizationController::class, 'index']);
+    Route::get('/statistics', [StatisticsController::class, 'index']);
 
     Route::prefix('/{language}')->group(function () {
         Route::get('/statements', [StatementController::class, 'index']);

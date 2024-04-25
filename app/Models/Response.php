@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -38,5 +39,14 @@ class Response extends Model
     public function statements(): BelongsToMany
     {
         return $this->belongsToMany(Statement::class)->withPivot('answer');
+    }
+
+    public function scopeSince(Builder $query, Carbon $date): void
+    {
+        $query
+            ->whereDate('created_at', '>=', $date)
+            // Include null values, because due to anonymization, the latest requests will not have a timestamp until
+            // the anonymization batch size is reached.
+            ->orWhereNull('created_at');
     }
 }

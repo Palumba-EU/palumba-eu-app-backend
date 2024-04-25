@@ -321,6 +321,12 @@
           "color": {
             "type": "string"
           },
+          "extreme1": {
+            "type": "string"
+          },
+          "extreme2": {
+            "type": "string"
+          },
           "associated_statements": {
             "type": "array",
             "items": {
@@ -333,6 +339,8 @@
           "name",
           "icon",
           "color",
+          "extreme1",
+          "extreme2",
           "associated_statements"
         ]
       },

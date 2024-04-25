@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 /** @mixin Topic */
 class TopicResource extends JsonResource
@@ -19,8 +20,10 @@ class TopicResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->getTranslationForAttribute('name'),
-            'icon' => $this->icon,
+            'icon' => Storage::disk('public')->url($this->icon),
             'color' => $this->color,
+            'extreme1' => $this->getTranslationForAttribute('extreme1'),
+            'extreme2' => $this->getTranslationForAttribute('extreme2'),
             'associated_statements' => $this->statements->pluck('id'),
         ];
     }

@@ -31,6 +31,12 @@ class TopicResource extends Resource
                 Forms\Components\ColorPicker::make('color')
                     ->hex()
                     ->required(),
+                Forms\Components\TextInput::make('extreme1')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('extreme2')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\Select::make('statements')
                     ->label('Associated statements')
                     ->relationship(name: 'statements', titleAttribute: 'statement')
@@ -65,6 +71,14 @@ class TopicResource extends Resource
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('icon')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('extreme1')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('extreme2')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

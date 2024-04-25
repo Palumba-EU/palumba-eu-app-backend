@@ -21,6 +21,7 @@ class StatementResource extends JsonResource
             'statement' => $this->getTranslationForAttribute('statement'),
             'details' => $this->getTranslationForAttribute('details'),
             'footnote' => $this->getTranslationForAttribute('footnote'),
+            'emojis' => $this->emojis,
             'vector' => $this->vector,
         ];
     }

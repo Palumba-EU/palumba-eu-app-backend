@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Country;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class CountryPolicy
 {
@@ -45,7 +44,7 @@ class CountryPolicy
      */
     public function delete(User $user, Country $country): bool
     {
-        return $user->can('write countries');
+        return $user->can('write countries') && ! $country->parties()->exists() && ! $country->local_parties()->exists() && ! $country->responses()->exists();
     }
 
     /**

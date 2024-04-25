@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Statement;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class StatementPolicy
 {
@@ -61,6 +60,6 @@ class StatementPolicy
      */
     public function forceDelete(User $user, Statement $statement): bool
     {
-        return $user->can('write statements');
+        return $user->can('write statements') && ! $statement->responses()->exists();
     }
 }

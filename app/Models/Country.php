@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 /**
  * @property int $id
@@ -17,6 +19,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $code
  * @property string $flag
+ * @property Collection<Party> $parties
+ * @property Collection<LocalParty> $local_parties
+ * @property Collection<Response> $responses
  */
 #[ObservedBy([AuditLogObserver::class])]
 class Country extends Model
@@ -29,4 +34,19 @@ class Country extends Model
         'flag',
         'published',
     ];
+
+    public function parties(): HasMany
+    {
+        return $this->hasMany(Party::class);
+    }
+
+    public function local_parties(): HasMany
+    {
+        return $this->hasMany(LocalParty::class);
+    }
+
+    public function responses(): HasMany
+    {
+        return $this->hasMany(Response::class);
+    }
 }

@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Party;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class PartyPolicy
 {
@@ -45,7 +44,7 @@ class PartyPolicy
      */
     public function delete(User $user, Party $party): bool
     {
-        return $user->can('write parties');
+        return $user->can('write parties') && ! $party->local_parties()->exists();
     }
 
     /**

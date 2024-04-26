@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,7 +18,9 @@ use Illuminate\Support\Collection;
  * @property int $country_id
  * @property string $language_code
  * @property string|null $gender
+ * @property int|null $language_id
  * @property Country $country
+ * @property Language|null $language
  * @property Collection<Statement> $statements
  * @property string|null $hashed_ip_address
  */
@@ -32,11 +34,16 @@ class Response extends Model
 
     protected $casts = ['created_at' => 'datetime'];
 
-    protected $fillable = ['created_at', 'age', 'country_id', 'language_code', 'gender', 'hashed_ip_address'];
+    protected $fillable = ['created_at', 'age', 'country_id', 'language_code', 'language_id', 'gender', 'hashed_ip_address'];
 
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Language::class);
     }
 
     public function statements(): BelongsToMany

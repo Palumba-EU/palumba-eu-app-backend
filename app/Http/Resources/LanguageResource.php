@@ -2,9 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/** @mixin Language */
 class LanguageResource extends JsonResource
 {
     /**
@@ -14,6 +16,10 @@ class LanguageResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'language_code' => $this->code,
+        ];
     }
 }

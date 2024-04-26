@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 
 class ResponseAnonymization
 {
-
     /**
      * Fetches all responses without a created_at date and assigns them random dates between
      * now and the latest date in the database
@@ -21,14 +20,14 @@ class ResponseAnonymization
     public function randomizeCurrentBatch()
     {
         try {
-            $batchQuery = Response::query()->whereNotNull('created_at');
+            $batchQuery = Response::query()->whereNull('created_at');
 
             if ($batchQuery->count() < config('responses.randomizedTimestampSampleSize')) {
                 return;
             }
 
             $max = now();
-            $min = Carbon::parse($batchQuery->max('created_at'));
+            $min = Carbon::parse(Response::query()->whereNotNull('created_at')->max('created_at'));
 
             $batchQuery->inRandomOrder()->each(function (Response $response, int $index) use ($max, $min) {
                 // Give one random element the $max date, so that the next batch starts after now

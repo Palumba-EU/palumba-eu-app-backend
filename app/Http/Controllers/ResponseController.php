@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateResponseRequest;
+use App\Models\Language;
 use App\Models\Response;
 use App\Services\CrowdInTranslation;
 use App\Services\ResponseAnonymization;
@@ -19,24 +20,17 @@ class ResponseController extends Controller
             'answer' => ! is_null($a['answer']) ? intval($a['answer'] * 2) : null,
         ])->keyBy('statement_id')->toArray();
 
+        $languageId = $request->validated('language_id');
         $languageCode = $request->validated('language_code');
 
-        // This is a purely temporary solution, so that the apps keep working until the next app update
-        if (is_null($languageCode)) {
-            $languageId = $request->validated('language_id');
-            if ($languageId === 0) {
-                $languageCode = 'en';
-            } else {
-                $languages = $crowdin->listTargetLanguages();
-                $languageCode = $languages->where('id', '=', $languageId)->firstOrFail()['language_code'];
-            }
+        $language = ! is_null($languageId)
+            ? Language::query()->where('id', $languageId)->firstOrFail()
+            : Language::query()->where('code', $languageCode)->firstOrFail();
 
-        }
-
-        DB::transaction(function () use ($languageCode, $anonymization, $request, $data, $answers) {
+        DB::transaction(function () use ($language, $anonymization, $request, $data, $answers) {
             $response = new Response([
                 ...$data->only(['age', 'country_id', 'gender'])->toArray(),
-                'language_code' => $languageCode,
+                'language_code' => $language->code,
                 'created_at' => null,
                 'hashed_ip_address' => $anonymization->getHashedIp($request),
             ]);

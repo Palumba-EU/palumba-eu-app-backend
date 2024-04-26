@@ -20,6 +20,7 @@ class RolesAndPermissionsSeeder extends Seeder
         'users',
         'user_invitations',
         'responses',
+        'languages',
     ];
 
     private array $extraPermissions = [

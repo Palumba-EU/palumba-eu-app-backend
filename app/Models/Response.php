@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,11 +37,6 @@ class Response extends Model
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
-    }
-
-    public function language(): BelongsTo
-    {
-        return $this->belongsTo(Language::class);
     }
 
     public function statements(): BelongsToMany

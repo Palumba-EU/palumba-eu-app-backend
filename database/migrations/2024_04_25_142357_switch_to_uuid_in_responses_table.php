@@ -22,13 +22,17 @@ return new class extends Migration
             $table->foreignUuid('response_uuid')->nullable()->constrained('responses', 'uuid')->onUpdate('cascade')->onDelete('restrict');
         });
 
-        Response::query()->each(function (Response $response) use (&$map) {
-            $response->uuid = Str::uuid()->toString();
-            $response->save();
+        Response::query()->pluck('id')->each(function ($id) {
+            $uuid = Str::uuid()->toString();
+
+            DB::update(
+                'UPDATE responses SET uuid = ? WHERE id = ?',
+                [$uuid, $id]
+            );
 
             DB::update(
                 'UPDATE response_statement SET response_uuid = ? WHERE response_id = ?',
-                [$response->uuid, $response->id]
+                [$uuid, $id]
             );
         });
 

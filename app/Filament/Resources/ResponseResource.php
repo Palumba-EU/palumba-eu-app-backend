@@ -29,9 +29,9 @@ class ResponseResource extends Resource
                 Forms\Components\Select::make('country_id')
                     ->relationship('country', 'name')
                     ->required(),
-                Forms\Components\Select::make('language_id')
-                    ->relationship('language', 'name')
-                    ->required(),
+                Forms\Components\TextInput::make('language_code')
+                    ->required()
+                    ->maxLength(6),
                 Forms\Components\TextInput::make('gender')
                     ->maxLength(255),
             ]);
@@ -51,7 +51,7 @@ class ResponseResource extends Resource
                 Tables\Columns\TextColumn::make('country.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('language.name')
+                Tables\Columns\TextColumn::make('language_code')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('gender')
                     ->searchable(),

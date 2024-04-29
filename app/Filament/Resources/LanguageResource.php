@@ -37,7 +37,7 @@ class LanguageResource extends Resource
                 Forms\Components\Select::make('code')
                     ->required()
                     ->options(fn () => $crowdInTranslation->listTargetLanguages()->pluck('language_code', 'language_code'))
-                    ->unique(),
+                    ->unique(Language::class, ignoreRecord: true),
             ]);
     }
 

@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 
 class TrustProxies extends Middleware
 {
+    public function __construct()
+    {
+        $proxies = config('cdn.trustedIps');
+
+        if (! is_null($proxies)) {
+            $this->proxies = $proxies;
+        }
+    }
+
     /**
      * The trusted proxies for this application.
      *

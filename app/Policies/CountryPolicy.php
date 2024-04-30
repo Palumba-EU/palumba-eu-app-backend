@@ -44,7 +44,7 @@ class CountryPolicy
      */
     public function delete(User $user, Country $country): bool
     {
-        return $user->can('write countries') && ! $country->parties()->exists() && ! $country->local_parties()->exists() && ! $country->responses()->exists();
+        return $user->can('write countries') && ! $country->local_parties()->exists() && ! $country->responses()->exists();
     }
 
     /**

@@ -19,7 +19,6 @@ use Illuminate\Support\Collection;
  * @property string $name
  * @property string $code
  * @property string $flag
- * @property Collection<Party> $parties
  * @property Collection<LocalParty> $local_parties
  * @property Collection<Response> $responses
  */
@@ -34,11 +33,6 @@ class Country extends Model
         'flag',
         'published',
     ];
-
-    public function parties(): HasMany
-    {
-        return $this->hasMany(Party::class);
-    }
 
     public function local_parties(): HasMany
     {

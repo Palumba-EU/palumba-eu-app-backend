@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Language;
 use App\Models\User;
-use Illuminate\Support\Collection;
 
 class LanguagePolicy
 {
@@ -66,9 +65,4 @@ class LanguagePolicy
         // English is the default language and should not be deletable
         return $user->can('write languages') && $language->code != 'en';
     }
-
-    public function forceDeleteAny(User $user, Collection $languages){
-        dd($languages);
-    }
-
 }

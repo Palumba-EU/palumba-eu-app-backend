@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Country;
 use App\Models\User;
-use Illuminate\Support\Collection;
 
 class CountryPolicy
 {
@@ -63,5 +62,4 @@ class CountryPolicy
     {
         return $user->can('write countries');
     }
-
 }

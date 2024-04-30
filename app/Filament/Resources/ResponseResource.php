@@ -66,11 +66,6 @@ class ResponseResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ])
             ->paginated([100, 250, 500])
             ->defaultPaginationPageOption(100);
     }

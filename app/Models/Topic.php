@@ -23,8 +23,10 @@ use Illuminate\Support\Collection;
  * @property string $icon
  * @property string $extreme1
  * @property string $extreme1_details
+ * @property string $extreme1_emojis
  * @property string $extreme2
  * @property string $extreme2_details
+ * @property string $extreme2_emojis
  * @property Collection<Statement> $statements
  */
 #[ObservedBy([AuditLogObserver::class])]
@@ -32,7 +34,7 @@ class Topic extends Model implements Translatable
 {
     use CrowdIn, HasFactory, Publishable;
 
-    protected $fillable = ['name', 'color', 'icon', 'published', 'extreme1', 'extreme2', 'extreme1_details', 'extreme2_details'];
+    protected $fillable = ['name', 'color', 'icon', 'published', 'extreme1', 'extreme2', 'extreme1_details', 'extreme2_details', 'extreme1_emojis', 'extreme2_emojis'];
 
     public function statements(): BelongsToMany
     {

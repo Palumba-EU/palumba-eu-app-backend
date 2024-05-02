@@ -33,16 +33,18 @@ class TopicResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('extreme1')
                     ->required()
-                    ->maxLength(255)
-                    ->columnSpanFull(),
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('extreme1_emojis')
+                    ->required(),
                 Forms\Components\RichEditor::make('extreme1_details')
                     ->required()
                     ->default('')
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('extreme2')
                     ->required()
-                    ->maxLength(255)
-                    ->columnSpanFull(),
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('extreme2_emojis')
+                    ->required(),
                 Forms\Components\RichEditor::make('extreme2_details')
                     ->required()
                     ->default('')

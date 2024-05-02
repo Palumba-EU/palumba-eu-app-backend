@@ -353,6 +353,12 @@
           "extreme2": {
             "type": "string"
           },
+          "extreme1_details": {
+            "type": "string"
+          },
+          "extreme2_details": {
+            "type": "string"
+          },
           "associated_statements": {
             "type": "array",
             "items": {
@@ -367,6 +373,8 @@
           "color",
           "extreme1",
           "extreme2",
+          "extreme1_details",
+          "extreme2_details",
           "associated_statements"
         ]
       },

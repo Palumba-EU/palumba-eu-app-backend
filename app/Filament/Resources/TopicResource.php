@@ -33,10 +33,20 @@ class TopicResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('extreme1')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpanFull(),
+                Forms\Components\RichEditor::make('extreme1_details')
+                    ->required()
+                    ->default('')
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('extreme2')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpanFull(),
+                Forms\Components\RichEditor::make('extreme2_details')
+                    ->required()
+                    ->default('')
+                    ->columnSpanFull(),
                 Forms\Components\Select::make('statements')
                     ->label('Associated statements')
                     ->relationship(name: 'statements', titleAttribute: 'statement')

@@ -23,7 +23,9 @@ class TopicResource extends JsonResource
             'icon' => Storage::disk('public')->url($this->icon),
             'color' => $this->color,
             'extreme1' => $this->getTranslationForAttribute('extreme1'),
+            'extreme1_details' => $this->getTranslationForAttribute('extreme1_details'),
             'extreme2' => $this->getTranslationForAttribute('extreme2'),
+            'extreme2_details' => $this->getTranslationForAttribute('extreme2_details'),
             'associated_statements' => $this->statements->pluck('id'),
         ];
     }

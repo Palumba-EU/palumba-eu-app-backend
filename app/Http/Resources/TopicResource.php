@@ -23,7 +23,11 @@ class TopicResource extends JsonResource
             'icon' => Storage::disk('public')->url($this->icon),
             'color' => $this->color,
             'extreme1' => $this->getTranslationForAttribute('extreme1'),
+            'extreme1_emojis' => $this->extreme1_emojis,
+            'extreme1_details' => $this->getTranslationForAttribute('extreme1_details'),
             'extreme2' => $this->getTranslationForAttribute('extreme2'),
+            'extreme2_emojis' => $this->extreme2_emojis,
+            'extreme2_details' => $this->getTranslationForAttribute('extreme2_details'),
             'associated_statements' => $this->statements->pluck('id'),
         ];
     }

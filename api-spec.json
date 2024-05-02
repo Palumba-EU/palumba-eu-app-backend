@@ -350,7 +350,19 @@
           "extreme1": {
             "type": "string"
           },
+          "extreme1_emojis": {
+            "type": "string"
+          },
+          "extreme1_details": {
+            "type": "string"
+          },
           "extreme2": {
+            "type": "string"
+          },
+          "extreme2_emojis": {
+            "type": "string"
+          },
+          "extreme2_details": {
             "type": "string"
           },
           "associated_statements": {
@@ -366,7 +378,11 @@
           "icon",
           "color",
           "extreme1",
+          "extreme1_emojis",
+          "extreme1_details",
           "extreme2",
+          "extreme2_emojis",
+          "extreme2_details",
           "associated_statements"
         ]
       },

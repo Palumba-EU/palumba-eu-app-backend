@@ -21,6 +21,7 @@ class ResultsController extends Controller
             'policies' => fn (HasMany $query) => $query->published(),
             'mood_images' => fn (HasMany $query) => $query->published(),
             'statements' => fn (BelongsToMany $query) => $query->published(),
+            'positions',
         ])->published()->get();
 
         return response()->json([

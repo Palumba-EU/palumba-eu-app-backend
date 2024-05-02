@@ -24,11 +24,11 @@ class PartyResource extends JsonResource
             'logo' => Storage::disk('public')->url($this->logo),
             'local_parties' => LocalPartyResource::collection($this->local_parties),
             'policies' => PolicyResource::collection($this->policies),
-            'position' => $this->position,
             'images' => MoodImageResource::collection($this->mood_images),
             'link' => $this->link,
             'acronym' => $this->acronym,
             'answers' => AnswerResource::collection($this->statements),
+            'positions' => $this->positions->map(fn ($w) => ['topic_id' => $w->id, 'position' => $w->pivot->position]),
         ];
     }
 }

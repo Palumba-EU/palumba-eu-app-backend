@@ -6,6 +6,7 @@ use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\PartyResource\Pages;
 use App\Filament\Resources\PartyResource\RelationManagers\MoodImagesRelationManager;
 use App\Filament\Resources\PartyResource\RelationManagers\PoliciesRelationManager;
+use App\Filament\Resources\PartyResource\RelationManagers\PartyPositionsRelationManager;
 use App\Filament\Resources\PartyResource\RelationManagers\StatementsRelationManager;
 use App\Models\Party;
 use Filament\Forms;
@@ -49,33 +50,6 @@ class PartyResource extends Resource
                     ->maxLength(512),
                 Forms\Components\TextInput::make('acronym')
                     ->required(),
-
-                // 5D position
-                Forms\Components\TextInput::make('p1')
-                    ->label('Position 1')
-                    ->required()
-                    ->numeric()
-                    ->columns(1),
-                Forms\Components\TextInput::make('p2')
-                    ->label('Position 2')
-                    ->required()
-                    ->numeric()
-                    ->columns(1),
-                Forms\Components\TextInput::make('p3')
-                    ->label('Position 3')
-                    ->required()
-                    ->numeric()
-                    ->columns(1),
-                Forms\Components\TextInput::make('p4')
-                    ->label('Position 4')
-                    ->required()
-                    ->numeric()
-                    ->columns(1),
-                Forms\Components\TextInput::make('p5')
-                    ->label('Position 5')
-                    ->required()
-                    ->numeric()
-                    ->columns(1),
             ]);
     }
 
@@ -113,6 +87,7 @@ class PartyResource extends Resource
             PoliciesRelationManager::class,
             MoodImagesRelationManager::class,
             StatementsRelationManager::class,
+            PartyPositionsRelationManager::class,
         ];
     }
 

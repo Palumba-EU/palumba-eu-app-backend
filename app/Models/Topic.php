@@ -37,6 +37,17 @@ class Topic extends Model implements Translatable
         return $this->belongsToMany(Statement::class);
     }
 
+    public function party_positions(): BelongsToMany
+    {
+        return $this->belongsToMany(Party::class, 'party_topic_positions')->withTimestamps()->withPivot(['position']);
+    }
+
+    public function statement_weights(): BelongsToMany
+    {
+        return $this->belongsToMany(Statement::class, 'statement_topic_weights')->withTimestamps()->withPivot(['weight']);
+    }
+
+
     public function getTranslatableAttributes(): array
     {
         return ['name', 'extreme1', 'extreme2'];

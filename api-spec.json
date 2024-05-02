@@ -304,23 +304,19 @@
           "footnote": {
             "type": "string"
           },
-          "vector": {
-            "description": "The statements 5D vector",
+          "weights": {
             "type": "array",
-            "minItems": 5,
-            "maxItems": 5,
             "items": {
-              "type": "integer",
-              "minimum": -100,
-              "maximum": 100
-            },
-            "example": [
-              -25,
-              0,
-              90,
-              15,
-              -11
-            ]
+              "type": "object",
+              "properties": {
+                "topic_id": {
+                  "type": "integer"
+                },
+                "weight": {
+                  "type": "integer"
+                }
+              }
+            }
           }
         },
         "required": [
@@ -329,7 +325,7 @@
           "emojis",
           "details",
           "footnote",
-          "vector"
+          "weights"
         ]
       },
       "Topic": {
@@ -495,21 +491,19 @@
               ]
             }
           },
-          "position": {
-            "description": "The parties position in 5D space",
+          "positions": {
             "type": "array",
-            "minItems": 5,
-            "maxItems": 5,
             "items": {
-              "type": "integer"
-            },
-            "example": [
-              -25,
-              0,
-              90,
-              15,
-              -11
-            ]
+              "type": "object",
+              "properties": {
+                "topic_id": {
+                  "type": "integer"
+                },
+                "position": {
+                  "type": "integer"
+                }
+              }
+            }
           }
         },
         "required": [

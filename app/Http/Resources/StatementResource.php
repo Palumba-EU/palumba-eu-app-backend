@@ -22,7 +22,7 @@ class StatementResource extends JsonResource
             'details' => $this->getTranslationForAttribute('details'),
             'footnote' => $this->getTranslationForAttribute('footnote'),
             'emojis' => $this->emojis,
-            'vector' => $this->vector,
+            'weights' => $this->weights->map(fn ($w) => ['topic_id' => $w->id, 'weight' => $w->pivot->weight]),
         ];
     }
 }

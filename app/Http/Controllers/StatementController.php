@@ -10,6 +10,6 @@ class StatementController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        return StatementResource::collection(Statement::query()->published()->with(['weights'])->orderBy('sort_index')->get());
+        return StatementResource::collection(Statement::query()->published()->with(['weights'])->orderBy('sort_index')->orderBy('statement')->get());
     }
 }

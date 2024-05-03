@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Exports\ResponseExporter;
 use App\Filament\Resources\ResponseResource\Pages;
 use App\Filament\Resources\ResponseResource\RelationManagers\StatementsRelationManager;
 use App\Models\Response;
@@ -9,6 +10,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 
@@ -65,6 +67,14 @@ class ResponseResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+            ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(ResponseExporter::class)
+                    ->columnMapping(false)
+                    ->chunkSize(250)
+                    ->modalDescription('Starts exporting the current responses in the background. You will be notified when the export is finished.')
+                    ->modalSubmitActionLabel('Start export'),
             ])
             ->paginated([100, 250, 500])
             ->defaultPaginationPageOption(100);

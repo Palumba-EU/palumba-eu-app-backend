@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\StatementResource\Pages;
+use App\Filament\Resources\StatementResource\RelationManagers\StatementWeightsRelationManager;
 use App\Models\Statement;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -42,43 +43,6 @@ class StatementResource extends Resource
                     ->required()
                     ->numeric()
                     ->columnSpanFull(),
-
-                Forms\Components\TextInput::make('w1')
-                    ->label('Weight 1')
-                    ->required()
-                    ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
-                    ->columns(1),
-                Forms\Components\TextInput::make('w2')
-                    ->label('Weight 2')
-                    ->required()
-                    ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
-                    ->columns(1),
-                Forms\Components\TextInput::make('w3')
-                    ->label('Weight 3')
-                    ->required()
-                    ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
-                    ->columns(1),
-                Forms\Components\TextInput::make('w4')
-                    ->label('Weight 4')
-                    ->required()
-                    ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
-                    ->columns(1),
-                Forms\Components\TextInput::make('w5')
-                    ->label('Weight 5')
-                    ->required()
-                    ->numeric()
-                    ->minValue(-100)
-                    ->maxValue(+100)
-                    ->columns(1),
-
             ]);
     }
 
@@ -122,7 +86,7 @@ class StatementResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            StatementWeightsRelationManager::class,
         ];
     }
 
@@ -134,5 +98,4 @@ class StatementResource extends Resource
             'edit' => Pages\EditStatement::route('/{record}/edit'),
         ];
     }
-
 }

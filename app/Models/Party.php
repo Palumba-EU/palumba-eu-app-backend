@@ -8,7 +8,6 @@ use App\Services\CrowdIn\CrowdIn;
 use App\Services\CrowdIn\Translatable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -27,15 +26,10 @@ use Illuminate\Support\Collection;
  * @property string $logo
  * @property string $link
  * @property string $acronym
- * @property int $p1
- * @property int $p2
- * @property int $p3
- * @property int $p4
- * @property int $p5
- * @property array<int> $position
  * @property Collection<Policy> $policies
  * @property Collection<LocalParty> $local_parties
  * @property Collection<MoodImage> $mood_images
+ * @property Collection<Topic> $positions
  */
 #[ObservedBy([AuditLogObserver::class])]
 class Party extends Model implements Translatable
@@ -48,11 +42,6 @@ class Party extends Model implements Translatable
         'logo',
         'link',
         'acronym',
-        'p1',
-        'p2',
-        'p3',
-        'p4',
-        'p5',
         'published',
     ];
 
@@ -76,18 +65,9 @@ class Party extends Model implements Translatable
         return $this->belongsToMany(Statement::class)->withTimestamps()->withPivot(['answer']);
     }
 
-    public function position(): Attribute
+    public function positions(): BelongsToMany
     {
-        return Attribute::make(
-            get: fn () => [$this->p1, $this->p2, $this->p3, $this->p4, $this->p5],
-            set: function (array $value) {
-                $this->p1 = $value[0];
-                $this->p2 = $value[1];
-                $this->p3 = $value[2];
-                $this->p4 = $value[3];
-                $this->p5 = $value[4];
-            }
-        );
+        return $this->belongsToMany(Topic::class, 'party_topic_positions')->withTimestamps()->withPivot(['position']);
     }
 
     public function getTranslatableAttributes(): array

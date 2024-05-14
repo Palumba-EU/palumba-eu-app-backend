@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Models\Traits\Publishable;
 use App\Observers\AuditLogObserver;
+use App\Services\CrowdIn\CrowdIn;
+use App\Services\CrowdIn\Translatable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,9 +25,9 @@ use Illuminate\Support\Collection;
  * @property Collection<Response> $responses
  */
 #[ObservedBy([AuditLogObserver::class])]
-class Country extends Model
+class Country extends Model implements Translatable
 {
-    use HasFactory, Publishable;
+    use CrowdIn, HasFactory, Publishable;
 
     protected $fillable = [
         'name',
@@ -42,5 +44,20 @@ class Country extends Model
     public function responses(): HasMany
     {
         return $this->hasMany(Response::class);
+    }
+
+    public function getTranslatableAttributes(): array
+    {
+        return ['name'];
+    }
+
+    public function getTranslatableFiles(): array
+    {
+        return [];
+    }
+
+    public static function getRelationshipsToEagerLoad(): array
+    {
+        return [];
     }
 }

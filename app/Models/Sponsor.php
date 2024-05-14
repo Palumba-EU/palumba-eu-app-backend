@@ -35,7 +35,7 @@ class Sponsor extends Model implements Translatable
 
     public function getTranslatableAttributes(): array
     {
-        return ['banner_link', 'banner_description'];
+        return ['name', 'banner_link', 'banner_description'];
     }
 
     public function getTranslatableFiles(): array

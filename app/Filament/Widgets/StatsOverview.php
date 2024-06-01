@@ -19,7 +19,7 @@ class StatsOverview extends BaseWidget
                 start: now()->subWeek(),
                 end: now(),
             )
-            ->perHour()
+            ->perDay()
             ->count();
 
         $responses24h = Response::query()->since(now()->subDay())->count();
@@ -28,7 +28,7 @@ class StatsOverview extends BaseWidget
                 start: now()->subDay(),
                 end: now(),
             )
-            ->perMinute()
+            ->perHour()
             ->count();
 
         return [

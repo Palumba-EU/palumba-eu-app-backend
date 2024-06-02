@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Country;
 use App\Models\LocalParty;
 use App\Models\MoodImage;
 use App\Models\Party;
@@ -20,6 +21,7 @@ return [
     ],
 
     'translatable_models' => [
+        Country::class,
         LocalParty::class,
         Party::class,
         Policy::class,

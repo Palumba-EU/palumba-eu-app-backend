@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
             }
 
             if (strlen(trim($language)) === 0) {
-                $language = null;
+                $language = 'en';
             }
 
             return new TranslationRepository($language);

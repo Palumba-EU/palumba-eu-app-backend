@@ -5,7 +5,7 @@
     "version": "0.1.5"
   },
   "paths": {
-    "/localization": {
+    "/{language}/localization": {
       "get": {
         "summary": "List countries and languages",
         "description": "Retrieves a list of countries with their respective country code and flag image and languages with their language code.",
@@ -34,7 +34,17 @@
               }
             }
           }
-        }
+        },
+        "parameters": [
+          {
+            "name": "language",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     },
     "/{language}/statements": {

@@ -14,7 +14,7 @@ class StatsOverview extends BaseWidget
     {
         $responsesTotal = Response::query()->count();
         $responses7d = Response::query()->since(now()->subWeek())->count();
-        $responses7dChartData =Trend::model(Response::class)
+        $responses7dChartData = Trend::model(Response::class)
             ->between(
                 start: now()->subWeek(),
                 end: now(),
@@ -23,7 +23,7 @@ class StatsOverview extends BaseWidget
             ->count();
 
         $responses24h = Response::query()->since(now()->subDay())->count();
-        $responses24hChartData =Trend::model(Response::class)
+        $responses24hChartData = Trend::model(Response::class)
             ->between(
                 start: now()->subDay(),
                 end: now(),

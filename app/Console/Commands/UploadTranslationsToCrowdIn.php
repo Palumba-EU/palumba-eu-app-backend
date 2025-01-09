@@ -27,7 +27,7 @@ class UploadTranslationsToCrowdIn extends Command
      */
     public function handle()
     {
-        $generator = new CrowdInTranslation;
+        $generator = new CrowdInTranslation();
 
         $generateStrings = $this->option('strings');
         $generateFiles = $this->option('files');

@@ -33,7 +33,7 @@ class Register extends BaseRegister
         $this->invitation = UserInvitation::where('code', $this->token)->firstOrFail();
 
         if ($this->invitation->valid_until->isPast()) {
-            throw new UserInvitationExpiredException;
+            throw new UserInvitationExpiredException();
         }
 
         $this->form->fill([

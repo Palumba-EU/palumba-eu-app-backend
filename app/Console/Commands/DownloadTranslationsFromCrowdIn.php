@@ -27,7 +27,7 @@ class DownloadTranslationsFromCrowdIn extends Command
      */
     public function handle()
     {
-        $generator = new CrowdInTranslation;
+        $generator = new CrowdInTranslation();
 
         try {
             $this->output->info('Downloading translations...');

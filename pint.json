@@ -2,7 +2,7 @@
     "preset": "laravel",
     "rules": {
         "new_with_parentheses": {
-            "anonymous_class": true,
+            "anonymous_class": false,
             "named_class": true
         }
     }

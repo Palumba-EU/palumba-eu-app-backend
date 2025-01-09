@@ -20,7 +20,7 @@ class UploadTranslationsToCrowdInJob implements ShouldQueue
 
     public function handle(): void
     {
-        $generator = new CrowdInTranslation();
+        $generator = new CrowdInTranslation;
 
         if ($this->uploadFiles) {
             $generator->uploadStrings();

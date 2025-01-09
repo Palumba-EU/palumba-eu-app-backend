@@ -16,9 +16,7 @@ class SourceImageUploader
         private readonly CrowdInFileRepository $fileRepository,
         private readonly int $projectId,
         private readonly string $class,
-    ) {
-
-    }
+    ) {}
 
     public function upload()
     {

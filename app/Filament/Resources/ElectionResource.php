@@ -3,23 +3,24 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Helper\PublishedColumn;
-use App\Filament\Resources\CountryResource\Pages;
-use App\Models\Country;
+use App\Filament\Resources\ElectionResource\Pages;
+use App\Models\Election;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class CountryResource extends Resource
+class ElectionResource extends Resource
 {
-    protected static ?string $model = Country::class;
+    protected static ?string $model = Election::class;
 
-    protected static ?string $navigationGroup = 'Global';
+    protected static ?string $navigationIcon = 'heroicon-o-cube';
 
-    protected static ?int $navigationSort = 20;
+    protected static ?string $navigationGroup = 'Elections';
 
-    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+    protected static ?int $navigationSort = 28;
 
     public static function form(Form $form): Form
     {
@@ -27,18 +28,18 @@ class CountryResource extends Resource
             ->schema([
                 Forms\Components\Checkbox::make('published')
                     ->columnSpanFull(),
+                Forms\Components\DatePicker::make('date')
+                    ->required()
+                    ->after(Carbon::now()->addHours()),
                 Forms\Components\TextInput::make('name')
-                    ->unique(Country::class, ignoreRecord: true)
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('code')
-                    ->unique(Country::class, ignoreRecord: true)
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('flag')
-                    ->image()
-                    ->directory('flags')
-                    ->required(),
+                    ->maxLength(255)
+                    ->columnSpanFull(),
+                Forms\Components\Select::make('country_id')
+                    ->relationship('country', 'name')
+                    ->nullable()
+                    ->placeholder('EU level election')
+                    ->helperText('Assign a country to make it a national election'),
             ]);
     }
 
@@ -55,20 +56,24 @@ class CountryResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('date')
+                    ->date()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('code')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\ImageColumn::make('flag'),
+                Tables\Columns\TextColumn::make('country.name')
+                    ->numeric()
+                    ->sortable()
+                    ->default('EU level election'),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-            ]);
+            ])
+            ->defaultSort('date', 'desc');
     }
 
     public static function getRelations(): array
@@ -81,9 +86,9 @@ class CountryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCountries::route('/'),
-            'create' => Pages\CreateCountry::route('/create'),
-            'edit' => Pages\EditCountry::route('/{record}/edit'),
+            'index' => Pages\ListElections::route('/'),
+            'create' => Pages\CreateElection::route('/create'),
+            'edit' => Pages\EditElection::route('/{record}/edit'),
         ];
     }
 }

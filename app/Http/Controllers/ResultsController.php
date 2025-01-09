@@ -6,7 +6,6 @@ use App\Http\Resources\PartyResource;
 use App\Http\Resources\TopicResource;
 use App\Models\Party;
 use App\Models\Topic;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\JsonResponse;

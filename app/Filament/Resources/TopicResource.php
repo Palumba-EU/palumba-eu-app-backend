@@ -17,6 +17,8 @@ class TopicResource extends Resource
 
     protected static ?int $navigationSort = 60;
 
+    protected static ?string $navigationGroup = 'Elections';
+
     protected static ?string $navigationIcon = 'heroicon-o-clipboard';
 
     public static function form(Form $form): Form
@@ -115,5 +117,4 @@ class TopicResource extends Resource
             'edit' => Pages\EditTopic::route('/{record}/edit'),
         ];
     }
-
 }

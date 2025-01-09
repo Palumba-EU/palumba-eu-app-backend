@@ -14,10 +14,7 @@ class CrowdInFileRepository
 
     private ?ModelCollection $directories = null;
 
-    public function __construct(private readonly Crowdin $client, private readonly int $projectId)
-    {
-
-    }
+    public function __construct(private readonly Crowdin $client, private readonly int $projectId) {}
 
     public function getFileByName(string $filename, ?int $directoryId = null): ?File
     {

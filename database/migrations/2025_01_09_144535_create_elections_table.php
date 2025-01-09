@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('failed_import_rows', function (Blueprint $table) {
+        Schema::create('elections', function (Blueprint $table) {
             $table->id();
-            $table->json('data');
-            $table->foreignId('import_id')->constrained()->cascadeOnDelete();
-            $table->text('validation_error')->nullable();
             $table->timestamps();
+
+            $table->boolean('published');
+            $table->timestamp('date');
+            $table->string('name');
+
+            $table->foreignId('country_id')->nullable()->constrained()->onUpdate('CASCADE')->onDelete('RESTRICT');
         });
     }
 
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('failed_import_rows');
+        Schema::dropIfExists('elections');
     }
 };

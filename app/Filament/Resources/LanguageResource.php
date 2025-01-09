@@ -14,10 +14,11 @@ use Filament\Tables\Table;
 
 class LanguageResource extends Resource
 {
-
     protected static ?string $model = Language::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-language';
+
+    protected static ?string $navigationGroup = 'Global';
 
     protected static ?int $navigationSort = 25;
 

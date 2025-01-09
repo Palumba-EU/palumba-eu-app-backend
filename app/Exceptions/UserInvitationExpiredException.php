@@ -2,7 +2,4 @@
 
 namespace App\Exceptions;
 
-class UserInvitationExpiredException extends \Exception
-{
-
-}
+class UserInvitationExpiredException extends \Exception {}

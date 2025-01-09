@@ -49,5 +49,4 @@ class ResponseExporter extends Exporter
 
         return $body;
     }
-
 }

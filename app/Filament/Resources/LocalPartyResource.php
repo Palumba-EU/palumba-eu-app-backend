@@ -17,6 +17,8 @@ class LocalPartyResource extends Resource
 
     protected static ?int $navigationSort = 50;
 
+    protected static ?string $navigationGroup = 'Elections';
+
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
     protected static ?string $label = 'Local Candidate List';
@@ -109,5 +111,4 @@ class LocalPartyResource extends Resource
             'edit' => Pages\EditLocalParty::route('/{record}/edit'),
         ];
     }
-
 }

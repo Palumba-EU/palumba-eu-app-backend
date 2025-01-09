@@ -5,8 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\PartyResource\Pages;
 use App\Filament\Resources\PartyResource\RelationManagers\MoodImagesRelationManager;
-use App\Filament\Resources\PartyResource\RelationManagers\PoliciesRelationManager;
 use App\Filament\Resources\PartyResource\RelationManagers\PartyPositionsRelationManager;
+use App\Filament\Resources\PartyResource\RelationManagers\PoliciesRelationManager;
 use App\Filament\Resources\PartyResource\RelationManagers\StatementsRelationManager;
 use App\Models\Party;
 use Filament\Forms;
@@ -20,6 +20,8 @@ class PartyResource extends Resource
     protected static ?string $model = Party::class;
 
     protected static ?int $navigationSort = 40;
+
+    protected static ?string $navigationGroup = 'Elections';
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
@@ -99,5 +101,4 @@ class PartyResource extends Resource
             'edit' => Pages\EditParty::route('/{record}/edit'),
         ];
     }
-
 }

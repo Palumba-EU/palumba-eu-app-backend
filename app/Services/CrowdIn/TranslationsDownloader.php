@@ -54,7 +54,7 @@ class TranslationsDownloader
 
     private function unzip(string $filename)
     {
-        $zip = new ZipArchive();
+        $zip = new ZipArchive;
         $zip->open($filename);
 
         $this->disk->makeDirectory('translations');

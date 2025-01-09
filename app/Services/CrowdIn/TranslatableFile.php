@@ -10,8 +10,5 @@ class TranslatableFile
         public readonly string $attributeName,
         public readonly string $fullPath,
         public readonly string $context,
-        public readonly Carbon $updatedAt)
-    {
-
-    }
+        public readonly Carbon $updatedAt) {}
 }

@@ -18,6 +18,8 @@ class SponsorResource extends Resource
 
     protected static ?int $navigationSort = 80;
 
+    protected static ?string $navigationGroup = 'Global';
+
     protected static ?string $navigationIcon = 'heroicon-o-trophy';
 
     public static function form(Form $form): Form
@@ -118,5 +120,4 @@ class SponsorResource extends Resource
             'edit' => Pages\EditSponsor::route('/{record}/edit'),
         ];
     }
-
 }

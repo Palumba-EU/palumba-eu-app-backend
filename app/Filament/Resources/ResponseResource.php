@@ -20,6 +20,8 @@ class ResponseResource extends Resource
 
     protected static ?int $navigationSort = 70;
 
+    protected static ?string $navigationGroup = 'Elections';
+
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left';
 
     public static function form(Form $form): Form

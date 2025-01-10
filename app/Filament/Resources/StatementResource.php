@@ -19,6 +19,8 @@ class StatementResource extends Resource
 
     protected static ?int $navigationSort = 30;
 
+    protected static ?string $navigationGroup = 'Elections';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

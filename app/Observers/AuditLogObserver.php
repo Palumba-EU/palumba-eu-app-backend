@@ -9,10 +9,7 @@ use Illuminate\Support\Facades\Log;
 
 class AuditLogObserver
 {
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 
     private function log($message, Model $model)
     {

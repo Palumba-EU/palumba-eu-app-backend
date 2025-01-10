@@ -18,6 +18,8 @@ class UserInvitationResource extends Resource
 {
     protected static ?string $model = UserInvitation::class;
 
+    protected static ?string $navigationGroup = 'Global';
+
     protected static ?int $navigationSort = 11;
 
     protected static ?string $navigationIcon = 'heroicon-o-paper-airplane';

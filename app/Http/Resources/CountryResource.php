@@ -14,7 +14,7 @@ class CountryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' =>  $this->getTranslationForAttribute('name'),
+            'name' => $this->getTranslationForAttribute('name'),
             'country_code' => $this->code,
             'flag_image' => Storage::disk('public')->url($this->flag),
         ];

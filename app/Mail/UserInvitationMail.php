@@ -14,14 +14,12 @@ class UserInvitationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(private UserInvitation $invitation)
-    {
-    }
+    public function __construct(private UserInvitation $invitation) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('user_invitation.mail.subject', [ 'app_name' => config('app.name') ]),
+            subject: __('user_invitation.mail.subject', ['app_name' => config('app.name')]),
         );
     }
 

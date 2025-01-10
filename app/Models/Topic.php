@@ -51,7 +51,6 @@ class Topic extends Model implements Translatable
         return $this->belongsToMany(Statement::class, 'statement_topic_weights')->withTimestamps()->withPivot(['weight']);
     }
 
-
     public function getTranslatableAttributes(): array
     {
         return ['name', 'extreme1', 'extreme2', 'extreme1_details', 'extreme2_details'];

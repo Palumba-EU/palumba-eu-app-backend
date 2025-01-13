@@ -231,6 +231,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "election_id": {
+                    "type": "integer",
+                    "description": "The answered election"
+                  },
                   "age": {
                     "type": "integer",
                     "minimum": 0,
@@ -261,7 +265,7 @@
                     "type": "array",
                     "items": {
                       "type": "object",
-                      "description": "The complete list of answers. Should contain one item per statement",
+                      "description": "The list of answers. Can be empty, partial or complete. Answer can also be added later.",
                       "properties": {
                         "statement_id": {
                           "type": "integer"
@@ -285,7 +289,80 @@
         },
         "responses": {
           "201": {
-            "description": "User responses successfully submitted"
+            "description": "User responses successfully submitted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "editable_until": {
+                      "type": "string",
+                      "format": "datetime"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "editable_until"
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many attempts. Try again later. Defaults to 5 attempts per hour in production"
+          }
+        }
+      }
+    },
+    "/responses/{response_uuid}/answers": {
+      "post": {
+        "summary": "Submit additional answers",
+        "description": "Lets a user add additional or change their existing answers",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "answers": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "description": "A list of additional answers. Can be empty, partial or complete. If a statement has already been answered, the previous answer will be overwritten.",
+                      "properties": {
+                        "statement_id": {
+                          "type": "integer"
+                        },
+                        "answer": {
+                          "description": "The participants answer or null if skipped",
+                          "nullable": true,
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/Answer"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Answers successfully submitted"
+          },
+          "403": {
+            "description": "Changing the answers is forbidden. Likely because the edit period expired."
+          },
+          "404": {
+            "description": "Answer not found"
           },
           "429": {
             "description": "Too many attempts. Try again later. Defaults to 5 attempts per hour in production"

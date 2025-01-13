@@ -57,4 +57,13 @@ class Election extends Model implements Translatable
     {
         return [];
     }
+
+    /**
+     * Returns the very first election that was created.
+     * Used for keeping endpoints backwards compatible.
+     */
+    public static function default(): Election
+    {
+        return Election::query()->orderBy('id')->firstOrFail();
+    }
 }

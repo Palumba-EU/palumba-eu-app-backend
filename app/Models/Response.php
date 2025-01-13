@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\BelongsToElection;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -15,24 +16,39 @@ use Illuminate\Support\Collection;
  * @property string $uuid
  * @property Carbon|null $created_at
  * @property int|null $age
+ * @property int $election_id
+ * @property Election $election
  * @property int $country_id
  * @property string $language_code
  * @property string|null $gender
  * @property Country $country
  * @property Collection<Statement> $statements
  * @property string|null $hashed_ip_address
+ * @property Carbon $editable_until
  */
 class Response extends Model
 {
-    use HasFactory, HasUuids;
+    use BelongsToElection, HasFactory, HasUuids;
 
     public $primaryKey = 'uuid';
 
     public $timestamps = false;
 
-    protected $casts = ['created_at' => 'datetime'];
+    protected $casts = [
+        'created_at' => 'datetime',
+        'editable_until' => 'datetime',
+    ];
 
-    protected $fillable = ['created_at', 'age', 'country_id', 'language_code', 'gender', 'hashed_ip_address'];
+    protected $fillable = [
+        'created_at',
+        'age',
+        'country_id',
+        'language_code',
+        'gender',
+        'hashed_ip_address',
+        'election_id',
+        'editable_until',
+    ];
 
     public function country(): BelongsTo
     {

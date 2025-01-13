@@ -49,6 +49,9 @@ class ResponseResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('election.name')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('age')
                     ->numeric()
                     ->sortable(),
@@ -65,8 +68,11 @@ class ResponseResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
-            ])
+                Tables\Filters\SelectFilter::make('election')
+                    ->relationship('election', 'name')
+                    ->searchable()
+                    ->preload(),
+            ], layout: Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

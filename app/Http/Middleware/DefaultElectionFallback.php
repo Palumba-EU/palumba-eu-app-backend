@@ -22,7 +22,7 @@ class DefaultElectionFallback
         // not take an election parameter. Those routes should continue to return data for the original election.
         // This middleware falls back to this very first election and manually binds it to the route.
         if (is_null($request->route('election'))) {
-            $election = Election::query()->orderBy('id')->firstOrFail();
+            $election = Election::default();
             $request->route()->setParameter('election', $election);
         }
 

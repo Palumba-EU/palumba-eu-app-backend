@@ -25,9 +25,9 @@ class PartyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
-    protected static ?string $label = 'EU Group';
+    protected static ?string $label = 'Electable party';
 
-    protected static ?string $pluralLabel = 'EU Groups';
+    protected static ?string $pluralLabel = 'Electable parties';
 
     public static function form(Form $form): Form
     {
@@ -35,13 +35,16 @@ class PartyResource extends Resource
             ->schema([
                 Forms\Components\Checkbox::make('published')
                     ->columnSpanFull(),
+                Forms\Components\Select::make('election_id')
+                    ->relationship('election', 'name')
+                    ->required()
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\ColorPicker::make('color')
                     ->required()
-                    ->hex()
-                    ->columnSpanFull(),
+                    ->hex(),
                 Forms\Components\FileUpload::make('logo')
                     ->image()
                     ->directory('parties/logos')
@@ -68,6 +71,9 @@ class PartyResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('election.name')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
@@ -76,8 +82,11 @@ class PartyResource extends Resource
                 Tables\Columns\ImageColumn::make('logo'),
             ])
             ->filters([
-                //
-            ])
+                Tables\Filters\SelectFilter::make('election')
+                    ->relationship('election', 'name')
+                    ->searchable()
+                    ->preload(),
+            ], layout: Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ]);

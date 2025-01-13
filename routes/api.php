@@ -8,6 +8,7 @@ use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\StatementController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Middleware\DefaultElectionFallback;
+use App\Http\Middleware\DefaultLanguageFallback;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(sprintf('cache.headers:public;max_age=%d;etag', config('cdn.maxAge')))->group(function () {
@@ -30,10 +31,12 @@ Route::middleware(sprintf('cache.headers:public;max_age=%d;etag', config('cdn.ma
     });
 
     // Deprecated - Remove once apps have switched to paths with language prefix
-    Route::get('/localization', [LocalizationController::class, 'index']);
-    Route::get('/statements', [StatementController::class, 'index']);
-    Route::get('/results', [ResultsController::class, 'index']);
-    Route::get('/sponsors', [SponsorController::class, 'index']);
+    Route::middleware([DefaultLanguageFallback::class, DefaultElectionFallback::class])->group(function () {
+        Route::get('/localization', [LocalizationController::class, 'index']);
+        Route::get('/statements', [StatementController::class, 'index']);
+        Route::get('/results', [ResultsController::class, 'index']);
+        Route::get('/sponsors', [SponsorController::class, 'index']);
+    });
 });
 
 Route::post('/responses', [ResponseController::class, 'store'])->middleware(['throttle:responses']);

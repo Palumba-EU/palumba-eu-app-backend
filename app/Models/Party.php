@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\BelongsToElection;
 use App\Models\Traits\Publishable;
 use App\Observers\AuditLogObserver;
 use App\Services\CrowdIn\CrowdIn;
@@ -15,7 +16,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
 /**
- * An EU level party/group
+ * An electable party or group.
+ * For EU level elections, these are EU parties/groups
+ * For country level elections, these are local parties/groups
  *
  * @property int $id
  * @property Carbon $createdAt
@@ -30,11 +33,13 @@ use Illuminate\Support\Collection;
  * @property Collection<LocalParty> $local_parties
  * @property Collection<MoodImage> $mood_images
  * @property Collection<Topic> $positions
+ * @property int $election_id
+ * @property Election $election
  */
 #[ObservedBy([AuditLogObserver::class])]
 class Party extends Model implements Translatable
 {
-    use CrowdIn, HasFactory, Publishable;
+    use BelongsToElection, CrowdIn, HasFactory, Publishable;
 
     protected $fillable = [
         'name',

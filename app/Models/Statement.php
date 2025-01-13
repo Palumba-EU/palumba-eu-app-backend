@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\BelongsToElection;
 use App\Models\Traits\Publishable;
 use App\Observers\AuditLogObserver;
 use App\Services\CrowdIn\CrowdIn;
@@ -26,11 +27,13 @@ use Illuminate\Support\Collection;
  * @property string $emojis
  * @property Collection<Response> $responses
  * @property Collection<Topic> $weights
+ * @property int $election_id
+ * @property Election $election
  */
 #[ObservedBy([AuditLogObserver::class])]
 class Statement extends Model implements Translatable
 {
-    use CrowdIn, HasFactory, Publishable, SoftDeletes;
+    use BelongsToElection, CrowdIn, HasFactory, Publishable, SoftDeletes;
 
     protected $fillable = [
         'statement',
@@ -39,6 +42,7 @@ class Statement extends Model implements Translatable
         'sort_index',
         'emojis',
         'published',
+        'election_id',
     ];
 
     public function parties(): BelongsToMany

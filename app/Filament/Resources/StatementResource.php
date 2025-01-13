@@ -29,6 +29,11 @@ class StatementResource extends Resource
             ->schema([
                 Forms\Components\Checkbox::make('published')
                     ->columnSpanFull(),
+                Forms\Components\Select::make('election_id')
+                    ->relationship('election', 'name')
+                    ->required()
+                    ->disabledOn('edit')
+                    ->columnSpanFull(),
                 Forms\Components\Textarea::make('statement')
                     ->required()
                     ->maxLength(1024)
@@ -61,6 +66,9 @@ class StatementResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('election.name')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('statement')
                     ->searchable()
                     ->sortable(),
@@ -70,8 +78,12 @@ class StatementResource extends Resource
             ])
             ->defaultSort('sort_index')
             ->filters([
+                Tables\Filters\SelectFilter::make('election')
+                    ->relationship('election', 'name')
+                    ->searchable()
+                    ->preload(),
                 Tables\Filters\TrashedFilter::make(),
-            ])
+            ], layout: Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ]);

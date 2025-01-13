@@ -38,6 +38,7 @@ class PartyResource extends Resource
                 Forms\Components\Select::make('election_id')
                     ->relationship('election', 'name')
                     ->required()
+                    ->disabledOn('edit')
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->required()

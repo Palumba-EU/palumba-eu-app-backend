@@ -26,4 +26,21 @@ class LegacyRoutesTest extends TestCase
         $v0_response->assertContent($v2_response->content());
         $v1_response->assertContent($v2_response->content());
     }
+
+    public function test_legacy_statements_routes(): void
+    {
+        /** @var Election $election */
+        $election = Election::query()->orderBy('id')->firstOrFail();
+
+        $v0_response = $this->get('/api/statements');
+        $v1_response = $this->get('/api/en/statements');
+        $v2_response = $this->get("/api/en/$election->id/statements");
+
+        $v0_response->assertStatus(200);
+        $v1_response->assertStatus(200);
+        $v2_response->assertStatus(200);
+
+        $v0_response->assertContent($v2_response->content());
+        $v1_response->assertContent($v2_response->content());
+    }
 }

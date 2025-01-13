@@ -25,9 +25,9 @@ class PartyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
-    protected static ?string $label = 'EU Group';
+    protected static ?string $label = 'Electable party';
 
-    protected static ?string $pluralLabel = 'EU Groups';
+    protected static ?string $pluralLabel = 'Electable parties';
 
     public static function form(Form $form): Form
     {
@@ -38,15 +38,13 @@ class PartyResource extends Resource
                 Forms\Components\Select::make('election_id')
                     ->relationship('election', 'name')
                     ->required()
-                    ->placeholder('Election')
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\ColorPicker::make('color')
                     ->required()
-                    ->hex()
-                    ->columnSpanFull(),
+                    ->hex(),
                 Forms\Components\FileUpload::make('logo')
                     ->image()
                     ->directory('parties/logos')

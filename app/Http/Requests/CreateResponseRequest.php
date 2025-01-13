@@ -17,6 +17,7 @@ class CreateResponseRequest extends FormRequest
     {
         return [
             'age' => ['present', 'nullable', 'integer', 'min:0'],
+            'election_id' => ['sometimes', 'exists:elections,id'],
             'country_id' => ['required', 'exists:countries,id'],
             'language_id' => ['required_without:language_code', 'integer', Rule::exists('languages', 'id')->where(
                 fn (Builder $query) => $query->where('published', '=', true)

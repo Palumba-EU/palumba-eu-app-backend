@@ -4,6 +4,16 @@
     "title": "Palumba API",
     "version": "0.1.5"
   },
+  "servers": [
+    {
+      "url": "http://palumba-staging.bitperfect-software.com/api",
+      "description": "Staging"
+    },
+    {
+      "url": "http://palumba.bitperfect-software.com/api",
+      "description": "Production"
+    }
+  ],
   "paths": {
     "/{language}/localization": {
       "get": {

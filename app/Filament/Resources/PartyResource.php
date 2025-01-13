@@ -35,6 +35,11 @@ class PartyResource extends Resource
             ->schema([
                 Forms\Components\Checkbox::make('published')
                     ->columnSpanFull(),
+                Forms\Components\Select::make('election_id')
+                    ->relationship('election', 'name')
+                    ->required()
+                    ->placeholder('Election')
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -68,6 +73,9 @@ class PartyResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('election.name')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
@@ -76,8 +84,11 @@ class PartyResource extends Resource
                 Tables\Columns\ImageColumn::make('logo'),
             ])
             ->filters([
-                //
-            ])
+                Tables\Filters\SelectFilter::make('election')
+                    ->relationship('election', 'name')
+                    ->searchable()
+                    ->preload(),
+            ], layout: Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ]);

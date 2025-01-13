@@ -9,6 +9,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Actions\AttachAction;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class StatementsRelationManager extends RelationManager
 {
@@ -48,7 +49,10 @@ class StatementsRelationManager extends RelationManager
                     ->label('Answer statement')
                     ->preloadRecordSelect()
                     ->form(fn (AttachAction $action): array => [
-                        $action->getRecordSelect(),
+                        $action
+                            // Filter for statements that belong to the same election as the party
+                            ->recordSelectOptionsQuery(fn (Builder $query) => $query->election($this->getOwnerRecord()->election))
+                            ->getRecordSelect(),
                         Forms\Components\Select::make('answer')
                             ->required()
                             ->options(AnswerScale::$scale),

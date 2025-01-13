@@ -48,6 +48,7 @@ class Party extends Model implements Translatable
         'link',
         'acronym',
         'published',
+        'election_id',
     ];
 
     public function policies(): HasMany

@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Palumba API",
-    "version": "0.1.5"
+    "version": "0.1.6"
   },
   "servers": [
     {
@@ -57,7 +57,38 @@
         ]
       }
     },
-    "/{language}/statements": {
+    "/{language}/elections": {
+      "get": {
+        "summary": "List elections",
+        "description": "Retrieves the complete list of all current and upcoming elections",
+        "responses": {
+          "200": {
+            "description": "A list of elections",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Election"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "language",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/{language}/{election}/statements": {
       "get": {
         "summary": "List statements",
         "description": "Retrieves the complete list of statements with their details and footnotes.",
@@ -84,11 +115,19 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "election",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ]
       }
     },
-    "/{language}/results": {
+    "/{language}/{election}/results": {
       "get": {
         "summary": "List parties and topics",
         "description": "Retrieves the complete list of parties and topics.",
@@ -130,11 +169,19 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "election",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ]
       }
     },
-    "/{language}/sponsors": {
+    "/{language}/{election}/sponsors": {
       "get": {
         "summary": "List sponsors",
         "description": "Retrieves a list of sponsors with their details.",
@@ -156,6 +203,14 @@
         "parameters": [
           {
             "name": "language",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "election",
             "in": "path",
             "required": true,
             "schema": {
@@ -304,6 +359,38 @@
         "required": [
           "name",
           "language_code"
+        ]
+      },
+      "Election": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "country": {
+            "description": "The country in which the election is held or null for EU level elections.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Country"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "date",
+          "country"
         ]
       },
       "Statement": {

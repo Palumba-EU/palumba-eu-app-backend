@@ -62,6 +62,13 @@ class SponsorResource extends Resource
                         'media' => 'Media',
                         'other' => 'Other',
                     ]),
+                Forms\Components\Select::make('elections')
+                    ->label('Sponsored elections')
+                    ->multiple()
+                    ->relationship('elections', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->hint('Keep empty to show sponsor in every election'),
             ]);
     }
 
@@ -96,6 +103,12 @@ class SponsorResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->formatStateUsing(fn ($state) => Str::ucfirst($state)),
+                Tables\Columns\TextColumn::make('elections.name')
+                    ->label('Sponsored elections')
+                    ->searchable()
+                    ->sortable()
+                    ->default('All'),
+
             ])
             ->filters([
                 //

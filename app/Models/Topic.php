@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\BelongsToElection;
 use App\Models\Traits\Publishable;
 use App\Observers\AuditLogObserver;
 use App\Services\CrowdIn\CrowdIn;
@@ -28,11 +29,13 @@ use Illuminate\Support\Collection;
  * @property string $extreme2_details
  * @property string $extreme2_emojis
  * @property Collection<Statement> $statements
+ * @property int $election_id
+ * @property Election $election
  */
 #[ObservedBy([AuditLogObserver::class])]
 class Topic extends Model implements Translatable
 {
-    use CrowdIn, HasFactory, Publishable;
+    use BelongsToElection, CrowdIn, HasFactory, Publishable;
 
     protected $fillable = ['name', 'color', 'icon', 'published', 'extreme1', 'extreme2', 'extreme1_details', 'extreme2_details', 'extreme1_emojis', 'extreme2_emojis'];
 

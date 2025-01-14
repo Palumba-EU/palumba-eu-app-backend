@@ -15,13 +15,16 @@ class ResultsController extends Controller
 {
     public function index(string $language, Election $election): JsonResponse
     {
-        $topics = Topic::query()->with(['statements' => fn (BelongsToMany $query) => $query->published()])->published()->get();
+        $topics = Topic::query()->election($election)->with([
+            'statements' => fn (BelongsToMany $query) => $query->published(),
+        ])->published()->get();
+
         $parties = Party::query()->election($election)->with([
             'local_parties' => fn (BelongsToMany $query) => $query->published(),
             'policies' => fn (HasMany $query) => $query->published(),
             'mood_images' => fn (HasMany $query) => $query->published(),
-            'statements' => fn (BelongsToMany $query) => $query->published(),
-            'positions',
+            'statements' => fn (BelongsToMany $query) => $query->published()->election($election),
+            'positions' => fn (BelongsToMany $query) => $query->published()->election($election),
         ])->published()->get();
 
         return response()->json([

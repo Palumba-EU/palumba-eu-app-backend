@@ -8,6 +8,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Actions\AttachAction;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class PartyPositionsRelationManager extends RelationManager
 {
@@ -45,7 +46,10 @@ class PartyPositionsRelationManager extends RelationManager
                     ->label('Add position')
                     ->preloadRecordSelect()
                     ->form(fn (AttachAction $action): array => [
-                        $action->getRecordSelect(),
+                        $action
+                            // Filter for statements that belong to the same election as the party
+                            ->recordSelectOptionsQuery(fn (Builder $query) => $query->election($this->getOwnerRecord()->election))
+                            ->getRecordSelect(),
                         Forms\Components\TextInput::make('position')
                             ->numeric()
                             ->required(),

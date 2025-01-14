@@ -27,6 +27,11 @@ class TopicResource extends Resource
             ->schema([
                 Forms\Components\Checkbox::make('published')
                     ->columnSpanFull(),
+                Forms\Components\Select::make('election_id')
+                    ->relationship('election', 'name')
+                    ->required()
+                    ->disabledOn('edit')
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -78,6 +83,9 @@ class TopicResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('election.name')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
@@ -95,8 +103,11 @@ class TopicResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
-            ])
+                Tables\Filters\SelectFilter::make('election')
+                    ->relationship('election', 'name')
+                    ->searchable()
+                    ->preload(),
+            ], layout: Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ]);

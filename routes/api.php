@@ -17,17 +17,17 @@ Route::middleware(sprintf('cache.headers:public;max_age=%d;etag', config('cdn.ma
     Route::prefix('/{language}')->middleware([DefaultElectionFallback::class])->group(function () {
         Route::get('/localization', [LocalizationController::class, 'index']);
         Route::get('/elections', [ElectionController::class, 'index']);
+        Route::get('/sponsors', [SponsorController::class, 'index']);
 
         Route::prefix('/{election}')->group(function () {
             Route::get('/statements', [StatementController::class, 'index']);
             Route::get('/results', [ResultsController::class, 'index']);
-            Route::get('/sponsors', [SponsorController::class, 'index']);
+            Route::get('/sponsors', [SponsorController::class, 'indexScoped']);
         });
 
         // Deprecated - New routes are all scoped to election
         Route::get('/statements', [StatementController::class, 'index']);
         Route::get('/results', [ResultsController::class, 'index']);
-        Route::get('/sponsors', [SponsorController::class, 'index']);
     });
 
     // Deprecated - Remove once apps have switched to paths with language prefix

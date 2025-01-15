@@ -6,6 +6,10 @@
   },
   "servers": [
     {
+      "url": "http://localhost/api",
+      "description": "Local"
+    },
+    {
       "url": "http://palumba-staging.bitperfect-software.com/api",
       "description": "Staging"
     },
@@ -88,7 +92,7 @@
         ]
       }
     },
-    "/{language}/{election}/localization": {
+    "/{language}/elections/{election}/localization": {
       "get": {
         "summary": "Lists countries/regions and languages for the election",
         "description": "Retrieves a list of countries or regions and the languages the election is available in.",
@@ -138,7 +142,7 @@
         ]
       }
     },
-    "/{language}/{election}/statements": {
+    "/{language}/elections/{election}/statements": {
       "get": {
         "summary": "List statements",
         "description": "Retrieves the complete list of statements with their details and footnotes.",
@@ -177,7 +181,7 @@
         ]
       }
     },
-    "/{language}/{election}/results": {
+    "/{language}/elections/{election}/results": {
       "get": {
         "summary": "List parties and topics",
         "description": "Retrieves the complete list of parties and topics.",
@@ -231,7 +235,7 @@
         ]
       }
     },
-    "/{language}/{election}/sponsors": {
+    "/{language}/elections/{election}/sponsors": {
       "get": {
         "summary": "List sponsors",
         "description": "Retrieves a list of sponsors with their details.",

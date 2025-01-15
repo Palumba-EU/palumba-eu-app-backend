@@ -40,6 +40,13 @@ class ElectionResource extends Resource
                     ->nullable()
                     ->placeholder('EU level election')
                     ->helperText('Assign a country to make it a national election'),
+                Forms\Components\Select::make('languages')
+                    ->label('Available languages')
+                    ->relationship('languages', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
+                    ->helperText('Keep empty to use all languages'),
             ]);
     }
 
@@ -66,6 +73,11 @@ class ElectionResource extends Resource
                     ->numeric()
                     ->sortable()
                     ->default('EU level election'),
+                Tables\Columns\TextColumn::make('languages.name')
+                    ->label('Available languages')
+                    ->searchable()
+                    ->sortable()
+                    ->default('All'),
             ])
             ->filters([
                 //

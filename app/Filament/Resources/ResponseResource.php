@@ -56,6 +56,7 @@ class ResponseResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('country.name')
+                    ->label('Country/Region')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('language_code')

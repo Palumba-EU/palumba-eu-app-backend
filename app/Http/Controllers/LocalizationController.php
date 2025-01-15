@@ -26,7 +26,7 @@ class LocalizationController extends Controller
     public function indexScoped(string $language, Election $election, CrowdInTranslation $crowdin): JsonResponse
     {
         $countries = Country::query()->published()->parent($election->country)->get();
-        $languages = Language::query()->published()->get();
+        $languages = $election->availableLanguages()->published()->get();
 
         return response()->json([
             'countries' => CountryResource::collection($countries),

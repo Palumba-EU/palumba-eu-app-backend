@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Helper\SharedElectionFilter;
 use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\StatementResource\Pages;
 use App\Filament\Resources\StatementResource\RelationManagers\StatementWeightsRelationManager;
@@ -11,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class StatementResource extends Resource
@@ -78,10 +80,7 @@ class StatementResource extends Resource
             ])
             ->defaultSort('sort_index')
             ->filters([
-                Tables\Filters\SelectFilter::make('election')
-                    ->relationship('election', 'name')
-                    ->searchable()
-                    ->preload(),
+                SharedElectionFilter::make(),
                 Tables\Filters\TrashedFilter::make(),
             ], layout: Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
@@ -89,7 +88,7 @@ class StatementResource extends Resource
             ]);
     }
 
-    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([

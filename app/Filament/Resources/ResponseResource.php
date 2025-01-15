@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Exports\ResponseExporter;
+use App\Filament\Helper\SharedElectionFilter;
 use App\Filament\Resources\ResponseResource\Pages;
 use App\Filament\Resources\ResponseResource\RelationManagers\StatementsRelationManager;
 use App\Models\Response;
@@ -69,10 +70,7 @@ class ResponseResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('election')
-                    ->relationship('election', 'name')
-                    ->searchable()
-                    ->preload(),
+                SharedElectionFilter::make(),
             ], layout: Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),

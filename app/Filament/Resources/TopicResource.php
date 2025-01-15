@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Helper\SharedElectionFilter;
 use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\TopicResource\Pages;
 use App\Models\Topic;
@@ -103,10 +104,7 @@ class TopicResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('election')
-                    ->relationship('election', 'name')
-                    ->searchable()
-                    ->preload(),
+                SharedElectionFilter::make(),
             ], layout: Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),

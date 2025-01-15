@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Helper\SharedElectionFilter;
 use App\Filament\Helper\PublishedColumn;
 use App\Filament\Resources\PartyResource\Pages;
 use App\Filament\Resources\PartyResource\RelationManagers\MoodImagesRelationManager;
@@ -83,10 +84,7 @@ class PartyResource extends Resource
                 Tables\Columns\ImageColumn::make('logo'),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('election')
-                    ->relationship('election', 'name')
-                    ->searchable()
-                    ->preload(),
+                SharedElectionFilter::make(),
             ], layout: Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),

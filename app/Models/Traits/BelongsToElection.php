@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 trait BelongsToElection
 {
-    public function scopeElection(Builder $query, Election $election): void
+    public function scopeElection(Builder $query, Election|int $election): void
     {
-        $query->where('election_id', '=', $election->id);
+        $query->where('election_id', '=', is_int($election) ? $election : $election->id);
     }
 
     public function election(): BelongsTo

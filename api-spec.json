@@ -17,8 +17,8 @@
   "paths": {
     "/{language}/localization": {
       "get": {
-        "summary": "List countries and languages",
-        "description": "Retrieves a list of countries with their respective country code and flag image and languages with their language code.",
+        "summary": "Lists all countries and languages",
+        "description": "Retrieves the full list of countries with their respective country code and flag image and languages with their language code.",
         "responses": {
           "200": {
             "description": "A list of countries and languages",
@@ -79,6 +79,56 @@
         "parameters": [
           {
             "name": "language",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/{language}/{election}/localization": {
+      "get": {
+        "summary": "Lists countries/regions and languages for the election",
+        "description": "Retrieves a list of countries or regions and the languages the election is available in.",
+        "responses": {
+          "200": {
+            "description": "A list of countries and languages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "countries": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Country"
+                      }
+                    },
+                    "languages": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Language"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "language",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "election",
             "in": "path",
             "required": true,
             "schema": {

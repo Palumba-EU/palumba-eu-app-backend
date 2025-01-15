@@ -20,6 +20,7 @@ Route::middleware(sprintf('cache.headers:public;max_age=%d;etag', config('cdn.ma
         Route::get('/sponsors', [SponsorController::class, 'index']);
 
         Route::prefix('/{election}')->group(function () {
+            Route::get('/localization', [LocalizationController::class, 'indexScoped']);
             Route::get('/statements', [StatementController::class, 'index']);
             Route::get('/results', [ResultsController::class, 'index']);
             Route::get('/sponsors', [SponsorController::class, 'indexScoped']);

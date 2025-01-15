@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class CountryResource extends Resource
 {
@@ -21,11 +22,22 @@ class CountryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
 
+    protected static ?string $label = 'Country or Region';
+
+    protected static ?string $pluralLabel = 'Countries and Regions';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Checkbox::make('published')
+                    ->columnSpanFull(),
+                Forms\Components\Select::make('parent_id')
+                    ->relationship('parent', 'name', fn (Builder $query) => $query->country())
+                    ->nullable()
+                    ->label('Region in')
+                    ->placeholder('This is a country')
+                    ->hint('Selecting a country makes this a region within a country (e.g. a German Bundesland)')
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->unique(Country::class, ignoreRecord: true)

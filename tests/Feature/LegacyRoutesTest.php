@@ -18,7 +18,7 @@ class LegacyRoutesTest extends TestCase
 
         $v0_response = $this->get('/api/results');
         $v1_response = $this->get('/api/en/results');
-        $v2_response = $this->get("/api/en/$election->id/results");
+        $v2_response = $this->get("/api/en/elections/$election->id/results");
 
         $v0_response->assertStatus(200);
         $v1_response->assertStatus(200);
@@ -35,7 +35,7 @@ class LegacyRoutesTest extends TestCase
 
         $v0_response = $this->get('/api/statements');
         $v1_response = $this->get('/api/en/statements');
-        $v2_response = $this->get("/api/en/$election->id/statements");
+        $v2_response = $this->get("/api/en/elections/$election->id/statements");
 
         $v0_response->assertStatus(200);
         $v1_response->assertStatus(200);

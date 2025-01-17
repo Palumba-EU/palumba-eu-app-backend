@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Election;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,6 +24,7 @@ class StatementFactory extends Factory
             'sort_index' => fake()->numberBetween(1, 100),
             'emojis' => fake()->emoji(),
             'published' => true,
+            'election_id' => Election::factory(),
         ];
     }
 }

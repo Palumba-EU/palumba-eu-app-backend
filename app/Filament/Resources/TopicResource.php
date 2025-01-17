@@ -37,7 +37,7 @@ class TopicResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255)
-                    ->unique()
+                    ->unique(ignoreRecord: true)
                     ->live(onBlur: true)
                     ->afterStateUpdated(function (Forms\Contracts\HasForms $livewire, Forms\Components\TextInput $component) {
                         $livewire->validateOnly($component->getStatePath());

@@ -40,13 +40,6 @@ jobs:
         run: |
           cp .env.ci .env
           php artisan key:generate
-        env:
-          DB_CONNECTION: pgsql
-          DB_HOST: 127.0.0.1
-          DB_PORT: 5432
-          DB_USERNAME: palumba
-          DB_PASSWORD: secret
-          DB_DATABASE: test
 
       - name: Run artisan test
         run: php artisan test

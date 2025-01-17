@@ -2,15 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Helper\SharedElectionFilter;
+use App\Filament\Helper\ElectionSelect;
 use App\Filament\Helper\PublishedColumn;
+use App\Filament\Helper\SharedElectionFilter;
 use App\Filament\Resources\TopicResource\Pages;
 use App\Models\Topic;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class TopicResource extends Resource
 {
@@ -28,14 +31,17 @@ class TopicResource extends Resource
             ->schema([
                 Forms\Components\Checkbox::make('published')
                     ->columnSpanFull(),
-                Forms\Components\Select::make('election_id')
-                    ->relationship('election', 'name')
-                    ->required()
+                ElectionSelect::make()
                     ->disabledOn('edit')
-                    ->columnSpanFull(),
+                    ->live(onBlur: true),
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->unique()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function (Forms\Contracts\HasForms $livewire, Forms\Components\TextInput $component) {
+                        $livewire->validateOnly($component->getStatePath());
+                    }),
                 Forms\Components\ColorPicker::make('color')
                     ->hex()
                     ->required(),
@@ -59,7 +65,12 @@ class TopicResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\Select::make('statements')
                     ->label('Associated statements')
-                    ->relationship(name: 'statements', titleAttribute: 'statement')
+                    ->relationship(name: 'statements', titleAttribute: 'statement', modifyQueryUsing: function (Builder $query, Get $get) {
+                        $electionId = $get('election_id');
+                        if (! is_null($electionId)) {
+                            $query->election($electionId);
+                        }
+                    })
                     ->multiple()
                     ->searchable()
                     ->preload()

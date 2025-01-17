@@ -36,10 +36,15 @@ class TranslationRepository
         }
 
         $path = $this->getPath($class);
-        $data = $this->getData($path);
 
-        if (array_key_exists($identifier, $data)) {
-            return $data[$identifier];
+        try {
+            $data = $this->getData($path);
+
+            if (array_key_exists($identifier, $data)) {
+                return $data[$identifier];
+            }
+        } catch (\Exception $exception) {
+            return $default;
         }
 
         return $default;
@@ -56,7 +61,7 @@ class TranslationRepository
     {
         if (! array_key_exists($path, $this->files)) {
             if (! $this->disk->exists($path)) {
-                throw new \Exception('Translation does not exist');
+                throw new \Exception('Translation does not exist ');
             }
 
             $this->files[$path] = json_decode($this->disk->get($path), true);

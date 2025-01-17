@@ -44,5 +44,5 @@ jobs:
       - name: Run artisan test
         run: php artisan test
 
-      - name: Run artisan pint --test
-        run: php artisan pint --test
+      - name: Run pint
+        run: php ./vendor/bin/pint --test

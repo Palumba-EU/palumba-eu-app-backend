@@ -59,7 +59,7 @@ class CrowdInTranslation
 
     public function listTargetLanguages(): Collection
     {
-        $languages = [];
+        $languages = new Collection();
 
         try {
             $languages = Cache::remember('languages', config('crowdin.target_language_cache_time'), function () {

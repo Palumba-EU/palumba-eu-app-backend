@@ -16,5 +16,4 @@ class ListStatements extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
-
 }

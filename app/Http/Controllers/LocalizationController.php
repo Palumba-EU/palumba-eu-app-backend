@@ -7,12 +7,11 @@ use App\Http\Resources\LanguageResource;
 use App\Models\Country;
 use App\Models\Election;
 use App\Models\Language;
-use App\Services\CrowdInTranslation;
 use Illuminate\Http\JsonResponse;
 
 class LocalizationController extends Controller
 {
-    public function index(CrowdInTranslation $crowdin): JsonResponse
+    public function index(): JsonResponse
     {
         $countries = Country::query()->published()->country()->get();
         $languages = Language::query()->published()->get();
@@ -23,7 +22,7 @@ class LocalizationController extends Controller
         ]);
     }
 
-    public function indexScoped(string $language, Election $election, CrowdInTranslation $crowdin): JsonResponse
+    public function indexScoped(string $language, Election $election): JsonResponse
     {
         $countries = Country::query()->published()->parent($election->country)->get();
         $languages = $election->availableLanguages()->published()->get();

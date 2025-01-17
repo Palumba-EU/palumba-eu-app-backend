@@ -37,7 +37,7 @@ class Topic extends Model implements Translatable
 {
     use BelongsToElection, CrowdIn, HasFactory, Publishable;
 
-    protected $fillable = ['name', 'color', 'icon', 'published', 'extreme1', 'extreme2', 'extreme1_details', 'extreme2_details', 'extreme1_emojis', 'extreme2_emojis'];
+    protected $fillable = ['name', 'color', 'icon', 'published', 'extreme1', 'extreme2', 'extreme1_details', 'extreme2_details', 'extreme1_emojis', 'extreme2_emojis', 'election_id'];
 
     public function statements(): BelongsToMany
     {

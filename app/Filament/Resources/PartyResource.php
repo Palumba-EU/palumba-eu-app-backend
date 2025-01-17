@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Helper\SharedElectionFilter;
+use App\Filament\Helper\ElectionSelect;
 use App\Filament\Helper\PublishedColumn;
+use App\Filament\Helper\SharedElectionFilter;
 use App\Filament\Resources\PartyResource\Pages;
 use App\Filament\Resources\PartyResource\RelationManagers\MoodImagesRelationManager;
 use App\Filament\Resources\PartyResource\RelationManagers\PartyPositionsRelationManager;
@@ -36,11 +37,8 @@ class PartyResource extends Resource
             ->schema([
                 Forms\Components\Checkbox::make('published')
                     ->columnSpanFull(),
-                Forms\Components\Select::make('election_id')
-                    ->relationship('election', 'name')
-                    ->required()
-                    ->disabledOn('edit')
-                    ->columnSpanFull(),
+                ElectionSelect::make()
+                    ->disabledOn('edit'),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),

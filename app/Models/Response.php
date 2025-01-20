@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Enums\LevelOfEducation;
 use App\Models\Traits\BelongsToElection;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -25,6 +26,7 @@ use Illuminate\Support\Collection;
  * @property Collection<Statement> $statements
  * @property string|null $hashed_ip_address
  * @property Carbon $editable_until
+ * @property int|null $level_of_education The level of education according to International Standard Classification of Education (ISCED)
  */
 class Response extends Model
 {
@@ -37,6 +39,7 @@ class Response extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'editable_until' => 'datetime',
+        'level_of_education' => LevelOfEducation::class,
     ];
 
     protected $fillable = [
@@ -48,6 +51,7 @@ class Response extends Model
         'hashed_ip_address',
         'election_id',
         'editable_until',
+        'level_of_education',
     ];
 
     public function country(): BelongsTo

@@ -26,7 +26,7 @@ use Illuminate\Support\Collection;
  * @property Collection<Statement> $statements
  * @property string|null $hashed_ip_address
  * @property Carbon $editable_until
- * @property int|null $level_of_education The level of education according to International Standard Classification of Education (ISCED)
+ * @property LevelOfEducation|null $level_of_education The level of education according to International Standard Classification of Education (ISCED)
  */
 class Response extends Model
 {

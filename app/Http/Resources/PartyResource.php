@@ -29,6 +29,7 @@ class PartyResource extends JsonResource
             'acronym' => $this->acronym,
             'answers' => AnswerResource::collection($this->statements),
             'positions' => $this->positions->map(fn ($w) => ['topic_id' => $w->id, 'position' => $w->pivot->position]),
+            'in_parliament' => $this->in_parliament,
         ];
     }
 }

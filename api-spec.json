@@ -690,6 +690,9 @@
           "acronym": {
             "type": "string"
           },
+          "in_parliament": {
+            "type": "boolean"
+          },
           "images": {
             "type": "array",
             "items": {
@@ -770,7 +773,8 @@
           "policies",
           "position",
           "link",
-          "acronym"
+          "acronym",
+          "in_parliament"
         ]
       },
       "Sponsor": {

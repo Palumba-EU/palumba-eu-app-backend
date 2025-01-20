@@ -35,6 +35,7 @@ use Illuminate\Support\Collection;
  * @property Collection<Topic> $positions
  * @property int $election_id
  * @property Election $election
+ * @property bool $in_parliament
  */
 #[ObservedBy([AuditLogObserver::class])]
 class Party extends Model implements Translatable
@@ -49,6 +50,11 @@ class Party extends Model implements Translatable
         'acronym',
         'published',
         'election_id',
+        'in_parliament',
+    ];
+
+    protected $casts = [
+        'in_parliament' => 'boolean',
     ];
 
     public function policies(): HasMany

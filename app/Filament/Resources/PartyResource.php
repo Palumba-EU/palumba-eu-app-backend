@@ -55,6 +55,8 @@ class PartyResource extends Resource
                     ->maxLength(512),
                 Forms\Components\TextInput::make('acronym')
                     ->required(),
+                Forms\Components\Checkbox::make('in_parliament')
+                    ->label('Currently in parliament'),
             ]);
     }
 
@@ -80,6 +82,13 @@ class PartyResource extends Resource
                 Tables\Columns\ColorColumn::make('color')
                     ->copyable(),
                 Tables\Columns\ImageColumn::make('logo'),
+                Tables\Columns\IconColumn::make('in_parliament')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check')
+                    ->trueColor('primary')
+                    ->falseIcon('heroicon-o-x-mark')
+                    ->falseColor('gray')
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SharedElectionFilter::make(),

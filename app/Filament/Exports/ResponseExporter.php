@@ -27,8 +27,9 @@ class ResponseExporter extends Exporter
             ExportColumn::make('age'),
             ExportColumn::make('country.name'),
             ExportColumn::make('gender'),
-            ExportColumn::make('hashed_ip_address'),
+            ExportColumn::make('level_of_education.name'),
             ExportColumn::make('language_code'),
+            ExportColumn::make('hashed_ip_address'),
             ExportColumn::make('uuid')
                 ->label('UUID'),
             ...$statements->map(function (Statement $statement) {

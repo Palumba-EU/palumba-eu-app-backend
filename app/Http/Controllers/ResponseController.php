@@ -31,7 +31,7 @@ class ResponseController extends Controller
         $election = $request->has('election_id') ? Election::query()->findOrFail($request->get('election_id')) : Election::default();
 
         $response = new Response([
-            ...$data->only(['age', 'country_id', 'gender'])->toArray(),
+            ...$data->only(['age', 'country_id', 'gender', 'level_of_education'])->toArray(),
             'election_id' => $election->id,
             'language_code' => $language->code,
             'created_at' => null,

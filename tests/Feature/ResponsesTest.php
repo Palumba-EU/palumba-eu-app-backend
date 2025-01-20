@@ -19,7 +19,7 @@ class ResponsesTest extends TestCase
 
         $statements = Statement::factory()->count(3)->create();
 
-        $response = $this->post('/api/responses', [
+        $response = $this->postJson('/api/responses', [
             'age' => null,
             'country_id' => Country::factory()->create()->id,
             'language_id' => Language::factory()->create()->id,
@@ -41,7 +41,7 @@ class ResponsesTest extends TestCase
         ]);
 
         // Update existing answer and add new one
-        $updateResponse1 = $this->post('/api/responses/'.$uuid.'/answers', [
+        $updateResponse1 = $this->postJson('/api/responses/'.$uuid.'/answers', [
             'answers' => [
                 ['statement_id' => $statements[0]->id, 'answer' => 0.5],
                 ['statement_id' => $statements[2]->id, 'answer' => 0],
@@ -59,7 +59,7 @@ class ResponsesTest extends TestCase
         // Travel 2 hours into the future (editableTime is set to 1 hour)
         $this->travel(2)->hours();
 
-        $updateResponse2 = $this->post('/api/responses/'.$uuid.'/answers', [
+        $updateResponse2 = $this->postJson('/api/responses/'.$uuid.'/answers', [
             'answers' => [
                 ['statement_id' => $statements[0]->id, 'answer' => -1],
             ],
@@ -72,5 +72,49 @@ class ResponsesTest extends TestCase
             'statement_id' => $statements[0]->id,
             'answer' => 1,
         ]);
+    }
+
+    public function test_level_of_education()
+    {
+        // level_of_education
+        $response = $this->postJson('/api/responses', [
+            'age' => null,
+            'gender' => null,
+            'country_id' => Country::factory()->create()->id,
+            'language_id' => Language::factory()->create()->id,
+            'level_of_education' => 0,
+            'answers' => [],
+        ]);
+        $response->assertStatus(201);
+
+        $response = $this->postJson('/api/responses', [
+            'age' => null,
+            'gender' => null,
+            'country_id' => Country::factory()->create()->id,
+            'language_id' => Language::factory()->create()->id,
+            'level_of_education' => -1,
+            'answers' => [],
+        ]);
+        $response->assertStatus(422);
+
+        $response = $this->postJson('/api/responses', [
+            'age' => null,
+            'gender' => null,
+            'country_id' => Country::factory()->create()->id,
+            'language_id' => Language::factory()->create()->id,
+            'level_of_education' => 9,
+            'answers' => [],
+        ]);
+        $response->assertStatus(422);
+
+        $response = $this->postJson('/api/responses', [
+            'age' => null,
+            'gender' => null,
+            'country_id' => Country::factory()->create()->id,
+            'language_id' => Language::factory()->create()->id,
+            'level_of_education' => null,
+            'answers' => [],
+        ]);
+        $response->assertStatus(201);
     }
 }

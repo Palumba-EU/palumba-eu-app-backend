@@ -26,6 +26,7 @@ class CreateResponseRequest extends FormRequest
                 fn (Builder $query) => $query->where('published', '=', true)
             )],
             'gender' => ['present', 'nullable', Rule::in(['male', 'female', 'gender-fluid', 'non-binary', 'diverse'])],
+            'level_of_education' => ['sometimes', 'nullable', 'integer', 'min:0', 'max:8'],
             'answers' => ['present', 'array'],
             'answers.*.statement_id' => ['required', 'distinct', Rule::exists('statements', 'id')->where(
                 fn (Builder $query) => $query->where('published', '=', true)

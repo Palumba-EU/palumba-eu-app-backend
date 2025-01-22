@@ -431,6 +431,63 @@
         }
       }
     },
+    "/notifications/topics": {
+      "get": {
+        "summary": "List Topics for Notifications",
+        "description": "List all available topics for Push Notifications subscriptions",
+        "responses": {
+          "200": {
+            "description": "A list of topics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications/subscriptions": {
+      "put": {
+        "summary": "Subscribe for Push Notifications",
+        "description": "Subscribes the given device to the given topics.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_token": {
+                    "type": "string"
+                  },
+                  "topics": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": ["token", "topics"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successfully subscribes"
+          },
+          "400": {
+            "description": "Unable to subscribe. See body for details."
+          }
+        }
+      }
+    },
     "/statistics": {
       "get": {
         "summary": "Available statistics",

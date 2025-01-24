@@ -20,6 +20,11 @@
   ],
   "paths": {
     "/{language}/localization": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/language"
+        }
+      ],
       "get": {
         "summary": "Lists all countries and languages",
         "description": "Retrieves the full list of countries with their respective country code and flag image and languages with their language code.",
@@ -62,6 +67,11 @@
       }
     },
     "/{language}/elections": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/language"
+        }
+      ],
       "get": {
         "summary": "List elections",
         "description": "Retrieves the complete list of all current and upcoming elections",
@@ -93,6 +103,11 @@
       }
     },
     "/{language}/elections/{election}/localization": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/language"
+        }
+      ],
       "get": {
         "summary": "Lists countries/regions and languages for the election",
         "description": "Retrieves a list of countries or regions and the languages the election is available in.",
@@ -143,6 +158,11 @@
       }
     },
     "/{language}/elections/{election}/statements": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/language"
+        }
+      ],
       "get": {
         "summary": "List statements",
         "description": "Retrieves the complete list of statements with their details and footnotes.",
@@ -182,6 +202,11 @@
       }
     },
     "/{language}/elections/{election}/results": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/language"
+        }
+      ],
       "get": {
         "summary": "List parties and topics",
         "description": "Retrieves the complete list of parties and topics.",
@@ -236,6 +261,11 @@
       }
     },
     "/{language}/elections/{election}/sponsors": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/language"
+        }
+      ],
       "get": {
         "summary": "List sponsors",
         "description": "Retrieves a list of sponsors with their details.",
@@ -277,6 +307,7 @@
     "/responses": {
       "post": {
         "summary": "Submit a users response",
+        "tags": ["Responses"],
         "description": "Submits a users responses for statistical evaluations.",
         "requestBody": {
           "required": true,
@@ -379,8 +410,19 @@
       }
     },
     "/responses/{response_uuid}/answers": {
+      "parameters": [
+        {
+          "name": "response_uuid",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
       "post": {
         "summary": "Submit additional answers",
+        "tags": ["Responses"],
         "description": "Lets a user add additional or change their existing answers",
         "requestBody": {
           "required": true,
@@ -431,9 +473,16 @@
         }
       }
     },
-    "/notifications/topics": {
+
+    "/{language}/notification-topics": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/language"
+        }
+      ],
       "get": {
         "summary": "List Topics for Notifications",
+        "tags": ["Push Notifications"],
         "description": "List all available topics for Push Notifications subscriptions",
         "responses": {
           "200": {
@@ -443,7 +492,16 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string"
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The displayable name"
+                      }
+                    }
                   }
                 }
               }
@@ -452,10 +510,23 @@
         }
       }
     },
-    "/notifications/subscriptions": {
+    "/{language}/devices/{device}/subscriptions": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/language"
+        },
+        {
+          "name": "device",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
       "put": {
-        "summary": "Subscribe for Push Notifications",
-        "description": "Subscribes the given device to the given topics.",
+        "summary": "Update the subscriptions for this device",
+        "tags": ["Push Notifications"],
         "requestBody": {
           "required": true,
           "content": {
@@ -463,27 +534,31 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "device_token": {
-                    "type": "string"
-                  },
-                  "topics": {
+                  "subscribe": {
                     "type": "array",
+                    "description": "A list of topics to subscribe to",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "unsubscribe": {
+                    "type": "array",
+                    "description": "A list of topics to unsubscribe from",
                     "items": {
                       "type": "string"
                     }
                   }
-                },
-                "required": ["token", "topics"]
+                }
               }
             }
           }
         },
         "responses": {
           "204": {
-            "description": "Successfully subscribes"
+            "description": "Successfully update subscriptions"
           },
           "400": {
-            "description": "Unable to subscribe. See body for details."
+            "description": "Unable to update subscriptions."
           }
         }
       }
@@ -491,6 +566,7 @@
     "/statistics": {
       "get": {
         "summary": "Available statistics",
+        "tags": ["Misc"],
         "description": "Returns a set of available statistics",
         "responses": {
           "200": {
@@ -899,6 +975,16 @@
         "minimum": -1,
         "maximum": 1,
         "description": "The parties answer encoded as: -1 = Fully disagree, -0.5 = Somewhat disagree, 0 = Neutral, +0.5 = Somewhat Agree, +1 = Fully agree"
+      }
+    },
+    "parameters": {
+      "language": {
+        "name": "language",
+        "in": "path",
+        "schema": {
+          "type": "string"
+        },
+        "required": true
       }
     }
   }

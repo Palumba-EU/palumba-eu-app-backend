@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ElectionController;
 use App\Http\Controllers\LocalizationController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\SponsorController;
@@ -25,6 +26,10 @@ Route::middleware(sprintf('cache.headers:public;max_age=%d;etag', config('cdn.ma
             Route::get('/results', [ResultsController::class, 'index']);
             Route::get('/sponsors', [SponsorController::class, 'indexScoped']);
         });
+
+        // Push notifications
+        Route::get('/notification-topics', [NotificationsController::class, 'index']);
+        Route::put('/devices/{device}/subscriptions', [NotificationsController::class, 'updateSubscriptions']);
 
         // Deprecated - New routes are all scoped to election
         Route::get('/statements', [StatementController::class, 'index']);

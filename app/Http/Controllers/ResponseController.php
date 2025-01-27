@@ -36,7 +36,8 @@ class ResponseController extends Controller
             'language_code' => $language->code,
             'created_at' => null,
             'hashed_ip_address' => $anonymization->getHashedIp($request),
-            'editable_until' => Carbon::now()->addHours(config('responses.editableTime')),
+            // Add a random number of minutes to prevent the answer to be associable to log entries
+            'editable_until' => Carbon::now()->addHours(config('responses.editableTime'))->addMinutes(rand(0, config('responses.editableTime_randomNumberOfMinutesRange'))),
         ]);
 
         DB::transaction(function () use ($response, $answers) {

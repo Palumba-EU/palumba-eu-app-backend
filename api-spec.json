@@ -772,6 +772,9 @@
           "logo": {
             "type": "string"
           },
+          "description": {
+            "type": "string"
+          },
           "link": {
             "type": "string"
           },
@@ -787,7 +790,8 @@
           "name",
           "logo",
           "link",
-          "acronym"
+          "acronym",
+          "description"
         ]
       },
       "Policy": {

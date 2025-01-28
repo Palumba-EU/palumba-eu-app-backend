@@ -307,7 +307,9 @@
     "/responses": {
       "post": {
         "summary": "Submit a users response",
-        "tags": ["Responses"],
+        "tags": [
+          "Responses"
+        ],
         "description": "Submits a users responses for statistical evaluations.",
         "requestBody": {
           "required": true,
@@ -422,7 +424,9 @@
       ],
       "post": {
         "summary": "Submit additional answers",
-        "tags": ["Responses"],
+        "tags": [
+          "Responses"
+        ],
         "description": "Lets a user add additional or change their existing answers",
         "requestBody": {
           "required": true,
@@ -473,7 +477,6 @@
         }
       }
     },
-
     "/{language}/notification-topics": {
       "parameters": [
         {
@@ -482,7 +485,9 @@
       ],
       "get": {
         "summary": "List Topics for Notifications",
-        "tags": ["Push Notifications"],
+        "tags": [
+          "Push Notifications"
+        ],
         "description": "List all available topics for Push Notifications subscriptions",
         "responses": {
           "200": {
@@ -526,7 +531,9 @@
       ],
       "put": {
         "summary": "Update the subscriptions for this device",
-        "tags": ["Push Notifications"],
+        "tags": [
+          "Push Notifications"
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -566,7 +573,9 @@
     "/statistics": {
       "get": {
         "summary": "Available statistics",
-        "tags": ["Misc"],
+        "tags": [
+          "Misc"
+        ],
         "description": "Returns a set of available statistics",
         "responses": {
           "200": {
@@ -655,13 +664,45 @@
                 "type": "null"
               }
             ]
+          },
+          "egg_screen": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "yes_btn_text": {
+                "type": "string"
+              },
+              "yes_btn_link": {
+                "type": "string"
+              },
+              "no_btn_text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "title",
+              "description",
+              "image",
+              "yes_btn_text",
+              "yes_btn_link",
+              "no_btn_text"
+            ]
           }
         },
         "required": [
           "id",
           "name",
           "date",
-          "country"
+          "country",
+          "egg_screen"
         ]
       },
       "Statement": {

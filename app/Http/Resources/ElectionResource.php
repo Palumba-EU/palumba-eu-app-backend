@@ -21,6 +21,15 @@ class ElectionResource extends JsonResource
             'name' => $this->getTranslationForAttribute('name'),
             'date' => $this->date->toDateString(),
             'country' => new CountryResource($this->country),
+
+            'egg_screen' => [
+                'title' => $this->getTranslationForAttribute('egg_title'),
+                'description' => $this->getTranslationForAttribute('egg_description'),
+                'image' => $this->getTranslatedFile('egg_image'),
+                'yes_btn_text' => $this->getTranslationForAttribute('egg_yes_btn_text'),
+                'yes_btn_link' => $this->getTranslationForAttribute('egg_yes_btn_link'),
+                'no_btn_text' => $this->getTranslationForAttribute('egg_no_btn_text'),
+            ],
         ];
     }
 }

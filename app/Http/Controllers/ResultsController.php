@@ -25,6 +25,7 @@ class ResultsController extends Controller
             'mood_images' => fn (HasMany $query) => $query->published(),
             'statements' => fn (BelongsToMany $query) => $query->published()->election($election),
             'positions' => fn (BelongsToMany $query) => $query->published()->election($election),
+            'unavailable_in_countries' => fn (BelongsToMany $query) => $query->published()->parent($election->country_id),
         ])->published()->get();
 
         return response()->json([

@@ -36,6 +36,7 @@ use Illuminate\Support\Collection;
  * @property int $election_id
  * @property Election $election
  * @property bool $in_parliament
+ * @property Collection<Country> $unavailable_in_countries
  */
 #[ObservedBy([AuditLogObserver::class])]
 class Party extends Model implements Translatable
@@ -80,6 +81,11 @@ class Party extends Model implements Translatable
     public function positions(): BelongsToMany
     {
         return $this->belongsToMany(Topic::class, 'party_topic_positions')->withTimestamps()->withPivot(['position']);
+    }
+
+    public function unavailable_in_countries(): BelongsToMany
+    {
+        return $this->belongsToMany(Country::class);
     }
 
     public function getTranslatableAttributes(): array

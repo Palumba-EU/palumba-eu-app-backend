@@ -51,19 +51,20 @@ class StatementResource extends Resource
                     ->label('This is the tutorial statement')
                     ->live()
                     ->rules([
-                        fn( Get $get ): \Closure => function (string $attribute, $value, \Closure $fail) use ($get, $form) {
-                            if( is_null($get('election_id')) || !$value )
+                        fn (Get $get): \Closure => function (string $attribute, $value, \Closure $fail) use ($get, $form) {
+                            if (is_null($get('election_id')) || ! $value) {
                                 return;
+                            }
 
                             $query = Statement::query()->election($get('election_id'))->where('is_tutorial', '=', true);
                             /** @var Statement|null $record */
                             $record = $form->getRecord();
-                            if( !is_null($record) ){
+                            if (! is_null($record)) {
                                 $query = $query->where('id', '!=', $record->id);
                             }
 
-                            if( $query->exists() ){
-                                $fail("This election already has a tutorial question defined");
+                            if ($query->exists()) {
+                                $fail('This election already has a tutorial question defined');
                             }
                         },
                     ])
@@ -75,7 +76,6 @@ class StatementResource extends Resource
                     ->columnSpanFull(),
             ]);
     }
-
 
     public static function table(Table $table): Table
     {

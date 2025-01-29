@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\StatementResource\Pages;
 
 use App\Filament\Resources\StatementResource;
-use App\Models\Statement;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateStatement extends CreateRecord

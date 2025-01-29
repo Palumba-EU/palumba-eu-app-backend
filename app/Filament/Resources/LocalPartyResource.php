@@ -52,6 +52,9 @@ class LocalPartyResource extends Resource
                     ->directory('local_parties')
                     ->required()
                     ->columnSpanFull(),
+                Forms\Components\RichEditor::make('description')
+                    ->required()
+                    ->columnSpanFull(),
                 Forms\Components\RichEditor::make('internal_notes')
                     ->default('')
                     ->hint('This information will not be shared publicly')

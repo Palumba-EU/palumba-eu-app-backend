@@ -21,6 +21,7 @@ class LocalPartyResource extends JsonResource
             'id' => $this->id,
             'name' => $this->getTranslationForAttribute('name'),
             'logo' => Storage::disk('public')->url($this->logo),
+            'description' => $this->getTranslationForAttribute('description'),
             'link' => $this->link,
             'acronym' => $this->acronym,
             'country_id' => $this->country_id,

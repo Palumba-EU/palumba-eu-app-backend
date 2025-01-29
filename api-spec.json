@@ -161,6 +161,12 @@
       "parameters": [
         {
           "$ref": "#/components/parameters/language"
+        },
+        {
+          "name": "include_tutorial",
+          "required": false,
+          "in": "query",
+          "description": "Includes the tutorial statement if set"
         }
       ],
       "get": {

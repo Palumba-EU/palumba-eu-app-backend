@@ -10,6 +10,7 @@ use App\Filament\Resources\StatementResource\RelationManagers\StatementWeightsRe
 use App\Models\Statement;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -46,7 +47,30 @@ class StatementResource extends Resource
                 Forms\Components\RichEditor::make('footnote')
                     ->required()
                     ->columnSpanFull(),
+                Forms\Components\Checkbox::make('is_tutorial')
+                    ->label('This is the tutorial statement')
+                    ->live()
+                    ->rules([
+                        fn (Get $get): \Closure => function (string $attribute, $value, \Closure $fail) use ($get, $form) {
+                            if (is_null($get('election_id')) || ! $value) {
+                                return;
+                            }
+
+                            $query = Statement::query()->election($get('election_id'))->where('is_tutorial', '=', true);
+                            /** @var Statement|null $record */
+                            $record = $form->getRecord();
+                            if (! is_null($record)) {
+                                $query = $query->where('id', '!=', $record->id);
+                            }
+
+                            if ($query->exists()) {
+                                $fail('This election already has a tutorial question defined');
+                            }
+                        },
+                    ])
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('sort_index')
+                    ->hidden(fn (Get $get): bool => $get('is_tutorial'))
                     ->required()
                     ->numeric()
                     ->columnSpanFull(),

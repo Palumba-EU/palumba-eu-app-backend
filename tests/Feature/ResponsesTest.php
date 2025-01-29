@@ -56,8 +56,8 @@ class ResponsesTest extends TestCase
             'answer' => 1,
         ]);
 
-        // Travel 2 hours into the future (editableTime is set to 1 hour)
-        $this->travel(2)->hours();
+        // Travel 3 hours into the future (editableTime is set to 1 hour +/- 120 minutes)
+        $this->travel(3)->hours();
 
         $updateResponse2 = $this->postJson('/api/responses/'.$uuid.'/answers', [
             'answers' => [

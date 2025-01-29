@@ -28,6 +28,8 @@ class ElectionResource extends Resource
             ->schema([
                 Forms\Components\Checkbox::make('published')
                     ->columnSpanFull(),
+                $form->getRecord()?->date->isPast() ?
+                Forms\Components\Placeholder::make('date')->content(fn (Election $record) => $record->date->toFormattedDateString()) :
                 Forms\Components\DatePicker::make('date')
                     ->required()
                     ->after(Carbon::now()->addHours()),
@@ -47,6 +49,43 @@ class ElectionResource extends Resource
                     ->preload()
                     ->searchable()
                     ->helperText('Keep empty to use all languages'),
+                Forms\Components\Tabs::make('Tabs')->tabs([
+                    Forms\Components\Tabs\Tab::make('Egg Screen')
+                        ->columns(2)
+                        ->schema([
+                            Forms\Components\TextInput::make('egg_title')
+                                ->label('Title')
+                                ->maxLength(255)
+                                ->required()
+                                ->columnSpanFull(),
+                            Forms\Components\FileUpload::make('egg_image')
+                                ->label('Image')
+                                ->image()
+                                ->directory('elections/egg_screen')
+                                ->required()
+                                ->columnSpanFull(),
+                            Forms\Components\RichEditor::make('egg_description')
+                                ->label('Content')
+                                ->required()
+                                ->columnSpanFull(),
+                            Forms\Components\TextInput::make('egg_yes_btn_text')
+                                ->label('Text for Yes Button')
+                                ->required()
+                                ->columnSpan(1)
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('egg_yes_btn_link')
+                                ->label('Link for Yes Button')
+                                ->required()
+                                ->columnSpan(1)
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('egg_no_btn_text')
+                                ->label('Text for No Button')
+                                ->required()
+                                ->columnSpan(1)
+                                ->maxLength(255),
+                        ]),
+                ])->columnSpanFull(),
+
             ]);
     }
 

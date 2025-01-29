@@ -6,6 +6,7 @@ use App\Models\Traits\Publishable;
 use App\Observers\AuditLogObserver;
 use App\Services\CrowdIn\CrowdIn;
 use App\Services\CrowdIn\Translatable;
+use App\Services\CrowdIn\TranslatableFile;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property int $id
@@ -25,6 +27,12 @@ use Illuminate\Support\Collection;
  * @property int|null $country_id
  * @property Country|null $country
  * @property Collection<Language> $languages
+ * @property string $egg_title
+ * @property string $egg_description
+ * @property string $egg_image
+ * @property string $egg_yes_btn_text
+ * @property string $egg_yes_btn_link
+ * @property string $egg_no_btn_text
  */
 #[ObservedBy([AuditLogObserver::class])]
 class Election extends Model implements Translatable
@@ -40,6 +48,12 @@ class Election extends Model implements Translatable
         'name',
         'date',
         'country_id',
+        'egg_title',
+        'egg_description',
+        'egg_image',
+        'egg_yes_btn_text',
+        'egg_yes_btn_link',
+        'egg_no_btn_text',
     ];
 
     public function country(): BelongsTo
@@ -63,12 +77,14 @@ class Election extends Model implements Translatable
 
     public function getTranslatableAttributes(): array
     {
-        return ['name'];
+        return ['name', 'egg_title', 'egg_description', 'egg_yes_btn_text', 'egg_yes_btn_link', 'egg_no_btn_text'];
     }
 
     public function getTranslatableFiles(): array
     {
-        return [];
+        return [
+            new TranslatableFile('egg_image', Storage::disk('public')->path($this->egg_image), sprintf('Egg Screen image of %s', $this->name), $this->updated_at),
+        ];
     }
 
     public static function getRelationshipsToEagerLoad(): array

@@ -30,6 +30,7 @@ class PartyResource extends JsonResource
             'answers' => AnswerResource::collection($this->statements),
             'positions' => $this->positions->map(fn ($w) => ['topic_id' => $w->id, 'position' => $w->pivot->position]),
             'in_parliament' => $this->in_parliament,
+            'unavailable_in' => CountryResource::collection($this->unavailable_in_countries),
         ];
     }
 }

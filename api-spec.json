@@ -946,6 +946,12 @@
                 }
               }
             }
+          },
+          "unavailable_in": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Country"
+            }
           }
         },
         "required": [
@@ -959,7 +965,8 @@
           "position",
           "link",
           "acronym",
-          "in_parliament"
+          "in_parliament",
+          "unavailable_in"
         ]
       },
       "Sponsor": {

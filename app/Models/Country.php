@@ -68,9 +68,9 @@ class Country extends Model implements Translatable
         $query->whereNotNull('parent_id');
     }
 
-    public function scopeParent(Builder $query, ?Country $parent)
+    public function scopeParent(Builder $query, Country|int|null $parent)
     {
-        $query->where('parent_id', $parent?->id);
+        $query->where('parent_id', is_int($parent) ? $parent : $parent?->id);
     }
 
     public function getTranslatableAttributes(): array

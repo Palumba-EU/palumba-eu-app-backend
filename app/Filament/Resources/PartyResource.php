@@ -10,12 +10,15 @@ use App\Filament\Resources\PartyResource\RelationManagers\MoodImagesRelationMana
 use App\Filament\Resources\PartyResource\RelationManagers\PartyPositionsRelationManager;
 use App\Filament\Resources\PartyResource\RelationManagers\PoliciesRelationManager;
 use App\Filament\Resources\PartyResource\RelationManagers\StatementsRelationManager;
+use App\Models\Election;
 use App\Models\Party;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class PartyResource extends Resource
 {
@@ -38,7 +41,8 @@ class PartyResource extends Resource
                 Forms\Components\Checkbox::make('published')
                     ->columnSpanFull(),
                 ElectionSelect::make()
-                    ->disabledOn('edit'),
+                    ->disabledOn('edit')
+                    ->live(onBlur: true),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -59,6 +63,24 @@ class PartyResource extends Resource
                     ->required(),
                 Forms\Components\Checkbox::make('in_parliament')
                     ->label('Currently in parliament'),
+                Forms\Components\Select::make('unavailable_in_countries')
+                    ->relationship(titleAttribute: 'name', modifyQueryUsing: function (Builder $query, Get $get) {
+                        $electionId = $get('election_id');
+                        if (empty($electionId)) {
+                            return $query;
+                        }
+
+                        $election = Election::query()->find($electionId);
+
+                        if (is_null($election)) {
+                            return $query;
+                        }
+
+                        return $query->parent($election->country_id);
+                    })
+                    ->label('Unavailable in')
+                    ->multiple()
+                    ->preload(),
             ]);
     }
 

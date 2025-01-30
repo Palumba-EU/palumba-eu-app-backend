@@ -742,6 +742,9 @@
                 }
               }
             }
+          },
+          "is_tutorial": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -750,7 +753,8 @@
           "emojis",
           "details",
           "footnote",
-          "weights"
+          "weights",
+          "is_tutorial"
         ]
       },
       "Topic": {

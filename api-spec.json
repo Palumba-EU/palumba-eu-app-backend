@@ -1,1053 +1,1076 @@
 {
-  "openapi": "3.0.0",
-  "info": {
-    "title": "Palumba API",
-    "version": "0.1.6"
-  },
-  "servers": [
-    {
-      "url": "http://localhost/api",
-      "description": "Local"
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Palumba API",
+        "version": "0.1.6"
     },
-    {
-      "url": "http://palumba-staging.bitperfect-software.com/api",
-      "description": "Staging"
-    },
-    {
-      "url": "http://palumba.bitperfect-software.com/api",
-      "description": "Production"
-    }
-  ],
-  "paths": {
-    "/{language}/localization": {
-      "parameters": [
+    "servers": [
         {
-          "$ref": "#/components/parameters/language"
+            "url": "http://localhost/api",
+            "description": "Local"
+        },
+        {
+            "url": "http://palumba-staging.bitperfect-software.com/api",
+            "description": "Staging"
+        },
+        {
+            "url": "http://palumba.bitperfect-software.com/api",
+            "description": "Production"
         }
-      ],
-      "get": {
-        "summary": "Lists all countries and languages",
-        "description": "Retrieves the full list of countries with their respective country code and flag image and languages with their language code.",
-        "responses": {
-          "200": {
-            "description": "A list of countries and languages",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "countries": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Country"
-                      }
-                    },
-                    "languages": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Language"
-                      }
-                    }
-                  }
+    ],
+    "paths": {
+        "/{language}/localization": {
+            "parameters": [
+                {
+                    "$ref": "#/components/parameters/language"
                 }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "language",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/{language}/elections": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/language"
-        }
-      ],
-      "get": {
-        "summary": "List elections",
-        "description": "Retrieves the complete list of all current and upcoming elections",
-        "responses": {
-          "200": {
-            "description": "A list of elections",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Election"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "language",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/{language}/elections/{election}/localization": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/language"
-        }
-      ],
-      "get": {
-        "summary": "Lists countries/regions and languages for the election",
-        "description": "Retrieves a list of countries or regions and the languages the election is available in.",
-        "responses": {
-          "200": {
-            "description": "A list of countries and languages",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "countries": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Country"
-                      }
-                    },
-                    "languages": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Language"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "language",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "election",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/{language}/elections/{election}/statements": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/language"
-        },
-        {
-          "name": "include_tutorial",
-          "required": false,
-          "in": "query",
-          "description": "Includes the tutorial statement if set"
-        }
-      ],
-      "get": {
-        "summary": "List statements",
-        "description": "Retrieves the complete list of statements with their details and footnotes.",
-        "responses": {
-          "200": {
-            "description": "A list of statements",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Statement"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "language",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "election",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/{language}/elections/{election}/results": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/language"
-        }
-      ],
-      "get": {
-        "summary": "List parties and topics",
-        "description": "Retrieves the complete list of parties and topics.",
-        "responses": {
-          "200": {
-            "description": "A list of topics",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "topics": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Topic"
-                      }
-                    },
-                    "parties": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Party"
-                      }
-                    }
-                  },
-                  "required": [
-                    "topics",
-                    "parties"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "language",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "election",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/{language}/elections/{election}/sponsors": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/language"
-        }
-      ],
-      "get": {
-        "summary": "List sponsors",
-        "description": "Retrieves a list of sponsors with their details.",
-        "responses": {
-          "200": {
-            "description": "A list of sponsors",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Sponsor"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "language",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "election",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/responses": {
-      "post": {
-        "summary": "Submit a users response",
-        "tags": [
-          "Responses"
-        ],
-        "description": "Submits a users responses for statistical evaluations.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "election_id": {
-                    "type": "integer",
-                    "description": "The answered election"
-                  },
-                  "age": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "nullable": true,
-                    "description": "The participants age or null if prefer not to say"
-                  },
-                  "country_id": {
-                    "type": "integer",
-                    "description": "The participants selected country"
-                  },
-                  "language_code": {
-                    "type": "string",
-                    "description": "The participants selected language"
-                  },
-                  "gender": {
-                    "type": "string",
-                    "enum": [
-                      "male",
-                      "female",
-                      "gender-fluid",
-                      "non-binary",
-                      "diverse"
-                    ],
-                    "nullable": true,
-                    "description": "The participants gender or null if prefer not to say"
-                  },
-                  "level_of_education": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "maximum": 8,
-                    "nullable": true,
-                    "description": "The level of education according to the International Standard Classification of Education (ISCED).\n0: No formal education\n1: Primary education\n2: Lower secondary education\n3: Upper secondary education\n4: Post-secondary non-tertiary education\n5: Short-cycle tertiary education\n6: Bachelors or equivalent\n7: Masters or equivalent\n7: Doctorate or equivalent"
-                  },
-                  "answers": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "description": "The list of answers. Can be empty, partial or complete. Answer can also be added later.",
-                      "properties": {
-                        "statement_id": {
-                          "type": "integer"
-                        },
-                        "answer": {
-                          "description": "The participants answer or null if skipped",
-                          "nullable": true,
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/Answer"
+            ],
+            "get": {
+                "summary": "Lists all countries and languages",
+                "description": "Retrieves the full list of countries with their respective country code and flag image and languages with their language code.",
+                "responses": {
+                    "200": {
+                        "description": "A list of countries and languages",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "countries": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Country"
+                                            }
+                                        },
+                                        "languages": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Language"
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                          ]
                         }
-                      }
                     }
-                  }
-                }
-              }
+                },
+                "parameters": [
+                    {
+                        "name": "language",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
             }
-          }
         },
-        "responses": {
-          "201": {
-            "description": "User responses successfully submitted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "editable_until": {
-                      "type": "string",
-                      "format": "datetime"
-                    }
-                  },
-                  "required": [
-                    "id",
-                    "editable_until"
-                  ]
+        "/{language}/elections": {
+            "parameters": [
+                {
+                    "$ref": "#/components/parameters/language"
                 }
-              }
-            }
-          },
-          "429": {
-            "description": "Too many attempts. Try again later. Defaults to 5 attempts per hour in production"
-          }
-        }
-      }
-    },
-    "/responses/{response_uuid}/answers": {
-      "parameters": [
-        {
-          "name": "response_uuid",
-          "in": "path",
-          "schema": {
-            "type": "string"
-          },
-          "required": true
-        }
-      ],
-      "post": {
-        "summary": "Submit additional answers",
-        "tags": [
-          "Responses"
-        ],
-        "description": "Lets a user add additional or change their existing answers",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "answers": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "description": "A list of additional answers. Can be empty, partial or complete. If a statement has already been answered, the previous answer will be overwritten.",
-                      "properties": {
-                        "statement_id": {
-                          "type": "integer"
-                        },
-                        "answer": {
-                          "description": "The participants answer or null if skipped",
-                          "nullable": true,
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/Answer"
+            ],
+            "get": {
+                "summary": "List elections",
+                "description": "Retrieves the complete list of all current and upcoming elections",
+                "responses": {
+                    "200": {
+                        "description": "A list of elections",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Election"
+                                    }
+                                }
                             }
-                          ]
                         }
-                      }
                     }
-                  }
-                }
-              }
+                },
+                "parameters": [
+                    {
+                        "name": "language",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
             }
-          }
         },
-        "responses": {
-          "201": {
-            "description": "Answers successfully submitted"
-          },
-          "403": {
-            "description": "Changing the answers is forbidden. Likely because the edit period expired."
-          },
-          "404": {
-            "description": "Answer not found"
-          },
-          "429": {
-            "description": "Too many attempts. Try again later. Defaults to 5 attempts per hour in production"
-          }
-        }
-      }
-    },
-    "/{language}/notification-topics": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/language"
-        }
-      ],
-      "get": {
-        "summary": "List Topics for Notifications",
-        "tags": [
-          "Push Notifications"
-        ],
-        "description": "List all available topics for Push Notifications subscriptions",
-        "responses": {
-          "200": {
-            "description": "A list of topics",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
+        "/{language}/elections/{election}/localization": {
+            "parameters": [
+                {
+                    "$ref": "#/components/parameters/language"
+                }
+            ],
+            "get": {
+                "summary": "Lists countries/regions and languages for the election",
+                "description": "Retrieves a list of countries or regions and the languages the election is available in.",
+                "responses": {
+                    "200": {
+                        "description": "A list of countries and languages",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "countries": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Country"
+                                            }
+                                        },
+                                        "languages": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Language"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "language",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "election",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/{language}/elections/{election}/statements": {
+            "parameters": [
+                {
+                    "$ref": "#/components/parameters/language"
+                },
+                {
+                    "name": "include_tutorial",
+                    "required": false,
+                    "in": "query",
+                    "description": "Includes the tutorial statement if set"
+                }
+            ],
+            "get": {
+                "summary": "List statements",
+                "description": "Retrieves the complete list of statements with their details and footnotes.",
+                "responses": {
+                    "200": {
+                        "description": "A list of statements",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Statement"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "language",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "election",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/{language}/elections/{election}/results": {
+            "parameters": [
+                {
+                    "$ref": "#/components/parameters/language"
+                }
+            ],
+            "get": {
+                "summary": "List parties and topics",
+                "description": "Retrieves the complete list of parties and topics.",
+                "responses": {
+                    "200": {
+                        "description": "A list of topics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "topics": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Topic"
+                                            }
+                                        },
+                                        "parties": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Party"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "topics",
+                                        "parties"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "language",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "election",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/{language}/elections/{election}/sponsors": {
+            "parameters": [
+                {
+                    "$ref": "#/components/parameters/language"
+                }
+            ],
+            "get": {
+                "summary": "List sponsors",
+                "description": "Retrieves a list of sponsors with their details.",
+                "responses": {
+                    "200": {
+                        "description": "A list of sponsors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Sponsor"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "language",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "election",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/responses": {
+            "post": {
+                "summary": "Submit a users response",
+                "tags": [
+                    "Responses"
+                ],
+                "description": "Submits a users responses for statistical evaluations.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "election_id": {
+                                        "type": "integer",
+                                        "description": "The answered election"
+                                    },
+                                    "age": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "nullable": true,
+                                        "description": "The participants age or null if prefer not to say"
+                                    },
+                                    "country_id": {
+                                        "type": "integer",
+                                        "description": "The participants selected country"
+                                    },
+                                    "language_code": {
+                                        "type": "string",
+                                        "description": "The participants selected language"
+                                    },
+                                    "gender": {
+                                        "type": "string",
+                                        "enum": [
+                                            "male",
+                                            "female",
+                                            "gender-fluid",
+                                            "non-binary",
+                                            "diverse"
+                                        ],
+                                        "nullable": true,
+                                        "description": "The participants gender or null if prefer not to say"
+                                    },
+                                    "level_of_education": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 8,
+                                        "nullable": true,
+                                        "description": "The level of education according to the International Standard Classification of Education (ISCED).\n0: No formal education\n1: Primary education\n2: Lower secondary education\n3: Upper secondary education\n4: Post-secondary non-tertiary education\n5: Short-cycle tertiary education\n6: Bachelors or equivalent\n7: Masters or equivalent\n7: Doctorate or equivalent"
+                                    },
+                                    "answers": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "description": "The list of answers. Can be empty, partial or complete. Answer can also be added later.",
+                                            "properties": {
+                                                "statement_id": {
+                                                    "type": "integer"
+                                                },
+                                                "answer": {
+                                                    "description": "The participants answer or null if skipped",
+                                                    "nullable": true,
+                                                    "allOf": [
+                                                        {
+                                                            "$ref": "#/components/schemas/Answer"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User responses successfully submitted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "editable_until": {
+                                            "type": "string",
+                                            "format": "datetime"
+                                        }
+                                    },
+                                    "required": [
+                                        "id",
+                                        "editable_until"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many attempts. Try again later. Defaults to 5 attempts per hour in production"
+                    }
+                }
+            }
+        },
+        "/responses/{response_uuid}/answers": {
+            "parameters": [
+                {
+                    "name": "response_uuid",
+                    "in": "path",
+                    "schema": {
                         "type": "string"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "The displayable name"
-                      }
-                    }
-                  }
+                    },
+                    "required": true
                 }
-              }
+            ],
+            "post": {
+                "summary": "Submit additional answers",
+                "tags": [
+                    "Responses"
+                ],
+                "description": "Lets a user add additional or change their existing answers",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "answers": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "description": "A list of additional answers. Can be empty, partial or complete. If a statement has already been answered, the previous answer will be overwritten.",
+                                            "properties": {
+                                                "statement_id": {
+                                                    "type": "integer"
+                                                },
+                                                "answer": {
+                                                    "description": "The participants answer or null if skipped",
+                                                    "nullable": true,
+                                                    "allOf": [
+                                                        {
+                                                            "$ref": "#/components/schemas/Answer"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Answers successfully submitted"
+                    },
+                    "403": {
+                        "description": "Changing the answers is forbidden. Likely because the edit period expired."
+                    },
+                    "404": {
+                        "description": "Answer not found"
+                    },
+                    "429": {
+                        "description": "Too many attempts. Try again later. Defaults to 5 attempts per hour in production"
+                    }
+                }
             }
-          }
-        }
-      }
-    },
-    "/{language}/devices/{device}/subscriptions": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/language"
         },
-        {
-          "name": "device",
-          "in": "path",
-          "schema": {
-            "type": "string"
-          },
-          "required": true
+        "/{language}/notification-topics": {
+            "parameters": [
+                {
+                    "$ref": "#/components/parameters/language"
+                }
+            ],
+            "get": {
+                "summary": "List Topics for Notifications",
+                "tags": [
+                    "Push Notifications"
+                ],
+                "description": "List all available topics for Push Notifications subscriptions",
+                "responses": {
+                    "200": {
+                        "description": "A list of topics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "description": "The displayable name"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{language}/devices/{device}/subscriptions": {
+            "parameters": [
+                {
+                    "$ref": "#/components/parameters/language"
+                },
+                {
+                    "name": "device",
+                    "in": "path",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "required": true
+                }
+            ],
+            "put": {
+                "summary": "Update the subscriptions for this device",
+                "tags": [
+                    "Push Notifications"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "subscribe": {
+                                        "type": "array",
+                                        "description": "A list of topics to subscribe to",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "unsubscribe": {
+                                        "type": "array",
+                                        "description": "A list of topics to unsubscribe from",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Successfully update subscriptions"
+                    },
+                    "400": {
+                        "description": "Unable to update subscriptions."
+                    }
+                }
+            }
+        },
+        "/statistics": {
+            "get": {
+                "summary": "Available statistics",
+                "tags": [
+                    "Misc"
+                ],
+                "description": "Returns a set of available statistics",
+                "responses": {
+                    "200": {
+                        "description": "The statistics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "responses_last_24h": {
+                                            "type": "integer",
+                                            "description": "The amount of responses in the last 24 hours"
+                                        }
+                                    },
+                                    "required": [
+                                        "responses_last_24h"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-      ],
-      "put": {
-        "summary": "Update the subscriptions for this device",
-        "tags": [
-          "Push Notifications"
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
+    },
+    "components": {
+        "schemas": {
+            "Country": {
                 "type": "object",
                 "properties": {
-                  "subscribe": {
-                    "type": "array",
-                    "description": "A list of topics to subscribe to",
-                    "items": {
-                      "type": "string"
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "country_code": {
+                        "type": "string"
+                    },
+                    "flag_image": {
+                        "type": "string"
                     }
-                  },
-                  "unsubscribe": {
-                    "type": "array",
-                    "description": "A list of topics to unsubscribe from",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "Successfully update subscriptions"
-          },
-          "400": {
-            "description": "Unable to update subscriptions."
-          }
-        }
-      }
-    },
-    "/statistics": {
-      "get": {
-        "summary": "Available statistics",
-        "tags": [
-          "Misc"
-        ],
-        "description": "Returns a set of available statistics",
-        "responses": {
-          "200": {
-            "description": "The statistics",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "responses_last_24h": {
-                      "type": "integer",
-                      "description": "The amount of responses in the last 24 hours"
-                    }
-                  },
-                  "required": [
-                    "responses_last_24h"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Country": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string"
-          },
-          "country_code": {
-            "type": "string"
-          },
-          "flag_image": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "country_code",
-          "flag_image"
-        ]
-      },
-      "Language": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "language_code": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "name",
-          "language_code"
-        ]
-      },
-      "Election": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string"
-          },
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "country": {
-            "description": "The country in which the election is held or null for EU level elections.",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/Country"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "egg_screen": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "image": {
-                "type": "string"
-              },
-              "yes_btn_text": {
-                "type": "string"
-              },
-              "yes_btn_link": {
-                "type": "string"
-              },
-              "no_btn_text": {
-                "type": "string"
-              }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "country_code",
+                    "flag_image"
+                ]
             },
-            "required": [
-              "title",
-              "description",
-              "image",
-              "yes_btn_text",
-              "yes_btn_link",
-              "no_btn_text"
-            ]
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "date",
-          "country",
-          "egg_screen"
-        ]
-      },
-      "Statement": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "statement": {
-            "type": "string"
-          },
-          "emojis": {
-            "type": "string"
-          },
-          "details": {
-            "type": "string"
-          },
-          "footnote": {
-            "type": "string"
-          },
-          "weights": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "topic_id": {
-                  "type": "integer"
+            "Language": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "language_code": {
+                        "type": "string"
+                    }
                 },
-                "weight": {
-                  "type": "integer"
-                }
-              }
-            }
-          },
-          "is_tutorial": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "id",
-          "statement",
-          "emojis",
-          "details",
-          "footnote",
-          "weights",
-          "is_tutorial"
-        ]
-      },
-      "Topic": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string"
-          },
-          "icon": {
-            "type": "string"
-          },
-          "color": {
-            "type": "string"
-          },
-          "extreme1": {
-            "type": "string"
-          },
-          "extreme1_emojis": {
-            "type": "string"
-          },
-          "extreme1_details": {
-            "type": "string"
-          },
-          "extreme2": {
-            "type": "string"
-          },
-          "extreme2_emojis": {
-            "type": "string"
-          },
-          "extreme2_details": {
-            "type": "string"
-          },
-          "associated_statements": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "icon",
-          "color",
-          "extreme1",
-          "extreme1_emojis",
-          "extreme1_details",
-          "extreme2",
-          "extreme2_emojis",
-          "extreme2_details",
-          "associated_statements"
-        ]
-      },
-      "LocalParty": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string"
-          },
-          "logo": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "link": {
-            "type": "string"
-          },
-          "acronym": {
-            "type": "string"
-          },
-          "country_id": {
-            "type": "integer"
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "logo",
-          "link",
-          "acronym",
-          "description"
-        ]
-      },
-      "Policy": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "title",
-          "description"
-        ]
-      },
-      "Party": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string"
-          },
-          "color": {
-            "type": "string"
-          },
-          "logo": {
-            "type": "string"
-          },
-          "link": {
-            "type": "string"
-          },
-          "acronym": {
-            "type": "string"
-          },
-          "in_parliament": {
-            "type": "boolean"
-          },
-          "images": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "link": {
-                  "type": "string",
-                  "nullable": true
+                "required": [
+                    "name",
+                    "language_code"
+                ]
+            },
+            "Election": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "country": {
+                        "description": "The country in which the election is held or null for EU level elections.",
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Country"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "egg_screen": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "image": {
+                                "type": "string"
+                            },
+                            "yes_btn_text": {
+                                "type": "string"
+                            },
+                            "yes_btn_link": {
+                                "type": "string"
+                            },
+                            "no_btn_text": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "title",
+                            "description",
+                            "image",
+                            "yes_btn_text",
+                            "yes_btn_link",
+                            "no_btn_text"
+                        ]
+                    },
+                    "local_party_screen": {
+                        "type": "object",
+                        "properties": {
+                            "logo": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "text": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "link": {
+                                "type": "string",
+                                "nullable": true
+                            }
+                        },
+                        "required": [
+                            "logo",
+                            "text",
+                            "link"
+                        ]
+                    }
                 },
-                "text": {
-                  "type": "string",
-                  "nullable": true
+                "required": [
+                    "id",
+                    "name",
+                    "date",
+                    "country",
+                    "egg_screen",
+                    "local_party_screen"
+                ]
+            },
+            "Statement": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "statement": {
+                        "type": "string"
+                    },
+                    "emojis": {
+                        "type": "string"
+                    },
+                    "details": {
+                        "type": "string"
+                    },
+                    "footnote": {
+                        "type": "string"
+                    },
+                    "weights": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "topic_id": {
+                                    "type": "integer"
+                                },
+                                "weight": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    },
+                    "is_tutorial": {
+                        "type": "boolean"
+                    }
                 },
-                "image": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "link",
-                "text",
-                "image"
-              ]
-            }
-          },
-          "local_parties": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/LocalParty"
-            }
-          },
-          "policies": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Policy"
-            }
-          },
-          "answers": {
-            "description": "The parties answers to the statements",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "statement_id": {
-                  "type": "integer"
+                "required": [
+                    "id",
+                    "statement",
+                    "emojis",
+                    "details",
+                    "footnote",
+                    "weights",
+                    "is_tutorial"
+                ]
+            },
+            "Topic": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "icon": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "extreme1": {
+                        "type": "string"
+                    },
+                    "extreme1_emojis": {
+                        "type": "string"
+                    },
+                    "extreme1_details": {
+                        "type": "string"
+                    },
+                    "extreme2": {
+                        "type": "string"
+                    },
+                    "extreme2_emojis": {
+                        "type": "string"
+                    },
+                    "extreme2_details": {
+                        "type": "string"
+                    },
+                    "associated_statements": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
                 },
-                "answer": {
-                  "$ref": "#/components/schemas/Answer"
-                }
-              },
-              "required": [
-                "statement_id",
-                "answer"
-              ]
-            }
-          },
-          "positions": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "topic_id": {
-                  "type": "integer"
+                "required": [
+                    "id",
+                    "name",
+                    "icon",
+                    "color",
+                    "extreme1",
+                    "extreme1_emojis",
+                    "extreme1_details",
+                    "extreme2",
+                    "extreme2_emojis",
+                    "extreme2_details",
+                    "associated_statements"
+                ]
+            },
+            "LocalParty": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "logo": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "link": {
+                        "type": "string"
+                    },
+                    "acronym": {
+                        "type": "string"
+                    },
+                    "country_id": {
+                        "type": "integer"
+                    }
                 },
-                "position": {
-                  "type": "integer"
-                }
-              }
+                "required": [
+                    "id",
+                    "name",
+                    "logo",
+                    "link",
+                    "acronym",
+                    "description"
+                ]
+            },
+            "Policy": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "title",
+                    "description"
+                ]
+            },
+            "Party": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "logo": {
+                        "type": "string"
+                    },
+                    "link": {
+                        "type": "string"
+                    },
+                    "acronym": {
+                        "type": "string"
+                    },
+                    "in_parliament": {
+                        "type": "boolean"
+                    },
+                    "images": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "link": {
+                                    "type": "string",
+                                    "nullable": true
+                                },
+                                "text": {
+                                    "type": "string",
+                                    "nullable": true
+                                },
+                                "image": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "link",
+                                "text",
+                                "image"
+                            ]
+                        }
+                    },
+                    "local_parties": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LocalParty"
+                        }
+                    },
+                    "policies": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Policy"
+                        }
+                    },
+                    "answers": {
+                        "description": "The parties answers to the statements",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "statement_id": {
+                                    "type": "integer"
+                                },
+                                "answer": {
+                                    "$ref": "#/components/schemas/Answer"
+                                }
+                            },
+                            "required": [
+                                "statement_id",
+                                "answer"
+                            ]
+                        }
+                    },
+                    "positions": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "topic_id": {
+                                    "type": "integer"
+                                },
+                                "position": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    },
+                    "unavailable_in": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Country"
+                        }
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "color",
+                    "logo",
+                    "images",
+                    "local_parties",
+                    "policies",
+                    "position",
+                    "link",
+                    "acronym",
+                    "in_parliament",
+                    "unavailable_in"
+                ]
+            },
+            "Sponsor": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "logo": {
+                        "type": "string"
+                    },
+                    "link": {
+                        "type": "string"
+                    },
+                    "banner_image": {
+                        "type": "string"
+                    },
+                    "banner_link": {
+                        "type": "string"
+                    },
+                    "banner_description": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string",
+                        "enum": [
+                            "main sponsor",
+                            "european partner",
+                            "national partner",
+                            "media",
+                            "other"
+                        ]
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "logo",
+                    "link",
+                    "banner_image",
+                    "banner_link",
+                    "banner_description",
+                    "category"
+                ]
+            },
+            "Answer": {
+                "type": "number",
+                "enum": [
+                    -1,
+                    -0.5,
+                    0,
+                    0.5,
+                    1
+                ],
+                "minimum": -1,
+                "maximum": 1,
+                "description": "The parties answer encoded as: -1 = Fully disagree, -0.5 = Somewhat disagree, 0 = Neutral, +0.5 = Somewhat Agree, +1 = Fully agree"
             }
-          },
-          "unavailable_in": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Country"
+        },
+        "parameters": {
+            "language": {
+                "name": "language",
+                "in": "path",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
             }
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "color",
-          "logo",
-          "images",
-          "local_parties",
-          "policies",
-          "position",
-          "link",
-          "acronym",
-          "in_parliament",
-          "unavailable_in"
-        ]
-      },
-      "Sponsor": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string"
-          },
-          "logo": {
-            "type": "string"
-          },
-          "link": {
-            "type": "string"
-          },
-          "banner_image": {
-            "type": "string"
-          },
-          "banner_link": {
-            "type": "string"
-          },
-          "banner_description": {
-            "type": "string"
-          },
-          "category": {
-            "type": "string",
-            "enum": [
-              "main sponsor",
-              "european partner",
-              "national partner",
-              "media",
-              "other"
-            ]
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "logo",
-          "link",
-          "banner_image",
-          "banner_link",
-          "banner_description",
-          "category"
-        ]
-      },
-      "Answer": {
-        "type": "number",
-        "enum": [
-          -1,
-          -0.5,
-          0,
-          0.5,
-          1
-        ],
-        "minimum": -1,
-        "maximum": 1,
-        "description": "The parties answer encoded as: -1 = Fully disagree, -0.5 = Somewhat disagree, 0 = Neutral, +0.5 = Somewhat Agree, +1 = Fully agree"
-      }
-    },
-    "parameters": {
-      "language": {
-        "name": "language",
-        "in": "path",
-        "schema": {
-          "type": "string"
-        },
-        "required": true
-      }
+        }
     }
-  }
 }

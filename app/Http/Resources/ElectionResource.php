@@ -30,6 +30,12 @@ class ElectionResource extends JsonResource
                 'yes_btn_link' => $this->getTranslationForAttribute('egg_yes_btn_link'),
                 'no_btn_text' => $this->getTranslationForAttribute('egg_no_btn_text'),
             ],
+
+            'local_party_screen' => [
+                'logo' => $this->getTranslatedFile('lp_logo'),
+                'text' => $this->getTranslationForAttribute('lp_text'),
+                'link' => $this->getTranslationForAttribute('lp_link'),
+            ],
         ];
     }
 }

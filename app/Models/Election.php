@@ -33,6 +33,9 @@ use Illuminate\Support\Facades\Storage;
  * @property string $egg_yes_btn_text
  * @property string $egg_yes_btn_link
  * @property string $egg_no_btn_text
+ * @property string|null $lp_logo
+ * @property string|null $lp_text
+ * @property string|null $lp_link
  */
 #[ObservedBy([AuditLogObserver::class])]
 class Election extends Model implements Translatable
@@ -54,6 +57,9 @@ class Election extends Model implements Translatable
         'egg_yes_btn_text',
         'egg_yes_btn_link',
         'egg_no_btn_text',
+        'lp_logo',
+        'lp_text',
+        'lp_link',
     ];
 
     public function country(): BelongsTo
@@ -77,13 +83,14 @@ class Election extends Model implements Translatable
 
     public function getTranslatableAttributes(): array
     {
-        return ['name', 'egg_title', 'egg_description', 'egg_yes_btn_text', 'egg_yes_btn_link', 'egg_no_btn_text'];
+        return ['name', 'egg_title', 'egg_description', 'egg_yes_btn_text', 'egg_yes_btn_link', 'egg_no_btn_text', 'lp_text', 'lp_link'];
     }
 
     public function getTranslatableFiles(): array
     {
         return [
             new TranslatableFile('egg_image', Storage::disk('public')->path($this->egg_image), sprintf('Egg Screen image of %s', $this->name), $this->updated_at),
+            new TranslatableFile('lp_logo', Storage::disk('public')->path($this->egg_image), sprintf('Local Party Screen Logo of %s', $this->name), $this->updated_at),
         ];
     }
 

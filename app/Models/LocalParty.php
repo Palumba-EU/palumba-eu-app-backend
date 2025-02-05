@@ -31,6 +31,7 @@ use Ramsey\Collection\Collection;
  * @property string $internal_notes
  * @property string $acronym
  * @property string $description
+ * @property string|null $link_text
  */
 #[ObservedBy([AuditLogObserver::class])]
 class LocalParty extends Model implements Translatable
@@ -38,7 +39,7 @@ class LocalParty extends Model implements Translatable
     use CrowdIn, HasFactory, Publishable;
 
     protected $fillable = [
-        'name', 'country_id', 'party_id', 'logo', 'link', 'internal_notes', 'acronym', 'published', 'description',
+        'name', 'country_id', 'party_id', 'logo', 'link', 'internal_notes', 'acronym', 'published', 'description', 'link_text'
     ];
 
     public function country(): BelongsTo
@@ -53,7 +54,7 @@ class LocalParty extends Model implements Translatable
 
     public function getTranslatableAttributes(): array
     {
-        return ['name', 'description'];
+        return ['name', 'description', 'link_text'];
     }
 
     public function getTranslatableFiles(): array

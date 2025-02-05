@@ -39,7 +39,7 @@ class LocalParty extends Model implements Translatable
     use CrowdIn, HasFactory, Publishable;
 
     protected $fillable = [
-        'name', 'country_id', 'party_id', 'logo', 'link', 'internal_notes', 'acronym', 'published', 'description', 'link_text'
+        'name', 'country_id', 'party_id', 'logo', 'link', 'internal_notes', 'acronym', 'published', 'description', 'link_text',
     ];
 
     public function country(): BelongsTo

@@ -43,10 +43,13 @@ class LocalPartyResource extends Resource
                     ->multiple()
                     ->preload()
                     ->searchable()
-                    ->required(),
+                    ->required()
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('link')
                     ->required()
                     ->maxLength(512),
+                Forms\Components\TextInput::make('link_text')
+                    ->nullable(),
                 Forms\Components\FileUpload::make('logo')
                     ->image()
                     ->directory('local_parties')

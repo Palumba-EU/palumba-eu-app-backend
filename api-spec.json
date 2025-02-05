@@ -852,6 +852,10 @@
           "link": {
             "type": "string"
           },
+          "link_text": {
+            "type": "string",
+            "nullable": true
+          },
           "acronym": {
             "type": "string"
           },
@@ -864,6 +868,7 @@
           "name",
           "logo",
           "link",
+          "link_text",
           "acronym",
           "description"
         ]

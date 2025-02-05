@@ -42,15 +42,9 @@ trait CrowdIn
 
     public function getTranslatedFile(string $filename, ?string $language = null): ?string
     {
-        $file = $this->getAttribute($filename);
-
-        if (is_null($file)) {
-            return null;
-        }
-
         /** @var TranslationRepository $repo */
         $repo = resolve(TranslationRepository::class);
-        $identifier = $this->getFileIdentifier($repo->disk->path($file), $filename);
+        $identifier = $this->getFileIdentifier($repo->disk->path($this->getAttribute($filename)), $filename);
 
         return $repo->getFile(self::class, $identifier, $this->getAttribute($filename));
     }

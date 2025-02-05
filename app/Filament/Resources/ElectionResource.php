@@ -84,26 +84,6 @@ class ElectionResource extends Resource
                                 ->columnSpan(1)
                                 ->maxLength(255),
                         ]),
-                    Forms\Components\Tabs\Tab::make('Local Party Screen')
-                        ->columns(2)
-                        ->schema([
-                            Forms\Components\FileUpload::make('lp_logo')
-                                ->label('Logo')
-                                ->image()
-                                ->directory('elections/local_party_screen')
-                                ->nullable()
-                                ->columnSpanFull(),
-                            Forms\Components\TextInput::make('lp_text')
-                                ->label('Text')
-                                ->nullable()
-                                ->columnSpan(1)
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('lp_link')
-                                ->label('Link')
-                                ->nullable()
-                                ->columnSpan(1)
-                                ->maxLength(255),
-                        ]),
                 ])->columnSpanFull(),
 
             ]);

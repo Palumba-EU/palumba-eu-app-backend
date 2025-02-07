@@ -64,6 +64,7 @@ class LocalPartyResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('acronym')
                     ->required(),
+                Forms\Components\Checkbox::make('show_collaboration_link'),
             ]);
     }
 

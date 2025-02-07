@@ -861,6 +861,9 @@
           },
           "country_id": {
             "type": "integer"
+          },
+          "show_collaboration_link": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -870,7 +873,8 @@
           "link",
           "link_text",
           "acronym",
-          "description"
+          "description",
+          "show_collaboration_link"
         ]
       },
       "Policy": {

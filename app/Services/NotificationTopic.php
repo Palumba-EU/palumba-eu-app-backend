@@ -4,13 +4,13 @@ namespace App\Services;
 
 use App\Models\Election;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 class NotificationTopic
 {
     public function __construct(
         public readonly string $id,
-        public readonly string $name
+        public readonly string $name,
+        public readonly int $relatedId
     ) {}
 
     /**
@@ -20,8 +20,9 @@ class NotificationTopic
     {
         return Election::query()->get()->map(function (Election $election) {
             return new NotificationTopic(
-                Str::slug($election->name),
+                $election->notification_topic,
                 $election->getTranslationForAttribute('name'),
+                $election->id
             );
         });
     }

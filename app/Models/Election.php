@@ -36,6 +36,7 @@ use Illuminate\Support\Facades\Storage;
  * @property string|null $lp_logo
  * @property string|null $lp_text
  * @property string|null $lp_link
+ * @property string $notification_topic
  */
 #[ObservedBy([AuditLogObserver::class])]
 class Election extends Model implements Translatable
@@ -60,6 +61,7 @@ class Election extends Model implements Translatable
         'lp_logo',
         'lp_text',
         'lp_link',
+        'notification_topic',
     ];
 
     public function country(): BelongsTo

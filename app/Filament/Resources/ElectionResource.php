@@ -33,6 +33,12 @@ class ElectionResource extends Resource
                 Forms\Components\DatePicker::make('date')
                     ->required()
                     ->after(Carbon::now()->addHours()),
+                Forms\Components\TextInput::make('notification_topic')
+                    ->label('Push Notification Topic')
+                    ->required()
+                    ->rules(['alpha_dash:ascii'])
+                    ->live(true)
+                    ->disabledOn('edit'),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255)

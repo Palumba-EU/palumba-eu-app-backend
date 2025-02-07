@@ -10,7 +10,6 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
-use Kreait\Firebase\Contract\Messaging;
 
 class NotificationsController extends Controller
 {

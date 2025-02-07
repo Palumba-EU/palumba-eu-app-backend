@@ -26,6 +26,7 @@ class LocalPartyResource extends JsonResource
             'link_text' => $this->getTranslationForAttribute('link_text'),
             'acronym' => $this->acronym,
             'country_id' => $this->country_id,
+            'show_collaboration_link' => $this->show_collaboration_link,
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Filament\Exports\ResponseExporter;
 use App\Filament\Helper\SharedElectionFilter;
 use App\Filament\Resources\ResponseResource\Pages;
 use App\Filament\Resources\ResponseResource\RelationManagers\StatementsRelationManager;
+use App\Models\Enums\GoingToVote;
 use App\Models\Enums\LevelOfEducation;
 use App\Models\Response;
 use Filament\Forms;
@@ -43,6 +44,9 @@ class ResponseResource extends Resource
                 Forms\Components\Select::make('level_of_education')
                     ->options(LevelOfEducation::class)
                     ->nullable(),
+                Forms\Components\Select::make('going_to_vote')
+                    ->options(GoingToVote::class)
+                    ->nullable(),
             ]);
     }
 
@@ -69,6 +73,8 @@ class ResponseResource extends Resource
                 Tables\Columns\TextColumn::make('gender')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('level_of_education')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('going_to_vote')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('hashed_ip_address')
                     ->searchable()

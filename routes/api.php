@@ -47,5 +47,6 @@ Route::middleware(sprintf('cache.headers:public;max_age=%d;etag', config('cdn.ma
 
 Route::middleware(['throttle:responses'])->group(function () {
     Route::post('/responses', [ResponseController::class, 'store']);
-    Route::post('/responses/{response}/answers', [ResponseController::class, 'update']);
+    Route::patch('/responses/{response}', [ResponseController::class, 'update']);
+    Route::post('/responses/{response}/answers', [ResponseController::class, 'updateAnswers']);
 });

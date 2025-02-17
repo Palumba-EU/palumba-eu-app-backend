@@ -361,6 +361,10 @@
                     "nullable": true,
                     "description": "The level of education according to the International Standard Classification of Education (ISCED).\n0: No formal education\n1: Primary education\n2: Lower secondary education\n3: Upper secondary education\n4: Post-secondary non-tertiary education\n5: Short-cycle tertiary education\n6: Bachelors or equivalent\n7: Masters or equivalent\n7: Doctorate or equivalent"
                   },
+                  "going_to_vote": {
+                    "type": "boolean",
+                    "description": "Whether the user is going to vote"
+                  },
                   "answers": {
                     "type": "array",
                     "items": {
@@ -393,23 +397,56 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "editable_until": {
-                      "type": "string",
-                      "format": "datetime"
-                    }
-                  },
-                  "required": [
-                    "id",
-                    "editable_until"
-                  ]
+                  "$ref": "#/components/schemas/Response"
                 }
               }
             }
+          },
+          "429": {
+            "description": "Too many attempts. Try again later. Defaults to 5 attempts per hour in production"
+          }
+        }
+      }
+    },
+    "/responses/{response_uuid}": {
+      "patch": {
+        "summary": "Update a users response",
+        "tags": [
+          "Responses"
+        ],
+        "description": "Updates a users response. Currently only going_to_vote field can be changed",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "going_to_vote": {
+                    "type": "boolean",
+                    "description": "Whether the user is going to vote"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User responses successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Changing the answers is forbidden. Likely because the edit period expired."
+          },
+          "404": {
+            "description": "Answer not found"
           },
           "429": {
             "description": "Too many attempts. Try again later. Defaults to 5 attempts per hour in production"
@@ -1069,6 +1106,22 @@
         "minimum": -1,
         "maximum": 1,
         "description": "The parties answer encoded as: -1 = Fully disagree, -0.5 = Somewhat disagree, 0 = Neutral, +0.5 = Somewhat Agree, +1 = Fully agree"
+      },
+      "Response": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "editable_until": {
+            "type": "string",
+            "format": "datetime"
+          }
+        },
+        "required": [
+          "id",
+          "editable_until"
+        ]
       }
     },
     "parameters": {

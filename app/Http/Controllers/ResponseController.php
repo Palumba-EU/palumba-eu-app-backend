@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateResponseRequest;
+use App\Http\Requests\UpdateResponseAnswersRequest;
 use App\Http\Requests\UpdateResponseRequest;
 use App\Http\Resources\ResponseResource;
 use App\Models\Election;
@@ -50,7 +51,19 @@ class ResponseController extends Controller
         return new ResponseResource($response);
     }
 
-    public function update(UpdateResponseRequest $request, Response $response): \Illuminate\Http\Response
+    public function update(UpdateResponseRequest $request, Response $response): ResponseResource
+    {
+        if ($response->editable_until->isPast()) {
+            abort(403, 'This answer can no longer be changed');
+        }
+
+        $response->fill($request->validated());
+        $response->save();
+
+        return new ResponseResource($response);
+    }
+
+    public function updateAnswers(UpdateResponseAnswersRequest $request, Response $response): \Illuminate\Http\Response
     {
         if ($response->editable_until->isPast()) {
             abort(403, 'This answer can no longer be changed');

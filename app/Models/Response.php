@@ -27,6 +27,7 @@ use Illuminate\Support\Collection;
  * @property string|null $hashed_ip_address
  * @property Carbon $editable_until
  * @property LevelOfEducation|null $level_of_education The level of education according to International Standard Classification of Education (ISCED)
+ * @property string|null $going_to_vote
  */
 class Response extends Model
 {
@@ -52,6 +53,7 @@ class Response extends Model
         'election_id',
         'editable_until',
         'level_of_education',
+        'going_to_vote',
     ];
 
     public function country(): BelongsTo

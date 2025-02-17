@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Enums\GoingToVote;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -27,6 +28,7 @@ class CreateResponseRequest extends FormRequest
             )],
             'gender' => ['present', 'nullable', Rule::in(['male', 'female', 'gender-fluid', 'non-binary', 'diverse'])],
             'level_of_education' => ['sometimes', 'nullable', 'integer', 'min:0', 'max:8'],
+            'going_to_vote' => ['sometimes', 'string', Rule::enum(GoingToVote::class)],
             'answers' => ['present', 'array'],
             'answers.*.statement_id' => ['required', 'distinct', Rule::exists('statements', 'id')->where(
                 fn (Builder $query) => $query->where('published', '=', true)

@@ -8,6 +8,7 @@ use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Actions\Exports\Models\Export;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ResponseExporter extends Exporter
 {
@@ -15,12 +16,24 @@ class ResponseExporter extends Exporter
 
     public static function modifyQuery(Builder $query): Builder
     {
-        return $query->with(['statements']);
+        $electionId = session('global_election');
+
+        if (is_null($electionId)) {
+            return $query->with(['statements']);
+        }
+
+        return $query->with(['statements' => fn (BelongsToMany $query) => $query->election(session('global_election'))]);
     }
 
     public static function getColumns(): array
     {
-        $statements = Statement::query()->orderBy('sort_index')->orderBy('statement')->get();
+        $electionId = session('global_election');
+
+        $statementsQuery = Statement::query();
+        if (! is_null($electionId)) {
+            $statementsQuery = $statementsQuery->election($electionId);
+        }
+        $statements = $statementsQuery->orderBy('sort_index')->orderBy('statement')->get();
 
         return [
             ExportColumn::make('created_at'),
@@ -28,6 +41,7 @@ class ResponseExporter extends Exporter
             ExportColumn::make('country.name'),
             ExportColumn::make('gender'),
             ExportColumn::make('level_of_education.name'),
+            ExportColumn::make('going_to_vote'),
             ExportColumn::make('language_code'),
             ExportColumn::make('hashed_ip_address'),
             ExportColumn::make('uuid')

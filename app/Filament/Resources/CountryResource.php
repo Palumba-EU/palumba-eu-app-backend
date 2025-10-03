@@ -22,9 +22,15 @@ class CountryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
 
-    protected static ?string $label = 'Country or Region';
+    public static function getModelLabel(): string
+    {
+        return config('admin.country.label', parent::getModelLabel());
+    }
 
-    protected static ?string $pluralLabel = 'Countries and Regions';
+    public static function getPluralModelLabel(): string
+    {
+        return config('admin.country.pluralLabel', parent::getPluralModelLabel());
+    }
 
     public static function form(Form $form): Form
     {

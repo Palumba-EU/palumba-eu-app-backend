@@ -119,4 +119,9 @@ class LocalPartyResource extends Resource
             'edit' => Pages\EditLocalParty::route('/{record}/edit'),
         ];
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return config('admin.localParty.visible', true);
+    }
 }

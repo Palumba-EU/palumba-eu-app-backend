@@ -30,9 +30,15 @@ class PartyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
-    protected static ?string $label = 'Electable party';
+    public static function getModelLabel(): string
+    {
+        return config('admin.party.label', parent::getModelLabel());
+    }
 
-    protected static ?string $pluralLabel = 'Electable parties';
+    public static function getPluralModelLabel(): string
+    {
+        return config('admin.party.pluralLabel', parent::getPluralModelLabel());
+    }
 
     public static function form(Form $form): Form
     {

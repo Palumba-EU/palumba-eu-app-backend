@@ -113,7 +113,7 @@ class PartyResource extends Resource
                             Forms\Components\TextInput::make('profile_link2_text')
                                 ->label('Label for Link 2')
                                 ->nullable(),
-                        ])
+                        ]),
                 ])->columnSpanFull(),
             ]);
     }

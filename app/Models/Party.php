@@ -37,6 +37,13 @@ use Illuminate\Support\Collection;
  * @property Election $election
  * @property bool $in_parliament
  * @property Collection<Country> $unavailable_in_countries
+ * @property string $profile_bio
+ * @property string $profile_affiliation
+ * @property string $profile_red_flags
+ * @property string|null $profile_link1
+ * @property string|null $profile_link1_text
+ * @property string|null $profile_link2
+ * @property string|null $profile_link2_text
  */
 #[ObservedBy([AuditLogObserver::class])]
 class Party extends Model implements Translatable
@@ -52,6 +59,14 @@ class Party extends Model implements Translatable
         'published',
         'election_id',
         'in_parliament',
+
+        'profile_bio',
+        'profile_affiliation',
+        'profile_red_flags',
+        'profile_link1',
+        'profile_link1_text',
+        'profile_link2',
+        'profile_link2_text',
     ];
 
     protected $casts = [
@@ -90,7 +105,14 @@ class Party extends Model implements Translatable
 
     public function getTranslatableAttributes(): array
     {
-        return ['name'];
+        return [
+            'name',
+            'profile_bio',
+            'profile_affiliation',
+            'profile_red_flags',
+            'profile_link1_text',
+            'profile_link2_text',
+        ];
     }
 
     public function getTranslatableFiles(): array

@@ -363,7 +363,11 @@
                   },
                   "going_to_vote": {
                     "type": "string",
-                    "enum": ["no", "maybe", "yes"],
+                    "enum": [
+                      "no",
+                      "maybe",
+                      "yes"
+                    ],
                     "description": "Whether the user is going to vote"
                   },
                   "answers": {
@@ -425,7 +429,11 @@
                 "properties": {
                   "going_to_vote": {
                     "type": "string",
-                    "enum": ["no", "maybe", "yes"],
+                    "enum": [
+                      "no",
+                      "maybe",
+                      "yes"
+                    ],
                     "description": "Whether the user is going to vote"
                   }
                 }
@@ -1033,6 +1041,43 @@
             "items": {
               "$ref": "#/components/schemas/Country"
             }
+          },
+          "profile": {
+            "type": "object",
+            "properties": {
+              "bio": {
+                "type": "string"
+              },
+              "affiliation": {
+                "type": "string"
+              },
+              "red_flags": {
+                "type": "string"
+              },
+              "link1": {
+                "type": "string"
+              },
+              "link1_text": {
+                "type": "string",
+                "nullable": true
+              },
+              "link2": {
+                "type": "string"
+              },
+              "link2_text": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "required": [
+              "bio",
+              "affiliation",
+              "red_flags",
+              "link1",
+              "link1_text",
+              "link2",
+              "link2_text"
+            ]
           }
         },
         "required": [

@@ -81,6 +81,40 @@ class PartyResource extends Resource
                     ->label('Unavailable in')
                     ->multiple()
                     ->preload(),
+                Forms\Components\Tabs::make('Tabs')->tabs([
+                    Forms\Components\Tabs\Tab::make('Profile')
+                        ->columns(2)
+                        ->schema([
+                            Forms\Components\RichEditor::make('profile_bio')
+                                ->label('Bio')
+                                ->required()
+                                ->columnSpanFull(),
+                            Forms\Components\RichEditor::make('profile_affiliation')
+                                ->label('Affiliation and Profile')
+                                ->required()
+                                ->columnSpanFull(),
+                            Forms\Components\RichEditor::make('profile_red_flags')
+                                ->label('Red Flags')
+                                ->required()
+                                ->columnSpanFull(),
+
+                            Forms\Components\TextInput::make('profile_link1')
+                                ->label('Link 1')
+                                ->required()
+                                ->maxLength(512),
+                            Forms\Components\TextInput::make('profile_link1_text')
+                                ->label('Label for Link 1')
+                                ->nullable(),
+
+                            Forms\Components\TextInput::make('profile_link2')
+                                ->label('Link 2')
+                                ->required()
+                                ->maxLength(512),
+                            Forms\Components\TextInput::make('profile_link2_text')
+                                ->label('Label for Link 2')
+                                ->nullable(),
+                        ])
+                ])->columnSpanFull(),
             ]);
     }
 

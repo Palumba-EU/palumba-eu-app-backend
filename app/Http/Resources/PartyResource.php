@@ -31,6 +31,17 @@ class PartyResource extends JsonResource
             'positions' => $this->positions->map(fn ($w) => ['topic_id' => $w->id, 'position' => $w->pivot->position]),
             'in_parliament' => $this->in_parliament,
             'unavailable_in' => CountryResource::collection($this->unavailable_in_countries),
+
+            'profile' => [
+                'bio' => $this->profile_bio,
+                'affiliation' => $this->profile_affiliation,
+                'red_flags' => $this->profile_red_flags,
+                'link1' => $this->profile_link1,
+                'link1_text' => $this->profile_link1_text,
+                'link2' => $this->profile_link2,
+                'link2_text' => $this->profile_link2_text,
+            ],
+
         ];
     }
 }

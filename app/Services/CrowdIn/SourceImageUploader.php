@@ -38,6 +38,12 @@ class SourceImageUploader
                         return;
                     }
 
+                    if (! file_exists($file->fullPath)) {
+                        Log::warning('Skipping "'.$file->fullPath.'": file does not exist');
+
+                        return;
+                    }
+
                     $storedFile = $this->client->storage->create(new SplFileInfo($file->fullPath));
 
                     if (is_null($storedFile)) {

@@ -52,7 +52,7 @@ class TranslationRepository
 
     private function getPath(string $class): string
     {
-        $filename = sprintf('%s.sources.json', Str::kebab(class_basename($class)));
+        $filename = sprintf('%s%s.sources.json', config('crowdin.prefix'), Str::kebab(class_basename($class)));
 
         return sprintf('translations/%s/%s', $this->language, $filename);
     }
@@ -73,7 +73,7 @@ class TranslationRepository
     public function getFile(string $class, string $identifier, mixed $default): ?string
     {
         $directoryName = Str::kebab(class_basename($class));
-        $translationPath = sprintf('translations/%s/%s/%s', $this->language, $directoryName, $identifier);
+        $translationPath = sprintf('translations/%s/%s/%s%s', $this->language, $directoryName, config('crowdin.prefix'), $identifier);
 
         $path = $this->disk->exists($translationPath)
             ? $translationPath

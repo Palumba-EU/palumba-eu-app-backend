@@ -56,7 +56,7 @@ class SourceStringGenerator
 
     private function getFilenameForClass(string $class): string
     {
-        return sprintf('%s/%s.sources.json', $this->basePath, Str::kebab(class_basename($class)));
+        return sprintf('%s/%s%s.sources.json', $this->basePath, config('crowdin.prefix'), Str::kebab(class_basename($class)));
     }
 
     private function writeSourceFile(string $filename, Collection $data): void

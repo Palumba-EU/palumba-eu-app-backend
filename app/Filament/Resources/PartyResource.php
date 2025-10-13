@@ -57,8 +57,6 @@ class PartyResource extends Resource
                     ->hex(),
                 Forms\Components\FileUpload::make('logo')
                     ->image()
-                    ->acceptedFileTypes(['image/svg+xml'])
-                    ->hint('SVG files only')
                     ->directory('parties/logos')
                     ->required()
                     ->columnSpanFull(),

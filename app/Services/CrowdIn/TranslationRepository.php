@@ -52,7 +52,7 @@ class TranslationRepository
 
     private function getPath(string $class): string
     {
-        $filename = sprintf('%s.sources.json', Str::kebab(class_basename($class)));
+        $filename = sprintf('%s%s.sources.json', config('crowdin.prefix'), Str::kebab(class_basename($class)));
 
         return sprintf('translations/%s/%s', $this->language, $filename);
     }

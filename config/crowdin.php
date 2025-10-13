@@ -20,6 +20,8 @@ return [
         'path' => env('TRANSLATABLE_BASE_PATH', 'sources'),
     ],
 
+    'prefix' => env('CROWDIN_FILE_PREFIX', ''),
+
     'translatable_models' => [
         Country::class,
         LocalParty::class,

@@ -54,7 +54,6 @@ class CountryResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('flag')
-                    ->hint('SVG files only')
                     ->image()
                     ->directory('flags')
                     ->required(),

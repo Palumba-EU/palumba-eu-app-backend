@@ -56,7 +56,6 @@ class CountryResource extends Resource
                 Forms\Components\FileUpload::make('flag')
                     ->hint('SVG files only')
                     ->image()
-                    ->acceptedFileTypes(['image/svg+xml'])
                     ->directory('flags')
                     ->required(),
             ]);

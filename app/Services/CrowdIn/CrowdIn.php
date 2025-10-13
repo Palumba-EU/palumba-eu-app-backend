@@ -29,7 +29,7 @@ trait CrowdIn
     {
         $extension = pathinfo($fullPath, PATHINFO_EXTENSION);
 
-        return sprintf('%s-%s.%s.%s', $this->getAttribute('id'), Str::kebab(class_basename(self::class)), $attribute, $extension);
+        return sprintf('%s%s-%s.%s.%s', config('crowdin.prefix'), $this->getAttribute('id'), Str::kebab(class_basename(self::class)), $attribute, $extension);
     }
 
     public function getTranslationForAttribute(string $attribute, ?string $language = null): ?string

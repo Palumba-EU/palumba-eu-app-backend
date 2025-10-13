@@ -73,7 +73,7 @@ class TranslationRepository
     public function getFile(string $class, string $identifier, mixed $default): ?string
     {
         $directoryName = Str::kebab(class_basename($class));
-        $translationPath = sprintf('translations/%s/%s/%s%s', $this->language, $directoryName, config('crowdin.prefix'), $identifier);
+        $translationPath = sprintf('translations/%s/%s/%s', $this->language, $directoryName, $identifier);
 
         $path = $this->disk->exists($translationPath)
             ? $translationPath

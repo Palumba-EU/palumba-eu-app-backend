@@ -42,7 +42,7 @@ class PartyPositionsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\AttachAction::make()
+                AttachAction::make()
                     ->label('Add position')
                     ->preloadRecordSelect()
                     ->form(fn (AttachAction $action): array => [

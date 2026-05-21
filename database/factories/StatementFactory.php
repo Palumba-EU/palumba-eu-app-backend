@@ -3,10 +3,11 @@
 namespace Database\Factories;
 
 use App\Models\Election;
+use App\Models\Statement;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Statement>
+ * @extends Factory<Statement>
  */
 class StatementFactory extends Factory
 {

@@ -45,7 +45,7 @@ class StatementsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\AttachAction::make()
+                AttachAction::make()
                     ->label('Answer statement')
                     ->preloadRecordSelect()
                     ->form(fn (AttachAction $action): array => [

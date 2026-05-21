@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Language;
+use App\Services\CrowdInTranslation;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -26,8 +27,8 @@ return new class extends Migration
             'published' => true,
         ]);
 
-        /** @var \App\Services\CrowdInTranslation $crowdIn */
-        $crowdIn = resolve(\App\Services\CrowdInTranslation::class);
+        /** @var CrowdInTranslation $crowdIn */
+        $crowdIn = resolve(CrowdInTranslation::class);
         $languages = $crowdIn->listTargetLanguages();
         foreach ($languages as $language) {
             Language::create([

@@ -41,7 +41,7 @@ class StatementWeightsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\AttachAction::make()
+                AttachAction::make()
                     ->label('Add weight')
                     ->preloadRecordSelect()
                     ->form(fn (AttachAction $action): array => [
